@@ -1,0 +1,13 @@
+.components {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ingredients{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 464px;
+    overflow-y: auto;
+}

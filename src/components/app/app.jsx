@@ -14,7 +14,7 @@ function App() {
                     <BurgerIngredients/>
                 </section>
 
-                <section className={styles.constructor} aria-label={`Бургер конструктор`}>
+                <section className={styles.constructor+` ml-10`} aria-label={`Бургер конструктор`}>
                     <BurgerConstructor/>
                 </section>
             </main>
