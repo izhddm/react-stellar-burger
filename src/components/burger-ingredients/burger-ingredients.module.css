@@ -10,3 +10,11 @@
   width: 100%;
   max-width: 600px;
 }
+
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 32px;
+}
