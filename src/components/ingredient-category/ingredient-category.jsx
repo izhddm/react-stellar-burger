@@ -1,6 +1,6 @@
 import React from 'react';
 import {data} from '../../utils/data.js'
-import Ingredient from "../ingredient/ingredient";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import styles from './ingredient-category.module.css'
 
 function IngredientCategory({label, type}) {
@@ -10,7 +10,7 @@ function IngredientCategory({label, type}) {
       <div className={styles.list + ` ml-4`}>
         {Array.from(data).map((element) => {
           if (element.type === type)
-            return <Ingredient key={element.id} element={element}/>;
+            return <BurgerIngredient key={element.id} element={element}/>;
         })}
       </div>
     </>

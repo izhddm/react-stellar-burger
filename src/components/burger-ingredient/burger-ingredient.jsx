@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './ingredient.module.css'
+import styles from './burger-ingredient.module.css'
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-function Ingredient({element}) {
+function BurgerIngredient({element}) {
   return (
     <div className={styles.container} key={element._id}>
       <img className={styles.image}
@@ -22,4 +22,4 @@ function Ingredient({element}) {
   );
 }
 
-export default Ingredient;
+export default BurgerIngredient;
