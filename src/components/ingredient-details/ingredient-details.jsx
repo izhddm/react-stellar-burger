@@ -12,7 +12,7 @@ function IngredientDetails({element}) {
                      src={element.image_large}
                      alt={element.name}
                 />
-                <h3 className={styles.subtitle+' text text_type_main-medium'}>{element.name}</h3>
+                <h3 className={styles.subtitle + ' text text_type_main-medium'}>{element.name}</h3>
                 <div className={styles.caption}>
                     <p className="text text_type_main-small"> Калории,ккал </p>
                     <p className="text text_type_main-small"> Белки, г </p>

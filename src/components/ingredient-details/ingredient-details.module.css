@@ -17,10 +17,8 @@
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
     color: #8585AD;
-    order: 0;
     align-self: center;
-    flex-grow: 0;
-    width: 520px;
+    margin: 32px 0 0;
 }
 
 .title {
@@ -31,11 +29,12 @@
 
 .subtitle {
     text-align: center;
-    margin: 15px 0 38px 0;
+    margin: 16px 0 0 ;
 }
 
 .image {
     width: 480px;
     height: 240px;
     align-self: center;
+    object-fit: cover;
 }
