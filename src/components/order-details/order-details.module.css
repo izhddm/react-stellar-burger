@@ -1,0 +1,29 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 120px 0;
+}
+.image {
+  position: initial;
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  align-self: center;
+  margin-bottom: 64px;
+  transition: opacity .1s ease-in;;
+}
+
+.image:hover {
+  cursor: pointer;
+  opacity: .6;
+}
+
+.subtitle {
+  margin: 32px 0 61px 0;
+}
+
+.message {
+  margin-top: 12px;
+}

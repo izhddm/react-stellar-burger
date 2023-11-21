@@ -4,7 +4,7 @@ import styles from './burger-ingredients.module.css'
 import {data} from "../../utils/data";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
-function BurgerIngredients(props) {
+function BurgerIngredients({handleOpenIngredientDetails}) {
     const ingredientsRef = React.useRef();
 
     // Категории ингредиентов
@@ -75,7 +75,7 @@ function BurgerIngredients(props) {
                                 <div className={styles.list + ` ml-4`}>
                                     {Array.from(data).map((element) => {
                                         if (element.type === tab.type)
-                                            return <BurgerIngredient key={element._id} element={element}/>;
+                                            return <BurgerIngredient key={element._id} element={element} handleOpenIngredientDetails={handleOpenIngredientDetails}/>;
 
                                         return null;
                                     })}

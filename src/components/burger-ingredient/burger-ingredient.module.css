@@ -5,6 +5,7 @@
   width: 100%;
   max-width: 272px;
   min-height: 208px;
+  position: relative;
 }
 
 .image {
@@ -14,4 +15,10 @@
 
 .price {
   display: flex;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
