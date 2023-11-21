@@ -7,9 +7,10 @@ function BurgerIngredient({element, handleOpenIngredientDetails}) {
     <div className={styles.container} key={element._id} onClick={(e) => {
       handleOpenIngredientDetails(e, element)
     }}>
-      <div className={styles.counter}>
-        <Counter count={1} size="default"/>
-      </div>
+      {element.count && element.count > 0 &&
+        <div className={styles.counter}>
+          <Counter count={1} size="default"/>
+        </div>}
       <img className={styles.image}
            src={element.image}
            alt={element.name}
