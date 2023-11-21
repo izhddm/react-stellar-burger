@@ -1,28 +1,28 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #131316;
-    color: #f2f2f3;
-    max-width: 1920px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #131316;
+  color: #f2f2f3;
+  max-width: 1920px;
+  margin: 0 auto;
 }
 
 .main {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    width: 100%;
-    max-width: 1240px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
 .ingredients {
-    flex: 1;
+  flex: 1;
 }
 
 .constructor {
-    flex: 1;
+  flex: 1;
 }
 
 

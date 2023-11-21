@@ -1,12 +1,12 @@
 .tab {
-    display: flex;
+  display: flex;
 }
 
 .ingredients {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    height: 72vh;
-    width: 100%;
-    max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 72vh;
+  width: 100%;
+  max-width: 600px;
 }
