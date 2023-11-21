@@ -1,27 +1,13 @@
 .components {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.ingredients{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 464px;
-    overflow-y: auto;
-}
-
-.ingredients::-webkit-scrollbar {
-    width: 12px;
-}
-
-.ingredients::-webkit-scrollbar-track {
-    background: #2F2F37;
-}
-
-.ingredients::-webkit-scrollbar-thumb {
-    background: #8585AD;
-    border: 3px solid #2F2F37;
-    border-radius: 6px;
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 43vh;
+  overflow-y: auto;
 }
