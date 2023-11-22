@@ -10,14 +10,15 @@ function Modal({onClick, onClose, children}) {
     e.stopPropagation();
   };
 
-  // Закрытие по ESC
-  const closeByEsc = ((e) => {
-    if (e.key === 'Escape') {
-      onClose()
-    }
-  });
-
   React.useEffect(() => {
+    // Закрытие по ESC
+    const closeByEsc = ((e) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    });
+
+    //События на нажатие кнопок
     document.addEventListener('keydown', closeByEsc);
 
     return () => document.removeEventListener('keydown', closeByEsc)
@@ -28,7 +29,7 @@ function Modal({onClick, onClose, children}) {
       <div className={styles.modal} onMouseDown={handleStopPropagation}>
         {children}
         <div className={styles.close}>
-          <CloseIcon onClick={onClick} type={"primary"}/>
+          <CloseIcon onClick={onClick} type="primary"/>
         </div>
       </div>
     </ModalOverlay>,
