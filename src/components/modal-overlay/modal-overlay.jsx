@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './modal-overlay.module.css'
+import PropTypes from "prop-types";
 
 function ModalOverlay({onMouseDown, children}) {
   return (
@@ -7,6 +8,11 @@ function ModalOverlay({onMouseDown, children}) {
       {children}
     </div>
   );
+}
+
+ModalOverlay.propTypes = {
+  onMouseDown:PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
 }
 
 export default ModalOverlay;
