@@ -1,7 +1,9 @@
 import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
-import BurgerIngredient from "../burger-ingredient/burger-ingredient";
+import Ingredient from "../ingredient/ingredient";
+import {ingredientPropType} from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 function BurgerIngredients({data, handleOpenIngredientDetails}) {
   const ingredientsRef = React.useRef();
@@ -76,7 +78,7 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
                 <div className={styles.list + ` ml-4`}>
                   {data.map((element) => {
                     if (element.type === tab.type) {
-                      return <BurgerIngredient
+                      return <Ingredient
                         key={element._id}
                         element={element}
                         handleOpenIngredientDetails={handleOpenIngredientDetails}

@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './burger-ingredient.module.css'
+import styles from './ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-function BurgerIngredient({element, handleOpenIngredientDetails}) {
+function Ingredient({element, handleOpenIngredientDetails}) {
   return (
     <div className={styles.container} key={element._id} onClick={(e) => {
       handleOpenIngredientDetails(e, element)
@@ -29,3 +29,4 @@ function BurgerIngredient({element, handleOpenIngredientDetails}) {
 }
 
 export default BurgerIngredient;
+export default Ingredient;
