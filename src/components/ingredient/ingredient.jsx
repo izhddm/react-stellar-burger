@@ -11,17 +11,17 @@ function Ingredient({element, handleOpenIngredientDetails}) {
     }}>
       {element.count && element.count > 0 &&
         <div className={styles.counter}>
-          <Counter count={1} size="default"/>
+          <Counter count={element.count} size="default"/>
         </div>}
       <img className={styles.image}
            src={element.image}
            alt={element.name}
       />
-      <div className={styles.price + ` mt-2 mb-2`}>
+      <div className={styles.price + " mt-2 mb-2"}>
         <p className="text text_type_digits-default mr-2">
           {element.price}
         </p>
-        <CurrencyIcon type={"primary"}/>
+        <CurrencyIcon type="primary"/>
       </div>
       <p className="text text_type_main-default">
         {element.name}

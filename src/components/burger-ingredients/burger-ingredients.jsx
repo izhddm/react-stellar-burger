@@ -75,7 +75,7 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
             return (
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
-                <div className={styles.list + ` ml-4`}>
+                <div className={styles.list + ' ml-4'}>
                   {data.map((element) => {
                     if (element.type === tab.type) {
                       return <Ingredient

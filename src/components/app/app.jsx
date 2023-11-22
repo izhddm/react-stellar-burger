@@ -39,13 +39,13 @@ function App() {
     <div className={styles.container}>
       <AppHeader/>
       <main className={styles.main}>
-        <section className={styles.ingredients} aria-label={`Бургер ингредиенты`}>
-          <h1 className={`text text_type_main-large mt-10 mb-5`}>Соберите бургер</h1>
+        <section className={styles.ingredients} aria-label="Бургер ингредиенты">
+          <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
           {listIngredients &&
             <BurgerIngredients data={listIngredients} handleOpenIngredientDetails={handleOpenIngredientDetails}/>}
         </section>
 
-        <section className={styles.constructor + ` ml-10`} aria-label={`Бургер конструктор`}>
+        <section className={styles.constructor + ' ml-10'} aria-label="Бургер конструктор">
           <BurgerConstructor/>
           <div className={styles.price + ' mt-10'}>
             <BurgerPrice/>

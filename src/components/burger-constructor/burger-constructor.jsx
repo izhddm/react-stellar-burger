@@ -4,7 +4,7 @@ import styles from './burger-constructor.module.css'
 
 function BurgerConstructor() {
   return (
-    <div className={styles.components + ` mt-25 ml-8`}>
+    <div className={styles.components + ' mt-25 ml-8'}>
       <ConstructorElement
         type="top"
         isLocked={true}
