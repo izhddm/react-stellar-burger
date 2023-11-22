@@ -2,7 +2,7 @@ import React from 'react';
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css'
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
   return (
     <div className={styles.components + ` mt-25 ml-8`}>
       <ConstructorElement

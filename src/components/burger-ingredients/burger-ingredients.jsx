@@ -97,4 +97,9 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
   );
 }
 
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientPropType).isRequired,
+  handleOpenIngredientDetails: PropTypes.func.isRequired
+}
+
 export default BurgerIngredients;

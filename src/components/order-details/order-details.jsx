@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './order-details.module.css'
 import imgDone from '../../images/done.png'
 
-function OrderDetails(props) {
+function OrderDetails() {
   return (
     <div className={styles.order}>
       <h2 className={'text text_type_digits-large'}>034536</h2>

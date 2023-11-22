@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ingredientPropType} from "../../utils/prop-types";
+import PropTypes from "prop-types";
 
 function Ingredient({element, handleOpenIngredientDetails}) {
   return (
@@ -28,5 +30,9 @@ function Ingredient({element, handleOpenIngredientDetails}) {
   );
 }
 
-export default BurgerIngredient;
+Ingredient.propTypes = {
+  element: ingredientPropType.isRequired,
+  handleOpenIngredientDetails: PropTypes.func.isRequired
+}
+
 export default Ingredient;
