@@ -33,6 +33,7 @@ function App() {
       .then(json => {
         setListIngredients(json.data)
       })
+      .catch((err) => console.error(err))
   }, [])
 
   return (
