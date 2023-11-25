@@ -1,11 +1,12 @@
-export const request = async (url, options) => {
-    const res = await fetch(url, options)
-    return checkResponse(res)
-}
+export const request = (url, options) => {
+  return fetch(url, options)
+    .then(checkResponse);
+};
+
 
 const checkResponse = (res) => {
-    if (res.ok) {
-        return res.json()
-    }
-    return Promise.reject(`Ошибка ${res.status}`)
+  if (res.ok) {
+    return res.json()
+  }
+  return Promise.reject(`Ошибка ${res.status}`)
 }
