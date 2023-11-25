@@ -78,11 +78,13 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
                 <div className={styles.list + ' ml-4'}>
                   {data.map((element) => {
                     if (element.type === tab.type) {
-                      return <Ingredient
-                        key={element._id}
-                        element={element}
-                        handleOpenIngredientDetails={handleOpenIngredientDetails}
-                      />;
+                      return (
+                        <Ingredient
+                          key={element._id}
+                          element={element}
+                          handleOpenIngredientDetails={handleOpenIngredientDetails}
+                        />
+                      );
                     }
 
                     return null;
