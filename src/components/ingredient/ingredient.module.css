@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 272px;
+  min-height: 208px;
+  position: relative;
+}
+
+.image {
+  width: 240px;
+  height: 120px;
+}
+
+.price {
+  display: flex;
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
