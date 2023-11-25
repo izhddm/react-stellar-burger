@@ -60,7 +60,7 @@ function App() {
           </div>
         </section>
       </main>
-      {contentModal && <Modal onClick={closeModal} onClose={closeModal}>
+      {contentModal && <Modal onClose={closeModal}>
         {contentModal}
       </Modal>}
     </div>
