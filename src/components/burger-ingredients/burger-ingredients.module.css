@@ -2,13 +2,19 @@
   display: flex;
 }
 
+.section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height:calc(100vh - 120px);
+}
+
 .ingredients {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
   overflow-y: auto;
-  height: 72vh;
-  width: 100%;
-  max-width: 600px;
 }
 
 .list {

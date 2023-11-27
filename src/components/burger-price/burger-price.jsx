@@ -1,14 +1,35 @@
 import React from 'react';
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-price.module.css';
+import OrderDetails from "../order-details/order-details";
+import PropTypes from "prop-types";
 
-function BurgerPrice(props) {
+function BurgerPrice({price = 0, setContentModal}) {
+
+  const handleOpenOrderDetails = () => {
+    setContentModal(() => <OrderDetails/>)
+  }
+
   return (
     <div className={styles.container}>
-      <p className="text text_type_digits-medium mr-2">1000</p>
+      <p className="text text_type_digits-medium mr-2">{price}</p>
       <CurrencyIcon type="primary"/>
+      <Button
+        disabled={!price}
+        type="primary" size="large"
+        htmlType='submit'
+        onMouseDown={handleOpenOrderDetails}
+        extraClass={'ml-10 mr-4'}
+      >
+        Оформить заказ
+      </Button>
     </div>
   );
+}
+
+BurgerPrice.propTypes = {
+  price: PropTypes.number.isRequired,
+  setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerPrice;

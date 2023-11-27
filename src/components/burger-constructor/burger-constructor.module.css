@@ -1,13 +1,50 @@
-.components {
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.burger {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height:calc(100vh - 240px);
 }
 
 .ingredients {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 43vh;
   overflow-y: auto;
+  flex: 1;
 }
+
+.element{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.element_color {
+  background-color: rgba(28, 28, 33, 1);
+}
+
+.dnd {
+  background-image: url('../../images/dnd.svg');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+}
+
+.price {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
+}
+

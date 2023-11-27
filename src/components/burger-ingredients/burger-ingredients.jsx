@@ -4,8 +4,9 @@ import styles from './burger-ingredients.module.css'
 import Ingredient from "../ingredient/ingredient";
 import {ingredientPropType} from "../../utils/prop-types";
 import PropTypes from "prop-types";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
-function BurgerIngredients({data, handleOpenIngredientDetails}) {
+function BurgerIngredients({data, setContentModal}) {
   const ingredientsRef = React.useRef();
 
   // Категории ингредиентов
@@ -26,6 +27,10 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
       behavior: 'smooth',
     });
   };
+
+  const handleOpenIngredientDetails = (e, element) => {
+    setContentModal(() => <IngredientDetails element={element}/>);
+  }
 
   //Смена tab при скроле пользователем
   React.useEffect(() => {
@@ -53,7 +58,8 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
   }, [tabs]);
 
   return (
-    <>
+    <section className={styles.section} aria-label="Бургер ингредиенты">
+      <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={styles.tab}>
         {tabs.map((tab) => (
           <Tab
@@ -95,13 +101,13 @@ function BurgerIngredients({data, handleOpenIngredientDetails}) {
           })
         }
       </div>
-    </>
+    </section>
   );
 }
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientPropType).isRequired,
-  handleOpenIngredientDetails: PropTypes.func.isRequired
+  setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

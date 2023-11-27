@@ -5,7 +5,11 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
-function Modal({onClose, children}) {
+function Modal({setContentModal, children}) {
+  const closeModal = () => {
+    setContentModal(null);
+  };
+
   // Остановить всплытие события, чтобы не срабатывало событие на внешнем элементе
   const handleStopPropagation = (e) => {
     e.stopPropagation();
@@ -15,7 +19,7 @@ function Modal({onClose, children}) {
     // Закрытие по ESC
     const closeByEsc = ((e) => {
       if (e.key === 'Escape') {
-        onClose()
+        closeModal()
       }
     });
 
@@ -26,11 +30,11 @@ function Modal({onClose, children}) {
   }, []);
 
   return createPortal(
-    <ModalOverlay onMouseDown={onClose}>
+    <ModalOverlay onMouseDown={closeModal}>
       <div className={styles.modal} onMouseDown={handleStopPropagation}>
         {children}
         <div className={styles.close}>
-          <CloseIcon onClick={onClose} type="primary"/>
+          <CloseIcon onClick={closeModal} type="primary"/>
         </div>
       </div>
     </ModalOverlay>,
@@ -39,7 +43,7 @@ function Modal({onClose, children}) {
 }
 
 Modal.propTypes = {
-  onClose:PropTypes.func.isRequired,
+  setContentModal:PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 }
 

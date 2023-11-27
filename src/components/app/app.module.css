@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  align-items: center;
   flex-direction: column;
   height: 100vh;
   background-color: #131316;
@@ -9,27 +10,11 @@
 }
 
 .main {
-  display: flex;
-  justify-content: space-between;
-
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-
-.ingredients {
-  flex: 1;
-}
-
-.constructor {
-  flex: 1;
-}
-
-.price {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 600px);
+  grid-template-rows: 1fr;
+  gap: 0 40px;
+  overflow: hidden;
 }
 
 
