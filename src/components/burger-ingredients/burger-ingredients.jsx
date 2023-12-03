@@ -2,112 +2,114 @@ import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import Ingredient from "../ingredient/ingredient";
-import {ingredientPropType} from "../../utils/prop-types";
 import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {useGetIngredientsQuery} from "../../services/api";
 
-function BurgerIngredients({data, setContentModal}) {
-  const ingredientsRef = React.useRef();
+function BurgerIngredients({setContentModal}) {
+    const ingredientsRef = React.useRef();
 
-  // Категории ингредиентов
-  const tabs = [
-    {value: 1, label: 'Булки', type: 'bun', ref: React.useRef()},
-    {value: 2, label: 'Соусы', type: 'sauce', ref: React.useRef()},
-    {value: 3, label: 'Начинки', type: 'main', ref: React.useRef()},
-  ];
+    const {data, error} = useGetIngredientsQuery();
+    const listIngredients = data?.data || [];
 
-  const [currentTab, setCurrentTab] = React.useState(tabs[0].value);
+    // Категории ингредиентов
+    const tabs = [
+        {value: 1, label: 'Булки', type: 'bun', ref: React.useRef()},
+        {value: 2, label: 'Соусы', type: 'sauce', ref: React.useRef()},
+        {value: 3, label: 'Начинки', type: 'main', ref: React.useRef()},
+    ];
 
-  // Скрол при клике по табу
-  const handleTabClick = (tab) => {
-    setCurrentTab(tab.value);
+    const [currentTab, setCurrentTab] = React.useState(tabs[0].value);
 
-    // Прокрутка к нужному ref
-    tab.ref.current.scrollIntoView({
-      behavior: 'smooth',
-    });
-  };
+    // Скрол при клике по табу
+    const handleTabClick = (tab) => {
+        setCurrentTab(tab.value);
 
-  const handleOpenIngredientDetails = (e, element) => {
-    setContentModal(() => <IngredientDetails element={element}/>);
-  }
-
-  //Смена tab при скроле пользователем
-  React.useEffect(() => {
-    const handleScroll = () => {
-      // Найди видимую категорию
-      const visibleTab = tabs.find((tab) => {
-        const tabRef = tab.ref.current;
-        return (
-          tabRef.getBoundingClientRect().top <= ingredientsRef.current.getBoundingClientRect().top &&
-          tabRef.getBoundingClientRect().bottom > ingredientsRef.current.getBoundingClientRect().top
-        );
-      });
-
-      // Обнови текущую видимую категорию
-      if (visibleTab) {
-        setCurrentTab(visibleTab.value);
-      }
+        // Прокрутка к нужному ref
+        tab.ref.current.scrollIntoView({
+            behavior: 'smooth',
+        });
     };
 
-    ingredientsRef.current.addEventListener('scroll', handleScroll);
+    const handleOpenIngredientDetails = (e, element) => {
+        setContentModal(() => <IngredientDetails element={element}/>);
+    }
 
-    return () => {
-      ingredientsRef.current.removeEventListener('scroll', handleScroll);
-    };
-  }, [tabs]);
+    //Смена tab при скроле пользователем
+    React.useEffect(() => {
+        const handleScroll = () => {
+            // Найди видимую категорию
+            const visibleTab = tabs.find((tab) => {
+                const tabRef = tab.ref.current;
+                return (
+                    tabRef.getBoundingClientRect().top <= ingredientsRef.current.getBoundingClientRect().top &&
+                    tabRef.getBoundingClientRect().bottom > ingredientsRef.current.getBoundingClientRect().top
+                );
+            });
 
-  return (
-    <section className={styles.section} aria-label="Бургер ингредиенты">
-      <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-      <div className={styles.tab}>
-        {tabs.map((tab) => (
-          <Tab
-            key={tab.value}
-            value={tab.value}
-            active={currentTab === tab.value}
-            onClick={() => {
-              handleTabClick(tab)
-            }}
-          >
-            {tab.label}
-          </Tab>
-        ))}
-      </div>
+            // Обнови текущую видимую категорию
+            if (visibleTab) {
+                setCurrentTab(visibleTab.value);
+            }
+        };
 
-      <div className={styles.ingredients + ' custom-scroll'} ref={ingredientsRef}>
-        {
-          tabs.map(tab => {
-            return (
-              <Fragment key={tab.value}>
-                <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
-                <div className={styles.list + ' ml-4'}>
-                  {data.map((element) => {
-                    if (element.type === tab.type) {
-                      return (
-                        <Ingredient
-                          key={element._id}
-                          element={element}
-                          handleOpenIngredientDetails={handleOpenIngredientDetails}
-                        />
-                      );
-                    }
+        ingredientsRef.current.addEventListener('scroll', handleScroll);
 
-                    return null;
-                  })}
-                </div>
-              </Fragment>
-            )
-          })
-        }
-      </div>
-    </section>
-  );
+        return () => {
+            ingredientsRef.current.removeEventListener('scroll', handleScroll);
+        };
+    }, [tabs]);
+
+    return (
+        <section className={styles.section} aria-label="Бургер ингредиенты">
+            <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
+            <div className={styles.tab}>
+                {tabs.map((tab) => (
+                    <Tab
+                        key={tab.value}
+                        value={tab.value}
+                        active={currentTab === tab.value}
+                        onClick={() => {
+                            handleTabClick(tab)
+                        }}
+                    >
+                        {tab.label}
+                    </Tab>
+                ))}
+            </div>
+
+            <div className={styles.ingredients + ' custom-scroll'} ref={ingredientsRef}>
+                {
+                    tabs.map(tab => {
+                        return (
+                            <Fragment key={tab.value}>
+                                <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
+                                <div className={styles.list + ' ml-4'}>
+                                    {listIngredients.map((element) => {
+                                        if (element.type === tab.type) {
+                                            return (
+                                                <Ingredient
+                                                    key={element._id}
+                                                    element={element}
+                                                    handleOpenIngredientDetails={handleOpenIngredientDetails}
+                                                />
+                                            );
+                                        }
+
+                                        return null;
+                                    })}
+                                </div>
+                            </Fragment>
+                        )
+                    })
+                }
+            </div>
+        </section>
+    );
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType).isRequired,
-  setContentModal: PropTypes.func.isRequired
+    setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;
