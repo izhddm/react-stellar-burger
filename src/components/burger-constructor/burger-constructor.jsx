@@ -3,9 +3,8 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import styles from './burger-constructor.module.css'
 import {listIngredients} from "../../utils/data";
 import BurgerPrice from "../burger-price/burger-price";
-import PropTypes from "prop-types";
 
-function BurgerConstructor({setContentModal}) {
+function BurgerConstructor() {
   const calcPrice = () => {
     return listIngredients.ingredients.reduce((acc, ingredient) => {
       if (ingredient.type === 'bun') {
@@ -59,14 +58,10 @@ function BurgerConstructor({setContentModal}) {
       </div>
 
       <div className={styles.price + ' mb-6'}>
-        <BurgerPrice price={calcPrice()} setContentModal={setContentModal}/>
+        <BurgerPrice price={calcPrice()} />
       </div>
     </section>
   );
-}
-
-BurgerPrice.propTypes = {
-  setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

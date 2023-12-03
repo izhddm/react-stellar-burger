@@ -6,18 +6,14 @@ import React from "react";
 import Modal from "../modal/modal";
 
 function App() {
-    const [contentModal, setContentModal] = React.useState(null);
-
     return (
         <div className={styles.container}>
             <AppHeader/>
             <main className={styles.main}>
-                <BurgerIngredients setContentModal={setContentModal}/>
-                <BurgerConstructor setContentModal={setContentModal}/>
+                <BurgerIngredients/>
+                <BurgerConstructor/>
             </main>
-            {contentModal && <Modal setContentModal={setContentModal}>
-                {contentModal}
-            </Modal>}
+            <Modal/>
         </div>
     );
 }

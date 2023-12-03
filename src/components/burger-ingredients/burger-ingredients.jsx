@@ -2,12 +2,15 @@ import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import Ingredient from "../ingredient/ingredient";
-import PropTypes from "prop-types";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetIngredientsQuery} from "../../services/api";
+import {useDispatch} from "react-redux";
+import {setContentModal} from "../../services/slices/modalSlice";
 
-function BurgerIngredients({setContentModal}) {
+function BurgerIngredients() {
     const ingredientsRef = React.useRef();
+
+    const dispatch = useDispatch();
 
     const {data, error} = useGetIngredientsQuery();
     const listIngredients = data?.data || [];
@@ -32,7 +35,7 @@ function BurgerIngredients({setContentModal}) {
     };
 
     const handleOpenIngredientDetails = (e, element) => {
-        setContentModal(() => <IngredientDetails element={element}/>);
+        dispatch(setContentModal(<IngredientDetails element={element}/>))
     }
 
     //Смена tab при скроле пользователем
@@ -106,10 +109,6 @@ function BurgerIngredients({setContentModal}) {
             </div>
         </section>
     );
-}
-
-BurgerIngredients.propTypes = {
-    setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

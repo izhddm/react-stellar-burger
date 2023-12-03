@@ -3,11 +3,16 @@ import {createPortal} from "react-dom";
 import styles from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {clearContentModal} from "../../services/slices/modalSlice";
 
-function Modal({setContentModal, children}) {
+function Modal() {
+  const dispatch = useDispatch();
+
+  const contentModal = useSelector(state => state.modal.contentModal);
+
   const closeModal = () => {
-    setContentModal(null);
+   dispatch(clearContentModal());
   };
 
   // Остановить всплытие события, чтобы не срабатывало событие на внешнем элементе
@@ -29,22 +34,19 @@ function Modal({setContentModal, children}) {
     return () => document.removeEventListener('keydown', closeByEsc)
   }, []);
 
-  return createPortal(
-    <ModalOverlay onMouseDown={closeModal}>
-      <div className={styles.modal} onMouseDown={handleStopPropagation}>
-        {children}
-        <div className={styles.close}>
-          <CloseIcon onClick={closeModal} type="primary"/>
-        </div>
-      </div>
-    </ModalOverlay>,
-    document.getElementById('modals')
-  );
-}
-
-Modal.propTypes = {
-  setContentModal:PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
+  return contentModal ? (
+      createPortal(
+          <ModalOverlay onMouseDown={closeModal}>
+            <div className={styles.modal} onMouseDown={handleStopPropagation}>
+              {contentModal}
+              <div className={styles.close}>
+                <CloseIcon onClick={closeModal} type="primary" />
+              </div>
+            </div>
+          </ModalOverlay>,
+          document.getElementById('modals')
+      )
+  ) : null;
 }
 
 export default Modal;
