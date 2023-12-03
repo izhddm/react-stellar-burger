@@ -1,12 +1,12 @@
 import React from 'react';
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css'
-import {listIngredients} from "../../utils/data";
+import {ingredientsCart} from "../../utils/data";
 import BurgerPrice from "../burger-price/burger-price";
 
 function BurgerConstructor() {
   const calcPrice = () => {
-    return listIngredients.ingredients.reduce((acc, ingredient) => {
+    return ingredientsCart.ingredients.reduce((acc, ingredient) => {
       if (ingredient.type === 'bun') {
         return acc + ingredient.price * 2;
       } else {
@@ -22,15 +22,15 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${listIngredients.bun.name} (верх)`}
-            price={listIngredients.bun.price}
-            thumbnail={listIngredients.bun.image_mobile}
+            text={`${ingredientsCart.bun.name} (верх)`}
+            price={ingredientsCart.bun.price}
+            thumbnail={ingredientsCart.bun.image_mobile}
             extraClass={styles.element_color + ' mr-4'}
           />
         </div>
         <div className={styles.ingredients + ' custom-scroll'}>
           {
-            listIngredients.ingredients.map((element, index) => {
+            ingredientsCart.ingredients.map((element, index) => {
               return (
                 <div key={index + '.' + element._id} className={styles.element}>
                   <div className={styles.dnd}></div>
@@ -49,9 +49,9 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${listIngredients.bun.name} (низ)`}
-            price={listIngredients.bun.price}
-            thumbnail={listIngredients.bun.image_mobile}
+            text={`${ingredientsCart.bun.name} (низ)`}
+            price={ingredientsCart.bun.price}
+            thumbnail={ingredientsCart.bun.image_mobile}
             extraClass={styles.element_color + ' mr-4'}
           />
         </div>
