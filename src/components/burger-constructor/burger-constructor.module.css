@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height:calc(100vh - 240px);
+  height: calc(100vh - 240px);
 }
 
 .ingredients {
@@ -21,7 +21,17 @@
   flex: 1;
 }
 
-.element{
+.select {
+  height: 100%;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  max-width: 300px;
+}
+
+.element {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
