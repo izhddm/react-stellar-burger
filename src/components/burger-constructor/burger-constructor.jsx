@@ -2,9 +2,11 @@ import React from 'react';
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css'
 import BurgerPrice from "../burger-price/burger-price";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {removeIngredient} from "../../services/slices/burgerSlice";
 
 function BurgerConstructor() {
+  const dispatch = useDispatch();
   const burgerIngredients = useSelector(state => state.burger);
 
   return (
@@ -22,16 +24,20 @@ function BurgerConstructor() {
         </div>
         <div className={styles.ingredients + ' custom-scroll'}>
           {burgerIngredients.ingredients.length === 0 ? (
-            <p className={styles.select + ' text text_type_main-default'}>По меньшей мере должен быть выбран один соус или начинка. Пожалуйста, выберите...</p>
+            <p className={styles.select + ' text text_type_main-default'}>По меньшей мере должен быть выбран один соус
+              или начинка. Пожалуйста, выберите...</p>
           ) : (
-            burgerIngredients.ingredients.map((element, index) => (
-              <div key={index + '.' + element._id} className={styles.element}>
+            burgerIngredients.ingredients.map((element) => (
+              <div key={element.uuid} className={styles.element}>
                 <div className={styles.dnd}></div>
                 <ConstructorElement
                   text={element.name}
                   price={element.price}
                   thumbnail={element.image_mobile}
                   extraClass={styles.element_color + ' mr-2'}
+                  handleClose={() => {
+                    dispatch(removeIngredient({'uuid': element.uuid}))
+                  }}
                 />
               </div>
             ))
