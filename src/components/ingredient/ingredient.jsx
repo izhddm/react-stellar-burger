@@ -2,13 +2,23 @@ import React from 'react';
 import styles from './ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types";
-import PropTypes from "prop-types";
+import {useDispatch} from "react-redux";
+import {setContentModal} from "../../services/slices/modalSlice";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
-function Ingredient({element, handleOpenIngredientDetails}) {
+function Ingredient({element}) {
+  const dispatch = useDispatch();
+
+  const handleOpenIngredientDetails = (element) => {
+    dispatch(setContentModal(<IngredientDetails element={element}/>))
+  }
+
   return (
     <div className={styles.container} key={element._id} onClick={(e) => {
       handleOpenIngredientDetails(e, element)
     }}>
+    <div className={styles.container} key={element._id} onClick={() => {
+      handleOpenIngredientDetails(element)
       {element.count && element.count > 0 &&
         <div className={styles.counter}>
           <Counter count={element.count} size="default"/>
@@ -32,7 +42,6 @@ function Ingredient({element, handleOpenIngredientDetails}) {
 
 Ingredient.propTypes = {
   element: ingredientPropType.isRequired,
-  handleOpenIngredientDetails: PropTypes.func.isRequired
 }
 
 export default Ingredient;

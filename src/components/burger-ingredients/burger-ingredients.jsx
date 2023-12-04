@@ -2,15 +2,10 @@ import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import Ingredient from "../ingredient/ingredient";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetIngredientsQuery} from "../../services/api";
-import {useDispatch} from "react-redux";
-import {setContentModal} from "../../services/slices/modalSlice";
 
 function BurgerIngredients() {
     const ingredientsRef = React.useRef();
-
-    const dispatch = useDispatch();
 
     const {data, error} = useGetIngredientsQuery();
     const listIngredients = data?.data || [];
@@ -33,10 +28,6 @@ function BurgerIngredients() {
             behavior: 'smooth',
         });
     };
-
-    const handleOpenIngredientDetails = (e, element) => {
-        dispatch(setContentModal(<IngredientDetails element={element}/>))
-    }
 
     //Смена tab при скроле пользователем
     React.useEffect(() => {
@@ -94,7 +85,6 @@ function BurgerIngredients() {
                                                 <Ingredient
                                                     key={element._id}
                                                     element={element}
-                                                    handleOpenIngredientDetails={handleOpenIngredientDetails}
                                                 />
                                             );
                                         }
