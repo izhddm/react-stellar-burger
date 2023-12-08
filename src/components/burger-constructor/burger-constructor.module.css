@@ -35,26 +35,6 @@
   max-width: 300px;
 }
 
-.element {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
-}
-
-.element_color {
-  background-color: rgba(28, 28, 33, 1);
-}
-
-.dnd {
-  background-image: url('../../images/dnd.svg');
-  background-repeat: no-repeat;
-  width: 24px;
-  height: 24px;
-}
-
 .price {
   display: flex;
   justify-content: flex-end;

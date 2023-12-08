@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.element_background {
+  background-color: rgba(28, 28, 33, 1);
+}
+
+.sixPoints {
+  background-image: url('../../images/dnd.svg');
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+}
