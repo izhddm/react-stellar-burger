@@ -7,7 +7,14 @@ export const api = createApi({
     getIngredients: builder.query({
       query: () => 'ingredients',
     }),
+    createOrder: builder.mutation({
+      query: (ids) => ({
+        url: 'orders',
+        method: 'POST',
+        body: {ingredients: ids}
+      })
+    })
   }),
 });
 
-export const {useGetIngredientsQuery} = api;
+export const {useGetIngredientsQuery, useCreateOrderMutation} = api;
