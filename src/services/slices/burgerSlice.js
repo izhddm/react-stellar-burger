@@ -39,6 +39,13 @@ const burgerSlice = createSlice({
         };
       },
     },
+    swapIngredients: (store, action) => {
+      const {indexFrom, indexTo, ingredient} = action.payload;
+
+      store.ingredients.splice(indexFrom, 1);
+      store.ingredients.splice(indexTo, 0, ingredient);
+
+    },
     removeIngredient: (state, action) => {
       const index = state.ingredients.findIndex(
         (ingredient) => ingredient.uuid === action.payload.uuid
@@ -55,6 +62,7 @@ export const {
   setBun,
   addIngredient,
   removeIngredient,
+  swapIngredients,
 } = burgerSlice.actions;
 
 export default burgerSlice.reducer;

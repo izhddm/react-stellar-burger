@@ -35,8 +35,8 @@ function BurgerConstructor() {
             <p className={styles.select + ' text text_type_main-default'}>По меньшей мере должен быть выбран один соус
               или начинка. Пожалуйста, выберите...</p>
           ) : (
-            constructorIngredients.map((element) => (
-             <ConstructorIngredient key={element.uuid} element={element} />
+            constructorIngredients.map((element, index) => (
+             <ConstructorIngredient key={element.uuid} element={element} index={index}/>
             ))
           )}
         </div>

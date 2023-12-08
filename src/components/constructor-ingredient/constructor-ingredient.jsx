@@ -1,15 +1,42 @@
 import React from 'react';
 import styles from "../constructor-ingredient/constructor-ingredient.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import {removeIngredient} from "../../services/slices/burgerSlice";
+import {removeIngredient, swapIngredients} from "../../services/slices/burgerSlice";
 import {ingredientPropType} from "../../utils/prop-types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useDrag, useDrop} from "react-dnd";
+import PropTypes from "prop-types";
 
-function ConstructorIngredient({element}) {
+function ConstructorIngredient({element, index}) {
   const dispatch = useDispatch();
 
+  const burgerIngredients = useSelector(state => state.burger.ingredients);
+  const findIndex = (item) => burgerIngredients.indexOf(item);
+
+  const [{isDragging}, dragRef] = useDrag({
+    type: 'SWAP_INGREDIENT',
+    item: {ingredient: element},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  })
+
+  const [, dropRef] = useDrop({
+    accept: 'SWAP_INGREDIENT',
+    hover({ingredient}) {
+      if (ingredient.uuid === element.uuid) return;
+
+      dispatch(swapIngredients({
+        indexFrom: findIndex(ingredient),
+        indexTo: index,
+        ingredient: ingredient,
+      }))
+    }
+  });
+
   return (
-    <div className={styles.container}>
+    <div className={`${isDragging ? styles.container + ' ' + styles.dragging : styles.container}`}
+         ref={node => dropRef(dragRef(node))}>
       <div className={styles.sixPoints}></div>
       <ConstructorElement
         text={element.name}
@@ -26,5 +53,6 @@ function ConstructorIngredient({element}) {
 
 ConstructorIngredient.propTypes = {
   element: ingredientPropType.isRequired,
+  index: PropTypes.number.isRequired
 }
 export default ConstructorIngredient;
