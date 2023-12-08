@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ingredient.module.css'
+import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,7 @@ import {setContentModal} from "../../services/slices/modalSlice";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDrag} from "react-dnd";
 
-function Ingredient({element}) {
+function BurgerIngredient({element}) {
   const dispatch = useDispatch();
 
   const [{isDragging}, drag] = useDrag({
@@ -52,8 +52,8 @@ function Ingredient({element}) {
   );
 }
 
-Ingredient.propTypes = {
+BurgerIngredient.propTypes = {
   element: ingredientPropType.isRequired,
 }
 
-export default Ingredient;
+export default BurgerIngredient;

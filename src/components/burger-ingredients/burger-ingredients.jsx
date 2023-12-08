@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
-import Ingredient from "../ingredient/ingredient";
+import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {useGetIngredientsQuery} from "../../services/api";
 
 function BurgerIngredients() {
@@ -82,7 +82,7 @@ function BurgerIngredients() {
                   {listIngredients.map((element) => {
                     if (element.type === tab.type) {
                       return (
-                        <Ingredient
+                        <BurgerIngredient
                           key={element._id}
                           element={element}
                         />
