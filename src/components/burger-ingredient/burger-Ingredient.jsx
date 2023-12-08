@@ -2,13 +2,16 @@ import React from 'react';
 import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDrag} from "react-dnd";
+import {getCountIngredientFromConstructor} from "../../services/selectors"
 
 function BurgerIngredient({element}) {
   const dispatch = useDispatch();
+
+  const count = useSelector(getCountIngredientFromConstructor(element));
 
   const [{isDragging}, drag] = useDrag({
     type: 'INGREDIENT',
@@ -30,9 +33,9 @@ function BurgerIngredient({element}) {
          }}
          ref={drag}
          draggable>
-      {element.count &&
+      {count > 0 &&
         <div className={styles.counter}>
-          <Counter count={element.count} size="default"/>
+          <Counter count={count} size="default"/>
         </div>}
       <img className={styles.image}
            draggable={"false"}
