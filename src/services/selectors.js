@@ -1,5 +1,5 @@
 export const getCountIngredientFromConstructor = element => state => {
-  if (state.burger.bun && element._id === state.burger.bun._id){
+  if (state.burger.bun && element._id === state.burger.bun._id) {
     return 2;
   }
 
