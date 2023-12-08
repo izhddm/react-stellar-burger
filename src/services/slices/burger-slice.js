@@ -42,6 +42,10 @@ const burgerSlice = createSlice({
         state.ingredients.splice(index, 1);
       }
     },
+    clearBurgerConstructor: (state) => {
+      state.bun = null;
+      state.ingredients = [];
+    }
   },
 });
 
@@ -50,6 +54,7 @@ export const {
   addIngredient,
   removeIngredient,
   swapIngredients,
+  clearBurgerConstructor,
 } = burgerSlice.actions;
 
 export default burgerSlice.reducer;
