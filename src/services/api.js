@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {baseUrl} from "../utils/constants";
+
+export const baseUrl = 'https://norma.nomoreparties.space/api';
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({baseUrl: baseUrl}),
