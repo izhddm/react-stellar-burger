@@ -5,25 +5,37 @@ import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch} from "react-redux";
 import {setContentModal} from "../../services/slices/modalSlice";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {useDrag} from "react-dnd";
 
 function Ingredient({element}) {
   const dispatch = useDispatch();
+
+  const [{isDragging}, drag] = useDrag({
+    type: 'INGREDIENT',
+    item: element,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  })
 
   const handleOpenIngredientDetails = (element) => {
     dispatch(setContentModal(<IngredientDetails element={element}/>))
   }
 
   return (
-    <div className={styles.container} key={element._id} onClick={(e) => {
-      handleOpenIngredientDetails(e, element)
-    }}>
-    <div className={styles.container} key={element._id} onClick={() => {
-      handleOpenIngredientDetails(element)
-      {element.count && element.count > 0 &&
+    <div className={`${isDragging ? styles.container + ' ' + styles.dragging : styles.container}`}
+         key={element._id}
+         onClick={() => {
+           handleOpenIngredientDetails(element)
+         }}
+         ref={drag}
+         draggable>
+      {element.count &&
         <div className={styles.counter}>
           <Counter count={element.count} size="default"/>
         </div>}
       <img className={styles.image}
+           draggable={"false"}
            src={element.image}
            alt={element.name}
       />

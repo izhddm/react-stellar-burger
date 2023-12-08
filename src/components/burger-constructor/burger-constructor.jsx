@@ -3,15 +3,35 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import styles from './burger-constructor.module.css'
 import BurgerPrice from "../burger-price/burger-price";
 import {useDispatch, useSelector} from "react-redux";
-import {removeIngredient} from "../../services/slices/burgerSlice";
+import {addIngredient, removeIngredient, setBun} from "../../services/slices/burgerSlice";
+import {useDrop} from "react-dnd";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const burgerIngredients = useSelector(state => state.burger);
 
+  // Принимаем то что бросил пользователь при перетаскивании
+  const [{isOver}, drop] = useDrop({
+    accept: 'INGREDIENT',
+    drop: (item) => {
+      if (item.type === 'bun') {
+        dispatch(setBun(item))
+      } else {
+        dispatch(addIngredient(item))
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      dropItem: monitor.getItem()
+    })
+  })
+
+  // Ингредиент, который перетаскивает пользователь для смены позиции в последовательности ингредиентов
+
+
   return (
     <section className={styles.section} aria-label="Бургер конструктор">
-      <div className={styles.burger}>
+      <div className={`${styles.burger} ${isOver ? styles.drop_zone : ''}`} ref={drop}>
         <div className={styles.element + ' mt-25'}>
           <ConstructorElement
             type="top"

@@ -12,7 +12,7 @@ function Modal() {
   const contentModal = useSelector(state => state.modal.contentModal);
 
   const closeModal = () => {
-   dispatch(clearContentModal());
+    dispatch(clearContentModal());
   };
 
   // Остановить всплытие события, чтобы не срабатывало событие на внешнем элементе
@@ -35,17 +35,17 @@ function Modal() {
   }, []);
 
   return contentModal ? (
-      createPortal(
-          <ModalOverlay onMouseDown={closeModal}>
-            <div className={styles.modal} onMouseDown={handleStopPropagation}>
-              {contentModal}
-              <div className={styles.close}>
-                <CloseIcon onClick={closeModal} type="primary" />
-              </div>
-            </div>
-          </ModalOverlay>,
-          document.getElementById('modals')
-      )
+    createPortal(
+      <ModalOverlay onMouseDown={closeModal}>
+        <div className={styles.modal} onMouseDown={handleStopPropagation}>
+          {contentModal}
+          <div className={styles.close}>
+            <CloseIcon onClick={closeModal} type="primary"/>
+          </div>
+        </div>
+      </ModalOverlay>,
+      document.getElementById('modals')
+    )
   ) : null;
 }
 

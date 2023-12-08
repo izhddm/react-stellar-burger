@@ -13,6 +13,10 @@
   max-height: calc(100vh - 240px);
 }
 
+.drop_zone {
+  background-color: rgba(240, 248, 255, 0.15);
+}
+
 .ingredients {
   display: flex;
   flex-direction: column;

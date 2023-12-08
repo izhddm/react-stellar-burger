@@ -6,16 +6,16 @@ import React from "react";
 import Modal from "../modal/modal";
 
 function App() {
-    return (
-        <div className={styles.container}>
-            <AppHeader/>
-            <main className={styles.main}>
-                <BurgerIngredients/>
-                <BurgerConstructor/>
-            </main>
-            <Modal/>
-        </div>
-    );
+  return (
+    <div className={styles.container}>
+      <AppHeader/>
+      <main className={styles.main}>
+        <BurgerIngredients/>
+        <BurgerConstructor/>
+      </main>
+      <Modal/>
+    </div>
+  );
 }
 
 export default App;

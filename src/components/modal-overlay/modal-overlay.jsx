@@ -11,7 +11,7 @@ function ModalOverlay({onMouseDown, children}) {
 }
 
 ModalOverlay.propTypes = {
-  onMouseDown:PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 }
 
