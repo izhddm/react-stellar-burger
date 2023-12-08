@@ -4,6 +4,9 @@ import styles from './burger-price.module.css';
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
+import {useCreateOrderMutation} from "../../services/api";
+import {setOrder} from "../../services/slices/order-slice";
+import {clearBurgerConstructor} from "../../services/slices/burger-slice";
 
 function BurgerPrice() {
   const dispatch = useDispatch();
@@ -17,8 +20,30 @@ function BurgerPrice() {
     }, bun ? bun.price * 2 : 0);
   }
 
-  const handleOpenOrderDetails = () => {
-    dispatch(setContentModal(<OrderDetails/>));
+  // Используем мутацию
+  const [createOrder, {isLoading, isError}] = useCreateOrderMutation();
+
+  const handleOpenOrderDetails = async () => {
+    try {
+      // Получаем только _id ингредиентов
+      const ingredientIds = ingredients.map(ingredient => ingredient._id);
+      ingredientIds.push(bun._id, bun._id);
+
+      // Вызываем мутацию с массивом _id ингредиентов
+      const response = await createOrder(ingredientIds);
+
+      // Проверяем успешность заказа и обновляем UI соответственно
+      if (response.data.success) {
+        const {name, order} = response.data;
+        dispatch(setOrder({name, order}))
+        dispatch(setContentModal(<OrderDetails orderNumber={order.number}/>));
+        dispatch(clearBurgerConstructor());
+      } else {
+        console.error('Order placement failed:', response.data);
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
   }
 
   return (
@@ -26,13 +51,13 @@ function BurgerPrice() {
       <p className="text text_type_digits-medium mr-2">{calcPrice()}</p>
       <CurrencyIcon type="primary"/>
       <Button
-        disabled={!bun || ingredients.length === 0}
+        disabled={!bun || ingredients.length === 0 || isLoading}
         type="primary" size="large"
         htmlType='submit'
         onMouseDown={handleOpenOrderDetails}
         extraClass={'ml-10 mr-4'}
       >
-        Оформить заказ
+        {isLoading ? 'Оформление заказа...' : 'Оформить заказ'}
       </Button>
     </div>
   );
