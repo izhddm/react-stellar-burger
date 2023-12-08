@@ -3,7 +3,7 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from './burger-price.module.css';
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
-import {setContentModal} from "../../services/slices/modalSlice";
+import {setContentModal} from "../../services/slices/modal-slice";
 
 function BurgerPrice() {
   const dispatch = useDispatch();

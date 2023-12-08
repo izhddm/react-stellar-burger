@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {api} from "../api";
-import modalReducer from '../slices/modalSlice'
-import burgerReducer from '../slices/burgerSlice'
+import modalReducer from '../slices/modal-slice'
+import burgerReducer from '../slices/burger-slice'
 
 export const store = configureStore({
   reducer: {

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './burger-constructor.module.css'
 import BurgerPrice from "../burger-price/burger-price";
 import {useDispatch, useSelector} from "react-redux";
-import {addIngredient, setBun} from "../../services/slices/burgerSlice";
+import {addIngredient, setBun} from "../../services/slices/burger-slice";
 import {useDrop} from "react-dnd";
 import ConstructorBun from "../constructor-bun/constructor-bun";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";

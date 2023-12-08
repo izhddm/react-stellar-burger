@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "../constructor-ingredient/constructor-ingredient.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import {removeIngredient, swapIngredients} from "../../services/slices/burgerSlice";
+import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
 import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";

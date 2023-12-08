@@ -3,7 +3,7 @@ import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch} from "react-redux";
-import {setContentModal} from "../../services/slices/modalSlice";
+import {setContentModal} from "../../services/slices/modal-slice";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDrag} from "react-dnd";
 

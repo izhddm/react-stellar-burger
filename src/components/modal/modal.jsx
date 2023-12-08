@@ -4,7 +4,7 @@ import styles from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {clearContentModal} from "../../services/slices/modalSlice";
+import {clearContentModal} from "../../services/slices/modal-slice";
 
 function Modal() {
   const dispatch = useDispatch();
