@@ -4,7 +4,6 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
 
@@ -22,7 +21,10 @@ function BurgerIngredient({element}) {
   })
 
   const handleOpenIngredientDetails = (element) => {
-    dispatch(setContentModal(<IngredientDetails element={element}/>))
+    dispatch(setContentModal({
+      componentName: 'IngredientDetails',
+      data: element
+    }))
   }
 
   return (

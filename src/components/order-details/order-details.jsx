@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './order-details.module.css'
 import imgDone from '../../images/done.png'
-import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
-function OrderDetails({orderNumber}) {
+function OrderDetails() {
+  const orderNumber = useSelector(state => state.modal.data);
   return (
     <div className={styles.order}>
       <h2 className={'text text_type_digits-large'}>{orderNumber}</h2>
@@ -20,10 +21,6 @@ function OrderDetails({orderNumber}) {
       </p>
     </div>
   );
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number,
 }
 
 export default OrderDetails;

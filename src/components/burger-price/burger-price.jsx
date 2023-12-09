@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-price.module.css';
-import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
 import {useCreateOrderMutation} from "../../services/api";
@@ -36,7 +35,10 @@ function BurgerPrice() {
       if (response.data.success) {
         const {name, order} = response.data;
         dispatch(setOrder({name, order}))
-        dispatch(setContentModal(<OrderDetails orderNumber={order.number}/>));
+        dispatch(setContentModal({
+          componentName: 'OrderDetails',
+          data: order.number
+        }));
         dispatch(clearBurgerConstructor());
       } else {
         console.error('Order placement failed:', response.data);

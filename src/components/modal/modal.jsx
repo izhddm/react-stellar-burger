@@ -5,11 +5,14 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
+import {modalComponent} from "../../utils/constant";
 
 function Modal() {
   const dispatch = useDispatch();
 
-  const contentModal = useSelector(state => state.modal.contentModal);
+  const componentName = useSelector(state => state.modal.componentName);
+  const DynamicComponent = modalComponent[componentName];
+  const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
 
   const closeModal = () => {
     dispatch(clearContentModal());
@@ -34,11 +37,11 @@ function Modal() {
     return () => document.removeEventListener('keydown', closeByEsc)
   }, []);
 
-  return contentModal ? (
+  return dynamicComponent ? (
     createPortal(
       <ModalOverlay onMouseDown={closeModal}>
         <div className={styles.modal} onMouseDown={handleStopPropagation}>
-          {contentModal}
+          {dynamicComponent}
           <div className={styles.close}>
             <CloseIcon onClick={closeModal} type="primary"/>
           </div>
