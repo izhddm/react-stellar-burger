@@ -1,13 +1,14 @@
 import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
-import Ingredient from "../ingredient/ingredient";
-import {ingredientPropType} from "../../utils/prop-types";
-import PropTypes from "prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
+import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
+import {useGetIngredientsQuery} from "../../services/api";
 
-function BurgerIngredients({data, setContentModal}) {
+function BurgerIngredients() {
   const ingredientsRef = React.useRef();
+
+  const {data, error} = useGetIngredientsQuery();
+  const listIngredients = data?.data || [];
 
   // Категории ингредиентов
   const tabs = [
@@ -27,10 +28,6 @@ function BurgerIngredients({data, setContentModal}) {
       behavior: 'smooth',
     });
   };
-
-  const handleOpenIngredientDetails = (e, element) => {
-    setContentModal(() => <IngredientDetails element={element}/>);
-  }
 
   //Смена tab при скроле пользователем
   React.useEffect(() => {
@@ -82,13 +79,12 @@ function BurgerIngredients({data, setContentModal}) {
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
                 <div className={styles.list + ' ml-4'}>
-                  {data.map((element) => {
+                  {listIngredients.map((element) => {
                     if (element.type === tab.type) {
                       return (
-                        <Ingredient
+                        <BurgerIngredient
                           key={element._id}
                           element={element}
-                          handleOpenIngredientDetails={handleOpenIngredientDetails}
                         />
                       );
                     }
@@ -103,11 +99,6 @@ function BurgerIngredients({data, setContentModal}) {
       </div>
     </section>
   );
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType).isRequired,
-  setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

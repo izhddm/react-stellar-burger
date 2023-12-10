@@ -8,6 +8,10 @@
   position: relative;
 }
 
+.dragging {
+  opacity: .5;
+}
+
 .image {
   width: 240px;
   height: 120px;

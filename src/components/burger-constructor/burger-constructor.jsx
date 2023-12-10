@@ -1,72 +1,60 @@
 import React from 'react';
-import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-constructor.module.css'
-import {listIngredients} from "../../utils/data";
 import BurgerPrice from "../burger-price/burger-price";
-import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {addIngredient, setBun} from "../../services/slices/burger-slice";
+import {useDrop} from "react-dnd";
+import ConstructorBun from "../constructor-bun/constructor-bun";
+import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 
-function BurgerConstructor({setContentModal}) {
-  const calcPrice = () => {
-    return listIngredients.ingredients.reduce((acc, ingredient) => {
-      if (ingredient.type === 'bun') {
-        return acc + ingredient.price * 2;
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const constructorBun = useSelector(state => state.burger.bun);
+  const constructorIngredients = useSelector(state => state.burger.ingredients);
+
+  // Принимаем то, что бросил пользователь при перетаскивании
+  const [{isOver}, drop] = useDrop({
+    accept: 'INGREDIENT',
+    drop: (item) => {
+      if (item.type === 'bun') {
+        dispatch(setBun(item));
       } else {
-        return acc + ingredient.price;
+        dispatch(addIngredient(item));
       }
-    }, 0);
-  }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  });
 
   return (
     <section className={styles.section} aria-label="Бургер конструктор">
-      <div className={styles.burger}>
-        <div className={styles.element + ' mt-25'}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${listIngredients.bun.name} (верх)`}
-            price={listIngredients.bun.price}
-            thumbnail={listIngredients.bun.image_mobile}
-            extraClass={styles.element_color + ' mr-4'}
-          />
-        </div>
-        <div className={styles.ingredients + ' custom-scroll'}>
-          {
-            listIngredients.ingredients.map((element, index) => {
-              return (
-                <div key={index + '.' + element._id} className={styles.element}>
-                  <div className={styles.dnd}></div>
-                  <ConstructorElement
-                    text={element.name}
-                    price={element.price}
-                    thumbnail={element.image_mobile}
-                    extraClass={styles.element_color + ' mr-2'}
-                  />
-                </div>
-              );
-            })
-          }
-        </div>
-        <div className={styles.element}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${listIngredients.bun.name} (низ)`}
-            price={listIngredients.bun.price}
-            thumbnail={listIngredients.bun.image_mobile}
-            extraClass={styles.element_color + ' mr-4'}
-          />
-        </div>
+      <div className={`${styles.burger} mt-25 ${isOver ? styles.drop_zone : ''}`} ref={drop}>
+        {/*Выводим надпись с призывом выбрать булочку*/}
+        {!constructorBun && (
+          <p className={styles.select + ' text text_type_main-default'}>Выберите булочку</p>
+        )}
+        {constructorBun && (<ConstructorBun type={'top'}/>)}
+
+        {/*Выводим надпись с призывом выбрать соусы и ингредиенты*/}
+        {constructorIngredients.length === 0 && (
+          <p className={styles.select + ' text text_type_main-default'}>Выберите соусы и начинки</p>
+        )}
+        {
+          constructorIngredients.length > 0 && (<div className={styles.ingredients + ' custom-scroll'}>
+            {constructorIngredients.map((element, index) => (
+              <ConstructorIngredient key={element.uuid} element={element} index={index}/>
+            ))}
+          </div>)
+        }
+        {constructorBun && <ConstructorBun type={'bottom'}/>}
       </div>
 
       <div className={styles.price + ' mb-6'}>
-        <BurgerPrice price={calcPrice()} setContentModal={setContentModal}/>
+        <BurgerPrice/>
       </div>
     </section>
   );
-}
-
-BurgerPrice.propTypes = {
-  setContentModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

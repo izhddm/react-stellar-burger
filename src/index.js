@@ -3,10 +3,18 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
+import {Provider} from "react-redux";
+import {store} from "./services/store/store";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import {DndProvider} from "react-dnd";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <DndProvider backend={HTML5Backend}>
+        <App/>
+      </DndProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
