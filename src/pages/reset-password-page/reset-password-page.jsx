@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./reset-password-page.module.css";
-import ResetPasswordForm from "../../components/reset-password-form/reset-password-form";
+import ResetPasswordForm from "../../components/form/reset-password-form/reset-password-form";
 import BlockTextWithLink from "../../components/block-text-with-link/block-text-with-link";
 
 function ResetPasswordPage() {

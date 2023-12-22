@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './login-page.module.css'
-import LoginForm from "../../components/login-form/login-form";
+import LoginForm from "../../components/form/login-form/login-form";
 import BlockTextWithLink from "../../components/block-text-with-link/block-text-with-link";
 
 function LoginPage() {
