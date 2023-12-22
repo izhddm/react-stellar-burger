@@ -36,11 +36,3 @@
   flex-direction: row;
   color: #F2F2F3;
 }
-
-.main {
-  display: grid;
-  grid-template-columns: repeat(2, 600px);
-  grid-template-rows: 1fr;
-  gap: 0 40px;
-  overflow: hidden;
-}
