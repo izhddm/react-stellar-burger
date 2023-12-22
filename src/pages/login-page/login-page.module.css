@@ -2,24 +2,3 @@
   grid-area: page;
   align-self: center;
 }
-
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.text {
-  margin: 0;
-}
-
-.link {
-  margin: 0;
-  text-decoration: none;
-  display: flex;
-  flex-direction: row;
-  color: var(--interface-accent, #4C4CFF);
-  cursor: pointer;
-}
