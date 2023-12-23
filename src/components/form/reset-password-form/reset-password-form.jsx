@@ -7,8 +7,6 @@ function ResetPasswordForm() {
   const [code, setCode] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(password, code);
   }
 
   return (
@@ -19,17 +17,17 @@ function ResetPasswordForm() {
                        value={password}
                        extraClass={'mt-6'}
                        placeholder={'Введите новый пароль'}
-                       required={true}/>
+                       required/>
         <Input onChange={e => setCode(e.target.value)}
                placeholder={'Введите код из письма'}
                extraClass={'mt-6'}
                value={code}
-               required={true}/>
+               required/>
         <Button htmlType="submit"
                 type="primary"
                 size="medium"
                 extraClass={'mt-6'}>
-          Вход
+          Сохранить
         </Button>
       </form>
   );
