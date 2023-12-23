@@ -37,3 +37,7 @@
   flex-direction: row;
   color: #F2F2F3;
 }
+
+.inactive {
+  color: var(--text-dark-grey-secondary-text, #8585AD);
+}
