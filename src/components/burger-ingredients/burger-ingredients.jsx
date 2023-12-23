@@ -47,10 +47,10 @@ function BurgerIngredients() {
       }
     };
 
-    ingredientsRef.current.addEventListener('scroll', handleScroll);
+    ingredientsRef?.current?.addEventListener('scroll', handleScroll);
 
     return () => {
-      ingredientsRef.current.removeEventListener('scroll', handleScroll);
+      ingredientsRef?.current?.removeEventListener('scroll', handleScroll);
     };
   }, [tabs]);
 
