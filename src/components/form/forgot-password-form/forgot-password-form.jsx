@@ -22,7 +22,7 @@ function ForgotPasswordForm() {
                 type="primary"
                 size="medium"
                 extraClass={'mt-6'}>
-          Вход
+          Восстановить
         </Button>
       </form>
   );
