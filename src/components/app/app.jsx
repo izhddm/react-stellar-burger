@@ -7,6 +7,8 @@ import LoginPage from "../../pages/login-page/login-page";
 import ResetPasswordPage from "../../pages/reset-password-page/reset-password-page";
 import RegisterPage from "../../pages/register-page/register-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
+import ProfilePage from "../../pages/profile-page/profile-page";
+import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 
 function App() {
   return (
@@ -18,6 +20,10 @@ function App() {
           <Route path={'/register'} element={<RegisterPage/>}/>
           <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
           <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
+          <Route path={'/profile'} element={<ProfilePage/>}>
+            <Route index element={<ProfileEditForm/>}/>
+            <Route path={'orders'} element={<NotFoundPage/>}/>
+          </Route>
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
