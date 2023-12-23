@@ -1,30 +1,46 @@
 import React, {useState} from 'react';
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './forgot-password-form.module.css';
+import {useForgotPasswordMutation} from "../../../services/api";
+import {useNavigate} from "react-router-dom";
 
 function ForgotPasswordForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const handleSubmit = (e) => {
+  const [forgotPassword, {isLoading, isError, error, data}] = useForgotPasswordMutation();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email);
+    try {
+      const response = await forgotPassword({email});
+
+      if (response?.data?.success) {
+        navigate('/reset-password');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   return (
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.title}>Восстановление пароля</h2>
-        <EmailInput onChange={(e) => setEmail(e.target.value)}
-                    placeholder={'Укажите e-mail'}
-                    extraClass={'mt-6'}
-                    value={email}
-                    isIcon={false}/>
-        <Button htmlType="submit"
-                type="primary"
-                size="medium"
-                extraClass={'mt-6'}>
-          Восстановить
-        </Button>
-      </form>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <h2 className={styles.title}>Восстановление пароля</h2>
+      <EmailInput onChange={(e) => setEmail(e.target.value)}
+                  placeholder={'Укажите e-mail'}
+                  extraClass={'mt-6'}
+                  value={email}
+                  required
+                  isIcon={false}/>
+      <Button htmlType="submit"
+              type="primary"
+              size="medium"
+              disabled={isLoading}
+              extraClass={'mt-6'}>
+        Восстановить
+      </Button>
+      {isError && <p className={`${styles.errorMessage} text text_type_main-default`}>{error}</p>}
+    </form>
   );
 }
 
