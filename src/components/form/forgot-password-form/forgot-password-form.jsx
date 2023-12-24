@@ -35,11 +35,12 @@ function ForgotPasswordForm() {
       <Button htmlType="submit"
               type="primary"
               size="medium"
-              disabled={isLoading}
+              disabled={isLoading || !email}
               extraClass={'mt-6'}>
-        Восстановить
+        {!isLoading ? 'Восстановить': 'Восстановление'}
       </Button>
-      {isError && <p className={`${styles.errorMessage} text text_type_main-default`}>{error}</p>}
+      {isError && <p
+        className={`${styles.errorMessage} text text_type_main-default`}>{error?.data?.message ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
     </form>
   );
 }
