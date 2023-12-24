@@ -21,8 +21,15 @@ export const api = createApi({
         method: 'POST',
         body: request
       })
-    })
+    }),
+    resetPassword: builder.mutation({
+      query: (request) => ({
+        url: 'password-reset/reset',
+        method: 'POST',
+        body: request
+      })
+    }),
   }),
 });
 
-export const {useGetIngredientsQuery, useCreateOrderMutation, useForgotPasswordMutation} = api;
+export const {useGetIngredientsQuery, useCreateOrderMutation, useForgotPasswordMutation, useResetPasswordMutation} = api;
