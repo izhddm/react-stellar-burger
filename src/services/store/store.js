@@ -3,6 +3,7 @@ import {api} from "../api";
 import modalReducer from '../slices/modal-slice'
 import burgerReducer from '../slices/burger-slice'
 import orderReducer from '../slices/order-slice'
+import userReducer from '../slices/user-slice'
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     modal: modalReducer,
     burger: burgerReducer,
     order: orderReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
