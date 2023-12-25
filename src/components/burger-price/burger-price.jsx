@@ -3,9 +3,9 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from './burger-price.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
-import {useCreateOrderMutation} from "../../services/api";
 import {setOrder} from "../../services/slices/order-slice";
 import {clearBurgerConstructor} from "../../services/slices/burger-slice";
+import {useCreateOrderMutation} from "../../services/api/order-api";
 
 function BurgerPrice() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function BurgerPrice() {
   }
 
   // Используем мутацию
-  const [createOrder, {isLoading, isError}] = useCreateOrderMutation();
+  const [createOrder, {isLoading}] = useCreateOrderMutation();
 
   const handleOpenOrderDetails = async () => {
     try {

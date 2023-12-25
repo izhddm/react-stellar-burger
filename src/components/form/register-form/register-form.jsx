@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './register-form.module.css';
-import {useRegisterUserMutation} from "../../../services/api";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../../services/slices/user-slice";
+import {useRegisterUserMutation} from "../../../services/api/user-api";
 
 function RegisterForm() {
   const navigate = useNavigate();

@@ -1,12 +1,15 @@
 import React from 'react';
 import styles from './profile-page.module.css'
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import {useLogoutUserMutation} from "../../services/api";
+import {useLogoutMutation} from "../../services/api/auth-api";
+import {useDispatch} from "react-redux";
+import {resetUser} from "../../services/slices/user-slice";
 
 function ProfilePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [logout, {isLoading}] = useLogoutUserMutation();
+  const [logout, {isLoading}] = useLogoutMutation();
 
   const handleLogoutBtn = async (e) => {
     e.preventDefault();
@@ -14,13 +17,10 @@ function ProfilePage() {
     const token = localStorage.getItem('refreshToken');
 
     if (token) {
-      const response = await logout({
-        token
-      });
+      const response = await logout();
 
       if (response?.data?.success) {
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('accessToken');
+        dispatch(resetUser());
         navigate('/login');
       }
     }

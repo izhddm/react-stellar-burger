@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
-import {useLoginUserMutation} from "../../../services/api";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../../services/slices/user-slice";
 import {useNavigate} from "react-router-dom";
+import {useLoginMutation} from "../../../services/api/auth-api";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [login, {isLoading, isError, error}] = useLoginUserMutation();
+  const [login, {isLoading, isError, error}] = useLoginMutation();
   const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,9 +24,7 @@ function LoginForm() {
 
     // Успешно авторизовались
     if (response?.data?.success) {
-      localStorage.setItem('accessToken', response.data?.accessToken);
-      localStorage.setItem('refreshToken', response.data?.refreshToken);
-      dispatch(setUser(response.data?.user));
+      dispatch(setUser(response.data.user));
 
       navigate('/');
     }

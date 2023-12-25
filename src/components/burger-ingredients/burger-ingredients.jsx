@@ -2,12 +2,12 @@ import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
-import {useGetIngredientsQuery} from "../../services/api";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 
 function BurgerIngredients() {
   const ingredientsRef = React.useRef();
 
-  const {data, error} = useGetIngredientsQuery();
+  const {data} = useGetIngredientsQuery();
   const listIngredients = data?.data || [];
 
   // Категории ингредиентов

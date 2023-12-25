@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './forgot-password-form.module.css';
-import {useForgotPasswordMutation} from "../../../services/api";
 import {useNavigate} from "react-router-dom";
+import {useForgotPasswordMutation} from "../../../services/api/user-api";
 
 function ForgotPasswordForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [forgotPassword, {isLoading, isError, error, data}] = useForgotPasswordMutation();
+  const [forgotPassword, {isLoading, isError, error}] = useForgotPasswordMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './reset-password-form.module.css';
-import {useResetPasswordMutation} from "../../../services/api";
+import {useResetPasswordMutation} from "../../../services/api/user-api";
 
 function ResetPasswordForm() {
   const [password, setPassword] = useState('');
   const [token, setToken] = useState('');
 
-  const [resetPassword, {isLoading, isError, data, error}] = useResetPasswordMutation();
+  const [resetPassword, {isLoading, isError, error}] = useResetPasswordMutation();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
