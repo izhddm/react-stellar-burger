@@ -29,7 +29,21 @@ export const api = createApi({
         body: request
       })
     }),
+    registerUser: builder.mutation({
+        query: (request) => ({
+          url: 'auth/register',
+          method: 'POST',
+          body: request
+        })
+      }
+    ),
   }),
 });
 
-export const {useGetIngredientsQuery, useCreateOrderMutation, useForgotPasswordMutation, useResetPasswordMutation} = api;
+export const {
+  useGetIngredientsQuery,
+  useCreateOrderMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useRegisterUserMutation
+} = api;

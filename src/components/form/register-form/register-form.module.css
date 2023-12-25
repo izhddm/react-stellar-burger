@@ -7,3 +7,8 @@
 .title {
   margin: 0;
 }
+
+.errorMessage {
+  color: red;
+}
+
