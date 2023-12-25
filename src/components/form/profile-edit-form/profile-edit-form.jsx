@@ -7,6 +7,11 @@ import {useGetUserInfoQuery, useUpdateUserInfoMutation} from "../../../services/
 
 function ProfileEditForm() {
   const dispatch = useDispatch();
+  const {email: userEmail, name: userName} = useSelector((state) => state.user);
+
+  const [updatedUserName, setUpdatedUserName] = useState(userName);
+  const [updatedEmail, setUpdatedEmail] = useState(userEmail);
+  const [updatedPassword, setUpdatedPassword] = useState('');
 
   // Получим данные о пользователе при монтировании
   const {data, isLoading: isLoadingUserInfo} = useGetUserInfoQuery();
@@ -14,14 +19,11 @@ function ProfileEditForm() {
   useEffect(() => {
     if (data?.success) {
       dispatch(setUser(data.user));
+      setUpdatedUserName(data.user.name);
+      setUpdatedEmail(data.user.email)
     }
   }, [data]);
 
-  const {email: userEmail, name: userName} = useSelector((state) => state.user);
-
-  const [updatedUserName, setUpdatedUserName] = useState(userName);
-  const [updatedEmail, setUpdatedEmail] = useState(userEmail);
-  const [updatedPassword, setUpdatedPassword] = useState('');
 
   const isFormEdited = updatedUserName !== userName || updatedEmail !== userEmail || updatedPassword !== '';
 
