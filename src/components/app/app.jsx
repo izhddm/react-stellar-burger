@@ -17,19 +17,24 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path={'/register'} element={<RegisterPage/>}/>
-          <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
-          <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
+
+          // Для не авторизированных только
+          <Route element={<ProtectedRouter forUnauthenticated={true}/>}>
+            <Route path={'/register'} element={<RegisterPage/>}/>
+            <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
+            <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
+            <Route path={'/login'} element={<LoginPage/>}/>
+          </Route>
+
 
           {/*Только для авторизированных*/}
-          <Route path={'/profile'} element={<ProtectedRouter/>}>
+          <Route path={'/profile'} element={<ProtectedRouter forAuthenticated={true}/>}>
             <Route element={<ProfilePage/>}>
               <Route index element={<ProfileEditForm/>}/>
               <Route path={'orders'} element={<NotFoundPage/>}/>
             </Route>
           </Route>
 
-          <Route path={'/login'} element={<LoginPage/>}/>
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
