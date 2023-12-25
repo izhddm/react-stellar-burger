@@ -16,7 +16,11 @@ function ForgotPasswordForm() {
       const response = await forgotPassword({email});
 
       if (response?.data?.success) {
-        navigate('/reset-password');
+        navigate('/reset-password', {
+          state:{
+            email
+          }
+        });
       }
     } catch (e) {
       console.error(e);
