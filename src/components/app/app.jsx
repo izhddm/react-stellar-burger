@@ -9,6 +9,7 @@ import RegisterPage from "../../pages/register-page/register-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
 import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
+import ProtectedRouter from "../protected-router/protected-router";
 
 function App() {
   return (
@@ -16,14 +17,19 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path={'/login'} element={<LoginPage/>}/>
           <Route path={'/register'} element={<RegisterPage/>}/>
           <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
           <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
-          <Route path={'/profile'} element={<ProfilePage/>}>
-            <Route index element={<ProfileEditForm/>}/>
-            <Route path={'orders'} element={<NotFoundPage/>}/>
+
+          {/*Только для авторизированных*/}
+          <Route path={'/profile'} element={<ProtectedRouter/>}>
+            <Route element={<ProfilePage/>}>
+              <Route index element={<ProfileEditForm/>}/>
+              <Route path={'orders'} element={<NotFoundPage/>}/>
+            </Route>
           </Route>
+
+          <Route path={'/login'} element={<LoginPage/>}/>
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>

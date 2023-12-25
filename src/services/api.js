@@ -42,7 +42,14 @@ export const api = createApi({
         method: 'POST',
         body: arg
       })
-    })
+    }),
+    logoutUser: builder.mutation({
+      query: (arg) => ({
+        url: 'auth/logout',
+        method: 'POST',
+        body: arg
+      })
+    }),
   }),
 });
 
@@ -52,5 +59,6 @@ export const {
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useRegisterUserMutation,
-  useLoginUserMutation
+  useLoginUserMutation,
+  useLogoutUserMutation
 } = api;
