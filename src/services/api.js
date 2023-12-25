@@ -30,13 +30,19 @@ export const api = createApi({
       })
     }),
     registerUser: builder.mutation({
-        query: (request) => ({
-          url: 'auth/register',
-          method: 'POST',
-          body: request
-        })
-      }
-    ),
+      query: (request) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: request
+      })
+    }),
+    loginUser: builder.mutation({
+      query: (arg) => ({
+        url: 'auth/login',
+        method: 'POST',
+        body: arg
+      })
+    })
   }),
 });
 
@@ -45,5 +51,6 @@ export const {
   useCreateOrderMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useRegisterUserMutation
+  useRegisterUserMutation,
+  useLoginUserMutation
 } = api;
