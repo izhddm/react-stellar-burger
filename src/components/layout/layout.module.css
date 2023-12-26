@@ -1,0 +1,16 @@
+.container {
+  background-color: #131316;
+  color: #f2f2f3;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header"
+    "page";
+  justify-items: center;
+
+  height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}

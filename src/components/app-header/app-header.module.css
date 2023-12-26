@@ -1,4 +1,5 @@
 .header {
+  grid-area: header;
   width: 100%;
   background: #1C1C21;
   box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 16px 24px 0 rgba(0, 0, 0, 0.04), 0 24px 32px 0 rgba(0, 0, 0, 0.04);
@@ -35,4 +36,8 @@
   display: flex;
   flex-direction: row;
   color: #F2F2F3;
+}
+
+.inactive {
+  color: var(--text-dark-grey-secondary-text, #8585AD);
 }

@@ -6,8 +6,10 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {modalComponent} from "../../utils/constant";
+import {useNavigate} from "react-router-dom";
 
 function Modal() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const componentName = useSelector(state => state.modal.componentName);
@@ -15,6 +17,7 @@ function Modal() {
   const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
 
   const closeModal = () => {
+    navigate(`/`, {'state': {'modal': false}});
     dispatch(clearContentModal());
   };
 

@@ -3,12 +3,14 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from './burger-price.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
-import {useCreateOrderMutation} from "../../services/api";
 import {setOrder} from "../../services/slices/order-slice";
 import {clearBurgerConstructor} from "../../services/slices/burger-slice";
+import {useCreateOrderMutation} from "../../services/api/order-api";
+import {useNavigate} from "react-router-dom";
 
 function BurgerPrice() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const bun = useSelector(state => state.burger.bun);
   const ingredients = useSelector(state => state.burger.ingredients);
@@ -20,10 +22,18 @@ function BurgerPrice() {
   }
 
   // Используем мутацию
-  const [createOrder, {isLoading, isError}] = useCreateOrderMutation();
+  const [createOrder, {isLoading}] = useCreateOrderMutation();
 
   const handleOpenOrderDetails = async () => {
     try {
+      const auth = localStorage.getItem('accessToken');
+
+      if (!auth) {
+        // Пользователь не авторизован, перенаправляем на страницу входа
+        navigate('/login');
+        return;
+      }
+
       // Получаем только _id ингредиентов
       const ingredientIds = ingredients.map(ingredient => ingredient._id);
       ingredientIds.push(bun._id, bun._id);

@@ -1,20 +1,46 @@
-import styles from "./app.module.css";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import React from "react";
-import Modal from "../modal/modal";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import HomePage from "../../pages/home-page/home-page";
+import NotFoundPage from "../../pages/not-found-page/not-found-page";
+import Layout from "../layout/layout";
+import LoginPage from "../../pages/login-page/login-page";
+import ResetPasswordPage from "../../pages/reset-password-page/reset-password-page";
+import RegisterPage from "../../pages/register-page/register-page";
+import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
+import ProfilePage from "../../pages/profile-page/profile-page";
+import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
+import ProtectedRouter from "../protected-router/protected-router";
+import IngredientsPage from "../../pages/ingredients-page/ingredients-page";
 
 function App() {
   return (
-    <div className={styles.container}>
-      <AppHeader/>
-      <main className={styles.main}>
-        <BurgerIngredients/>
-        <BurgerConstructor/>
-      </main>
-      <Modal/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={'/'} element={<Layout/>}>
+          <Route index element={<HomePage/>}/>
+          <Route path={'/ingredients/:id'} element={<IngredientsPage />} />
+
+          // Для не авторизированных только
+          <Route element={<ProtectedRouter forUnauthenticated={true}/>}>
+            <Route path={'/register'} element={<RegisterPage/>}/>
+            <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
+            <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
+            <Route path={'/login'} element={<LoginPage/>}/>
+          </Route>
+
+
+          {/*Только для авторизированных*/}
+          <Route path={'/profile'} element={<ProtectedRouter forAuthenticated={true}/>}>
+            <Route element={<ProfilePage/>}>
+              <Route index element={<ProfileEditForm/>}/>
+              <Route path={'orders'} element={<NotFoundPage/>}/>
+            </Route>
+          </Route>
+
+          <Route path='*' element={<NotFoundPage/>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

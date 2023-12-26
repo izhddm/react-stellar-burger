@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ingredientPropType} from "../../utils/prop-types";
-import {useDispatch, useSelector} from "react-redux";
-import {setContentModal} from "../../services/slices/modal-slice";
+import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
+import {useNavigate} from "react-router-dom";
 
 function BurgerIngredient({element}) {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const count = useSelector(getCountIngredientFromConstructor(element));
 
@@ -21,10 +21,12 @@ function BurgerIngredient({element}) {
   })
 
   const handleOpenIngredientDetails = (element) => {
-    dispatch(setContentModal({
-      componentName: 'IngredientDetails',
-      data: element
-    }))
+    // dispatch(setContentModal({
+    //   componentName: 'IngredientDetails',
+    //   data: element
+    // }));
+
+    navigate(`/ingredients/${element._id}`, {'state': {'modal': true}});
   }
 
   return (
