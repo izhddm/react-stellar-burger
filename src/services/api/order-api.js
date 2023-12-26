@@ -6,7 +6,10 @@ export const orderApi = apiBase.injectEndpoints({
       query: (ids) => ({
         url: 'orders',
         method: 'POST',
-        body: {ingredients: ids}
+        body: {ingredients: ids},
+        headers: {
+          'Authorization': localStorage.getItem('accessToken')
+        }
       })
     }),
   })
