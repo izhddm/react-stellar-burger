@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../services/slices/user-slice";
-import {useNavigate} from "react-router-dom";
+import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
+import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,8 +27,9 @@ function LoginForm() {
     // Успешно авторизовались
     if (response?.data?.success) {
       dispatch(setUser(response.data.user));
+      dispatch(setLoggedIn({isLoggedIn: true}))
 
-      navigate('/');
+      navigate(from, {'state': {'from': location}});
     }
   }
 

@@ -3,7 +3,7 @@ import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-deve
 import styles from './register-form.module.css';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../services/slices/user-slice";
+import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useRegisterUserMutation} from "../../../services/api/user-api";
 
 function RegisterForm() {
@@ -23,13 +23,12 @@ function RegisterForm() {
       password
     });
 
-    //Успешная регистрация - редиректим на страницу логина
+    //Успешная регистрация - редиректим на главную страницу
     if (response?.data?.success) {
-      localStorage.setItem('accessToken', response.data?.accessToken);
-      localStorage.setItem('refreshToken', response.data?.refreshToken);
       dispatch(setUser(response.data?.user));
+      dispatch(setLoggedIn({isLoggedIn: true}))
 
-      navigate('/login');
+      navigate('/');
     }
   }
 

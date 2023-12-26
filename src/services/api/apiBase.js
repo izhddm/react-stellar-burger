@@ -45,4 +45,4 @@ export const apiBase = createApi({
   }),
 });
 
-export const {} = apiBase; // Пример использования, замените на ваши эндпоинты
+export const {useRefreshTokenMutation} = apiBase; // Пример использования, замените на ваши эндпоинты

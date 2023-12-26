@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePage from "../../pages/home-page/home-page";
 import NotFoundPage from "../../pages/not-found-page/not-found-page";
@@ -11,17 +11,57 @@ import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
 import IngredientsPage from "../../pages/ingredients-page/ingredients-page";
+import {useDispatch} from "react-redux";
+import {setLoggedIn} from "../../services/slices/user-slice";
+import {useRefreshTokenMutation} from "../../services/api/apiBase";
+import {isJwtTokenValid} from "../../utils/jwtUtils";
 
 function App() {
+  const dispatch = useDispatch();
+  const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation();
+  // При монтировании актуализируем данные по логину пользователя
+  useEffect(() => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    const accessToken = localStorage.getItem('accessToken');
+
+    const checkTokenValidity = async () => {
+      // Декодирование токена без проверки подписи
+      const valid = isJwtTokenValid(accessToken);
+
+      // Проверка времени истечения токена
+      if (valid) {
+        console.log('Токен действителен.');
+        dispatch(setLoggedIn({'isLoggedIn': true}));
+      } else if (refreshToken) {
+        console.log('Токен истек или недействителен, обновим через refreshToken.');
+
+        try {
+          // Дождитесь выполнения updateToken
+          const response = updateToken();
+          const {data} = await response;
+
+          if (data?.success) {
+            dispatch(setLoggedIn({'isLoggedIn': true}));
+          }
+        } catch (error) {
+          console.error('Ошибка при обновлении токена:', error.message);
+        }
+      }
+    };
+
+    // Вызываем функцию с использованием async/await
+    checkTokenValidity();
+  }, [dispatch, updateToken]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path={'/ingredients/:id'} element={<IngredientsPage />} />
+          <Route path={'/ingredients/:id'} element={<IngredientsPage/>}/>
 
           // Для не авторизированных только
-          <Route element={<ProtectedRouter forUnauthenticated={true}/>}>
+          <Route element={<ProtectedRouter anonymous={true}/>}>
             <Route path={'/register'} element={<RegisterPage/>}/>
             <Route path={'/forgot-password'} element={<ForgotPasswordPage/>}/>
             <Route path={'/reset-password'} element={<ResetPasswordPage/>}/>
@@ -30,7 +70,7 @@ function App() {
 
 
           {/*Только для авторизированных*/}
-          <Route path={'/profile'} element={<ProtectedRouter forAuthenticated={true}/>}>
+          <Route path={'/profile'} element={<ProtectedRouter/>}>
             <Route element={<ProfilePage/>}>
               <Route index element={<ProfileEditForm/>}/>
               <Route path={'orders'} element={<NotFoundPage/>}/>

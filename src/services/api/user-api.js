@@ -39,7 +39,16 @@ export const authApi = apiBase.injectEndpoints({
         url: 'auth/register',
         method: 'POST',
         body: request
-      })
+      }),
+      transformResponse: (response) => {
+        // Проверяем, что вернулась модель с success:true
+        if (response?.success) {
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
+        }
+
+        return response;
+      },
     }),
   })
 });
