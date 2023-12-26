@@ -37,10 +37,27 @@ function ProfileEditForm() {
   };
 
   const handleSave = async () => {
-    // Проверяем, были ли внесены изменения перед отправкой запроса
-    if (isFormEdited) {
-      // Отправляем запрос на обновление данных пользователя
-      await updateUserInfo({name: updatedUserName, email: updatedEmail, password: updatedPassword});
+    const updatedData = {};
+
+    if (updatedUserName !== userName) {
+      updatedData.name = updatedUserName;
+    }
+
+    if (updatedEmail !== userEmail) {
+      updatedData.email = updatedEmail;
+    }
+
+    if (updatedPassword !== '') {
+      updatedData.password = updatedPassword;
+    }
+
+    if (Object.keys(updatedData).length > 0) {
+      const response = await updateUserInfo(updatedData);
+
+      if (response.status){
+        dispatch(setUser(response.user));
+        setUpdatedPassword('');
+      }
     }
   };
 

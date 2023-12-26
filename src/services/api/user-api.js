@@ -11,9 +11,10 @@ export const authApi = apiBase.injectEndpoints({
       })
     }),
     updateUserInfo: builder.mutation({
-      query: () => ({
+      query: (body) => ({
         url: 'auth/user',
         method: 'PATCH',
+        body,
         headers: {
           'Authorization': localStorage.getItem('accessToken')
         }
