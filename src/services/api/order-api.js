@@ -1,6 +1,6 @@
-import {api} from "./api";
+import {apiBase} from "./apiBase";
 
-export const orderApi = api.injectEndpoints({
+export const orderApi = apiBase.injectEndpoints({
   endpoints: (builder) => ({
     createOrder: builder.mutation({
       query: (ids) => ({

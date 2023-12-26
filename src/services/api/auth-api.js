@@ -1,6 +1,6 @@
-import {api} from "./api";
+import {apiBase} from "./apiBase";
 
-export const authApi = api.injectEndpoints({
+export const authApi = apiBase.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (arg) => ({
@@ -34,29 +34,10 @@ export const authApi = api.injectEndpoints({
         return response;
       },
     }),
-    refreshToken: builder.mutation({
-      query: () => ({
-        url: 'auth/token',
-        method: 'POST',
-        body: {
-          'token': localStorage.getItem('refreshToken')
-        }
-      }),
-      transformResponse: (response) => {
-        // Проверяем, что вернулась модель с success:true
-        if (response?.success) {
-          localStorage.setItem('accessToken', response.accessToken);
-          localStorage.setItem('refreshToken', response.refreshToken);
-        }
-
-        return response;
-      },
-    }),
   })
 });
 
 export const {
   useLoginMutation,
   useLogoutMutation,
-  useRefreshTokenMutation,
 } = authApi;

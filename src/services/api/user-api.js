@@ -1,6 +1,6 @@
-import {api} from "./api";
+import {apiBase} from "./apiBase";
 
-export const authApi = api.injectEndpoints({
+export const authApi = apiBase.injectEndpoints({
   endpoints: (builder) => ({
     getUserInfo: builder.query({
       query: () => ({

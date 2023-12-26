@@ -1,6 +1,6 @@
-import {api} from "./api";
+import {apiBase} from "./apiBase";
 
-export const ingredientApi = api.injectEndpoints({
+export const ingredientApi = apiBase.injectEndpoints({
   endpoints: (builder) => ({
     getIngredients: builder.query({
       query: () => 'ingredients',
