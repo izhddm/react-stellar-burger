@@ -10,6 +10,7 @@ import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password
 import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
+import IngredientsPage from "../../pages/ingredients-page/ingredients-page";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
+          <Route path={'/ingredients/:id'} element={<IngredientsPage />} />
 
           // Для не авторизированных только
           <Route element={<ProtectedRouter forUnauthenticated={true}/>}>
