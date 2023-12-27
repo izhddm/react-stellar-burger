@@ -1,28 +1,26 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
 import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
+import {useForm} from "../../../hooks/useForm";
 
 function LoginForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from || '/';
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {values, handleChange} = useForm({email: '', password: ''});
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
-  const dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await login({
-      email,
-      password
-    });
+    const response = await login(values);
 
     // Успешно авторизовались
     if (response?.data?.success) {
@@ -36,19 +34,20 @@ function LoginForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h2 className={styles.title}>Вход</h2>
-      <EmailInput onChange={(e) => setEmail(e.target.value)}
+      <EmailInput name={'email'}
+                  onChange={handleChange}
                   extraClass={'mt-6'}
-                  value={email}
+                  value={values.email}
                   isIcon={false}/>
       <PasswordInput name={'password'}
-                     onChange={e => setPassword(e.target.value)}
-                     value={password}
+                     onChange={handleChange}
+                     value={values.password}
                      extraClass={'mt-6'}
                      required={true}/>
       <Button htmlType="submit"
               type="primary"
               size="medium"
-              disabled={isLoading || !email || !password}
+              disabled={isLoading || !values.email || !values.password}
               extraClass={'mt-6'}>
         {!isLoading ? 'Вход' : 'Входим'}
       </Button>

@@ -1,27 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './register-form.module.css';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useRegisterUserMutation} from "../../../services/api/user-api";
+import {useForm} from "../../../hooks/useForm";
 
 function RegisterForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
 
   const [register, {isLoading, isError, error}] = useRegisterUserMutation();
-  const dispatch = useDispatch();
+  const {values, handleChange} = useForm({email: '', name: '', password: ''});
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await register({
-      email,
-      name,
-      password
-    });
+    const response = await register(values);
 
     //Успешная регистрация - редиректим на главную страницу
     if (response?.data?.success) {
@@ -35,25 +31,27 @@ function RegisterForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h2 className={styles.title}>Регистрация</h2>
-      <Input onChange={e => setName(e.target.value)}
+      <Input name={'name'}
+             onChange={handleChange}
              placeholder={'Имя'}
              extraClass={'mt-6'}
-             value={name}
+             value={values.name}
              required/>
-      <EmailInput onChange={(e) => setEmail(e.target.value)}
+      <EmailInput name={'email'}
+                  onChange={handleChange}
                   extraClass={'mt-6'}
-                  value={email}
+                  value={values.email}
                   isIcon={false}
                   required/>
       <PasswordInput name={'password'}
-                     onChange={e => setPassword(e.target.value)}
-                     value={password}
+                     onChange={handleChange}
+                     value={values.password}
                      extraClass={'mt-6'}
                      required={true}/>
       <Button htmlType="submit"
               type="primary"
               size="medium"
-              disabled={isLoading || !email || !password || !name}
+              disabled={isLoading || !values.email || !values.password || !values.name}
               extraClass={'mt-6'}>
         {!isLoading ? 'Зарегистрироваться' : 'Регистрация'}
       </Button>

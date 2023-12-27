@@ -1,17 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
 import {useGetUserInfoQuery, useUpdateUserInfoMutation} from "../../../services/api/user-api";
+import {useForm} from "../../../hooks/useForm";
 
 function ProfileEditForm() {
   const dispatch = useDispatch();
   const {email: userEmail, name: userName} = useSelector((state) => state.user);
 
-  const [updatedUserName, setUpdatedUserName] = useState(userName);
-  const [updatedEmail, setUpdatedEmail] = useState(userEmail);
-  const [updatedPassword, setUpdatedPassword] = useState('');
+  const {values, handleChange, setValues} = useForm({email: userEmail, name: userName, password: ''});
 
   // Получим данные о пользователе при монтировании
   const {data, isLoading: isLoadingUserInfo} = useGetUserInfoQuery();
@@ -19,44 +18,41 @@ function ProfileEditForm() {
   useEffect(() => {
     if (data?.success) {
       dispatch(setUser(data.user));
-      setUpdatedUserName(data.user.name);
-      setUpdatedEmail(data.user.email)
+      setValues({name: data.user.name, email: data.user.email})
     }
   }, [data]);
 
 
-  const isFormEdited = updatedUserName !== userName || updatedEmail !== userEmail || updatedPassword !== '';
+  const isFormEdited = values.name !== userName || values.email !== userEmail || values.password !== '';
 
   const [updateUserInfo, {isLoading: isUpdatingUserInfo}] = useUpdateUserInfoMutation();
 
   const handleCancel = () => {
     // Сбрасываем значения полей формы к начальным
-    setUpdatedUserName(userName);
-    setUpdatedEmail(userEmail);
-    setUpdatedPassword('');
+    setValues({email: userEmail, name: userName, password: ''});
   };
 
   const handleSave = async () => {
     const updatedData = {};
 
-    if (updatedUserName !== userName) {
-      updatedData.name = updatedUserName;
+    if (values.name !== userName) {
+      updatedData.name = values.name;
     }
 
-    if (updatedEmail !== userEmail) {
-      updatedData.email = updatedEmail;
+    if (values.email !== userEmail) {
+      updatedData.email = values.email;
     }
 
-    if (updatedPassword !== '') {
-      updatedData.password = updatedPassword;
+    if (values.password !== '') {
+      updatedData.password = values.password;
     }
 
     if (Object.keys(updatedData).length > 0) {
       const response = await updateUserInfo(updatedData);
 
-      if (response.status){
+      if (response.status) {
         dispatch(setUser(response.user));
-        setUpdatedPassword('');
+        setValues({password: ''});
       }
     }
   };
@@ -65,25 +61,27 @@ function ProfileEditForm() {
     !isLoadingUserInfo &&
     <form className={'mt-30 ml-15'}>
       <Input
-        onChange={(e) => setUpdatedUserName(e.target.value)}
+        name={'name'}
+        onChange={handleChange}
         placeholder={'Имя'}
-        value={updatedUserName}
+        value={values.name}
         icon={"EditIcon"}
         contentEditable={false}
         required={true}
       />
       <EmailInput
-        onChange={(e) => setUpdatedEmail(e.target.value)}
+        name={'email'}
+        onChange={handleChange}
         placeholder={'Логин'}
         extraClass={'mt-6'}
-        value={updatedEmail}
+        value={values.email}
         icon={"EditIcon"}
         required={true}
       />
       <PasswordInput
         name={'password'}
-        onChange={(e) => setUpdatedPassword(e.target.value)}
-        value={updatedPassword}
+        onChange={handleChange}
+        value={values.password}
         extraClass={'mt-6'}
         icon={"EditIcon"}
         required={true}
