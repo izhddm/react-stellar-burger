@@ -10,10 +10,8 @@ function decodeToken(token) {
     const [header, payload, signature] = cleanedToken.split('.');
 
     // Декодирование заголовка и полезной нагрузки Base64
-
     const decodedHeader = JSON.parse(atob(header));
     const decodedPayload = JSON.parse(atob(payload));
-    console.log(decodedPayload);
 
     return { header: decodedHeader, payload: decodedPayload, signature };
   } catch (error) {
@@ -30,11 +28,8 @@ export function isJwtTokenValid(token) {
 
     const decodedToken = decodeToken(token);
 
-    console.log(decodedToken.payload.exp * 1000 , Date.now(), decodedToken.payload.exp * 1000 > Date.now())
-
     return decodedToken.payload && decodedToken.payload.exp * 1000 > Date.now();
   } catch (error) {
     console.error('Ошибка при проверке токена:', error.message);
-    // Обработка других ошибок при проверке токена
   }
 }

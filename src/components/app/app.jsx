@@ -19,6 +19,7 @@ import {isJwtTokenValid} from "../../utils/jwtUtils";
 function App() {
   const dispatch = useDispatch();
   const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation();
+
   // При монтировании актуализируем данные по логину пользователя
   useEffect(() => {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -30,14 +31,11 @@ function App() {
 
       // Проверка времени истечения токена
       if (valid) {
-        console.log('Токен действителен.');
         dispatch(setLoggedIn({'isLoggedIn': true}));
       } else if (refreshToken) {
-        console.log('Токен истек или недействителен, обновим через refreshToken.');
-
         try {
           // Дождитесь выполнения updateToken
-          const response = updateToken();
+          const response = updateToken(refreshToken);
           const {data} = await response;
 
           if (data?.success) {
