@@ -2,13 +2,12 @@ import React, {Fragment} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
-import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
+import {useSelector} from "react-redux";
 
 function BurgerIngredients() {
   const ingredientsRef = React.useRef();
 
-  const {data} = useGetIngredientsQuery();
-  const listIngredients = data?.data || [];
+  const listIngredients = useSelector((state) => state.ingredients);
 
   // Категории ингредиентов
   const tabs = [
@@ -79,7 +78,7 @@ function BurgerIngredients() {
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
                 <div className={styles.list + ' ml-4'}>
-                  {listIngredients.map((element) => {
+                  {listIngredients && listIngredients.map((element) => {
                     if (element.type === tab.type) {
                       return (
                         <BurgerIngredient

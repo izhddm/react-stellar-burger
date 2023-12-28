@@ -15,10 +15,22 @@ import {useDispatch} from "react-redux";
 import {setLoggedIn} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/apiBase";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
+import {setIngredients} from "../../services/slices/ingredients-slice";
 
 function App() {
   const dispatch = useDispatch();
   const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation();
+
+  const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation(); // Обновление токена
+  const {data: ingredients, isLoading: ingredientLoading, isError: ingredientError} = useGetIngredientsQuery(); // Получения списка ингредиентов
+
+  // При монтировании получим список ингредиентов
+  useEffect(() => {
+    if (!ingredientLoading) {
+      dispatch(setIngredients(ingredients?.data ?? []));
+    }
+  }, [ingredients, ingredientLoading]);
 
   // При монтировании актуализируем данные по логину пользователя
   useEffect(() => {
@@ -50,6 +62,11 @@ function App() {
     // Вызываем функцию с использованием async/await
     checkTokenValidity();
   }, [dispatch, updateToken]);
+
+  // Выведем прелоудер пока идет загрузка
+  if (isLoadingToken || ingredientLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <BrowserRouter>
