@@ -69,8 +69,8 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
+    <div className={styles.container}>
+      <Routes location={background || location}>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
           <Route path={'/ingredients/:id'} element={<IngredientsPage/>}/>
@@ -95,7 +95,7 @@ function App() {
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 }
 
