@@ -5,10 +5,11 @@ import {ingredientPropType} from "../../utils/prop-types";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function BurgerIngredient({element}) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const count = useSelector(getCountIngredientFromConstructor(element));
 
@@ -26,7 +27,7 @@ function BurgerIngredient({element}) {
     //   data: element
     // }));
 
-    navigate(`/ingredients/${element._id}`, {'state': {'modal': true}});
+    navigate(`/ingredients/${element._id}`, {'state': {'modal': true, background: location}});
   }
 
   return (

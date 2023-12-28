@@ -7,17 +7,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {modalComponent} from "../../utils/constant";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
 
-function Modal() {
+function Modal({componentName = null}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const componentName = useSelector(state => state.modal.componentName);
-  const DynamicComponent = modalComponent[componentName];
+  const name = useSelector(state => state.modal.componentName);
+  const DynamicComponent = modalComponent[componentName ?? name];
   const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
 
   const closeModal = () => {
-    navigate(`/`, {'state': {'modal': false}});
+    navigate(`/`, {'state': {'modal': false, 'background': null}});
     dispatch(clearContentModal());
   };
 
@@ -53,6 +54,10 @@ function Modal() {
       document.getElementById('modals')
     )
   ) : null;
+}
+
+Modal.propTypes = {
+  componentName: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])])
 }
 
 export default Modal;
