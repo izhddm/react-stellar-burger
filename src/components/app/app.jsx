@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import HomePage from "../../pages/home-page/home-page";
 import NotFoundPage from "../../pages/not-found-page/not-found-page";
 import Layout from "../layout/layout";
@@ -17,10 +17,10 @@ import {useRefreshTokenMutation} from "../../services/api/apiBase";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 import {setIngredients} from "../../services/slices/ingredients-slice";
+import styles from  './app.module.css'
 
 function App() {
   const dispatch = useDispatch();
-  const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation();
 
   const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation(); // Обновление токена
   const {data: ingredients, isLoading: ingredientLoading, isError: ingredientError} = useGetIngredientsQuery(); // Получения списка ингредиентов
@@ -70,7 +70,7 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <Routes location={background || location}>
+      <Routes>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
           <Route path={'/ingredients/:id'} element={<IngredientsPage/>}/>
