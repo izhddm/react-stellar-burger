@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import HomePage from "../../pages/home-page/home-page";
 import NotFoundPage from "../../pages/not-found-page/not-found-page";
 import Layout from "../layout/layout";
@@ -10,17 +10,20 @@ import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password
 import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
-import IngredientsPage from "../../pages/ingredients-page/ingredients-page";
 import {useDispatch} from "react-redux";
 import {setLoggedIn} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/apiBase";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 import {setIngredients} from "../../services/slices/ingredients-slice";
-import styles from  './app.module.css'
+import styles from './app.module.css'
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const background = location.state && location.state?.background;
 
   const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation(); // Обновление токена
   const {data: ingredients, isLoading: ingredientLoading, isError: ingredientError} = useGetIngredientsQuery(); // Получения списка ингредиентов
@@ -70,10 +73,10 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <Routes>
+      <Routes location={background || location}>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path={'/ingredients/:id'} element={<IngredientsPage/>}/>
+          <Route path={'/ingredients/:id'} element={<IngredientDetails/>}/>
 
           // Для не авторизированных только
           <Route element={<ProtectedRouter anonymous={true}/>}>
@@ -84,7 +87,7 @@ function App() {
           </Route>
 
 
-          {/*Только для авторизированных*/}
+          // Только для авторизированных
           <Route path={'/profile'} element={<ProtectedRouter/>}>
             <Route element={<ProfilePage/>}>
               <Route index element={<ProfileEditForm/>}/>
@@ -95,6 +98,12 @@ function App() {
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
+        </Routes>
+      )}
     </div>
   );
 }

@@ -2,19 +2,13 @@ import React from 'react';
 import styles from './ingredient-details.module.css'
 import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
+import {getDetailIngredient} from "../../services/selectors";
 
 function IngredientDetails() {
   const {id} = useParams()
-  const {data} = useGetIngredientsQuery();
-  let element = useSelector(state => state.modal.data);
-
-  const listIngredients = data?.data ?? [];
 
   // Если нет в стейте элемента ингредиента, значит заберем его из массива ингредиентов
-  if (!element && listIngredients.length > 0) {
-    element = listIngredients.find((el) => el._id === id);
-  }
+  const element = useSelector(getDetailIngredient(id));
 
   return (
     element && <div className={styles.container}>
