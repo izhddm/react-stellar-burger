@@ -3,13 +3,19 @@ import styles from './forgot-password-form.module.css';
 import {useNavigate} from "react-router-dom";
 import {useForgotPasswordMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
+import {FC, FormEvent} from "react";
+import {FormType} from "../../../utils/types";
 
-function ForgotPasswordForm() {
+interface FormValues {
+  email: string
+}
+
+const ForgotPasswordForm: FC = () => {
   const navigate = useNavigate();
   const [forgotPassword, {isLoading, isError, error}] = useForgotPasswordMutation();
-  const {values, handleChange} = useForm({'email': ''})
+  const {values, handleChange}:FormType<FormValues> = useForm<FormValues>({'email': ''})
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -22,8 +28,8 @@ function ForgotPasswordForm() {
           }
         });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error: any) {
+      console.error(error);
     }
   }
 

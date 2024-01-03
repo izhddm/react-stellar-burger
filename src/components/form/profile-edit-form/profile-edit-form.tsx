@@ -1,45 +1,51 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
-import {useGetUserInfoQuery, useUpdateUserInfoMutation} from "../../../services/api/user-api";
+import {useUpdateUserInfoMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
+import {FormType} from "../../../utils/types";
 
-function ProfileEditForm() {
+interface FormValues {
+  email: string;
+  name: string;
+  password: string;
+}
+
+interface UpdatedData {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+const ProfileEditForm: FC = () => {
   const dispatch = useDispatch();
-  const {email: userEmail, name: userName} = useSelector((state) => state.user);
-
-  const {values, handleChange, setValues} = useForm({email: userEmail, name: userName, password: ''});
-
-  // Получим данные о пользователе при монтировании
-  const {data, isLoading: isLoadingUserInfo} = useGetUserInfoQuery();
-
-  useEffect(() => {
-    if (data?.success) {
-      dispatch(setUser(data.user));
-      setValues({name: data.user.name, email: data.user.email})
-    }
-  }, [data]);
-
-
-  const isFormEdited = values.name !== userName || values.email !== userEmail || values.password !== '';
-
+  const {email: defaultEmail, name: defaultName} = useSelector((state: any) => state.user);
   const [updateUserInfo, {isLoading: isUpdatingUserInfo}] = useUpdateUserInfoMutation();
 
+  const {values, handleChange, setValues}: FormType<FormValues> = useForm<FormValues>({email: defaultEmail, name: defaultName, password: ''});
+
+  useEffect(() => {
+    setValues({email: defaultEmail, name: defaultName, password: ''});
+  }, [defaultEmail, defaultName]);
+
+
+  const isFormEdited = values.name !== defaultName || values.email !== defaultEmail || values.password !== '';
+
+  // Сбрасываем значения полей формы к начальным
   const handleCancel = () => {
-    // Сбрасываем значения полей формы к начальным
-    setValues({email: userEmail, name: userName, password: ''});
+    setValues({email: defaultEmail, name: defaultName, password: ''});
   };
 
   const handleSave = async () => {
-    const updatedData = {};
+    const updatedData: UpdatedData = {};
 
-    if (values.name !== userName) {
+    if (values.name !== defaultName) {
       updatedData.name = values.name;
     }
 
-    if (values.email !== userEmail) {
+    if (values.email !== defaultEmail) {
       updatedData.email = values.email;
     }
 
@@ -50,15 +56,13 @@ function ProfileEditForm() {
     if (Object.keys(updatedData).length > 0) {
       const response = await updateUserInfo(updatedData);
 
-      if (response.status) {
-        dispatch(setUser(response.user));
-        setValues({password: ''});
+      if (response?.data?.success) {
+        dispatch(setUser(response.data.user));
       }
     }
   };
 
   return (
-    !isLoadingUserInfo &&
     <form className={'mt-30 ml-15'}>
       <Input
         name={'name'}
@@ -75,7 +79,6 @@ function ProfileEditForm() {
         placeholder={'Логин'}
         extraClass={'mt-6'}
         value={values.email}
-        icon={"EditIcon"}
         required={true}
       />
       <PasswordInput
