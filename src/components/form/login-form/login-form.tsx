@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, FormEvent} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
 import {useDispatch} from "react-redux";
@@ -6,18 +6,24 @@ import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
 import {useForm} from "../../../hooks/useForm";
+import {FormType} from "../../../utils/types";
 
-function LoginForm() {
+interface FormValues {
+  email: string,
+  password: string
+}
+
+const LoginForm: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from || '/';
 
-  const {values, handleChange} = useForm({email: '', password: ''});
+  const {values, handleChange}: FormType<FormValues> = useForm<FormValues>({email: '', password: ''});
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const response = await login(values);

@@ -1,13 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {FC, FormEvent, useEffect} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './reset-password-form.module.css';
 import {useResetPasswordMutation} from "../../../services/api/user-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../../../hooks/useForm";
+import {FormType} from "../../../utils/types";
 
-function ResetPasswordForm() {
+interface FormValues {
+  password: string,
+  token: string
+}
+
+const ResetPasswordForm: FC = () => {
   const [resetPassword, {isLoading, isSuccess, isError, error}] = useResetPasswordMutation();
-  const {values, handleChange, setValues} = useForm({password: '', token: ''});
+  const {values, handleChange, setValues}: FormType<FormValues> = useForm<FormValues>({password: '', token: ''});
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,13 +26,12 @@ function ResetPasswordForm() {
   }, [location]);
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const response = await resetPassword(values);
 
     if (response?.data?.success) {
-      // Обнулить пароль и токен после успешного сохранения
       setValues({password: '', token: ''})
 
       navigate('/login');

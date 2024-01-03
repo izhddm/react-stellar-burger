@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC, FormEvent} from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './register-form.module.css';
 import {useNavigate} from "react-router-dom";
@@ -6,15 +6,22 @@ import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useRegisterUserMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
+import {FormType} from "../../../utils/types";
 
-function RegisterForm() {
+interface FormValues {
+  email: string,
+  name: string,
+  password: string
+}
+
+const RegisterForm: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [register, {isLoading, isError, error}] = useRegisterUserMutation();
-  const {values, handleChange} = useForm({email: '', name: '', password: ''});
+  const {values, handleChange}: FormType<FormValues> = useForm<FormValues>({email: '', name: '', password: ''});
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const response = await register(values);
