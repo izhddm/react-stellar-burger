@@ -1,17 +1,21 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../constructor-ingredient/constructor-ingredient.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
-import {ingredientPropType} from "../../utils/prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import PropTypes from "prop-types";
 
-function ConstructorIngredient({element, index}) {
+interface ConstructorIngredientProps {
+  element: any,
+  index: number
+}
+
+const ConstructorIngredient: FC<ConstructorIngredientProps> = ({element, index}) => {
   const dispatch = useDispatch();
 
+  // @ts-ignore
   const burgerIngredients = useSelector(state => state.burger.ingredients);
-  const findIndex = (item) => burgerIngredients.indexOf(item);
+  const findIndex = (item: any) => burgerIngredients.indexOf(item);
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'SWAP_INGREDIENT',
@@ -23,6 +27,7 @@ function ConstructorIngredient({element, index}) {
 
   const [, dropRef] = useDrop({
     accept: 'SWAP_INGREDIENT',
+    // @ts-ignore
     hover({ingredient}) {
       if (ingredient.uuid === element.uuid) return;
 
@@ -51,8 +56,4 @@ function ConstructorIngredient({element, index}) {
   );
 }
 
-ConstructorIngredient.propTypes = {
-  element: ingredientPropType.isRequired,
-  index: PropTypes.number.isRequired
-}
 export default ConstructorIngredient;

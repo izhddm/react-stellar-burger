@@ -1,21 +1,27 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {createPortal} from "react-dom";
 import styles from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
-import {modalComponent} from "../../utils/constant";
 import {useNavigate} from "react-router-dom";
-import PropTypes from "prop-types";
+import {modalComponent} from "../../utils/types";
 
-function Modal({componentName = null}) {
+interface ModalProps {
+  componentName?: string,
+}
+
+const Modal: FC<ModalProps> = ({componentName}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const name = useSelector(state => state.modal.componentName);
+  // @ts-ignore
+  const name: string = useSelector(state => state.modal.componentName);
   const DynamicComponent = modalComponent[componentName ?? name];
   const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
+
+  const modalsElement = document.getElementById('modals');
 
   const closeModal = () => {
     navigate(`/`, {'state': {'modal': false, 'background': null}});
@@ -23,13 +29,13 @@ function Modal({componentName = null}) {
   };
 
   // Остановить всплытие события, чтобы не срабатывало событие на внешнем элементе
-  const handleStopPropagation = (e) => {
+  const handleStopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
   React.useEffect(() => {
     // Закрытие по ESC
-    const closeByEsc = ((e) => {
+    const closeByEsc = ((e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         closeModal()
       }
@@ -41,7 +47,7 @@ function Modal({componentName = null}) {
     return () => document.removeEventListener('keydown', closeByEsc)
   }, []);
 
-  return dynamicComponent ? (
+  return dynamicComponent && modalsElement ? (
     createPortal(
       <ModalOverlay onMouseDown={closeModal}>
         <div className={styles.modal} onMouseDown={handleStopPropagation}>
@@ -51,13 +57,9 @@ function Modal({componentName = null}) {
           </div>
         </div>
       </ModalOverlay>,
-      document.getElementById('modals')
+      modalsElement
     )
   ) : null;
-}
-
-Modal.propTypes = {
-  componentName: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])])
 }
 
 export default Modal;

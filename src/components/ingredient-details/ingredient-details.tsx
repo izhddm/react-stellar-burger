@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './ingredient-details.module.css'
 import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {getDetailIngredient} from "../../services/selectors";
 
-function IngredientDetails() {
+const IngredientDetails: FC = () => {
   const {id} = useParams()
 
   // Если нет в стейте элемента ингредиента, значит заберем его из массива ингредиентов
@@ -33,7 +33,6 @@ function IngredientDetails() {
         </div>
       </div>
     </div>
-
   );
 }
 

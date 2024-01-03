@@ -1,16 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {FC} from 'react';
 import styles from "./block-text-with-link.module.css";
 import {Link} from "react-router-dom";
 
-BlockTextWithLink.propTypes = {
-  text: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
-  extraClass: PropTypes.string.isRequired,
-};
+interface BlockTextWithLinkProps {
+  text: string,
+  url: string,
+  linkText: string,
+  extraClass: string
+}
 
-function BlockTextWithLink({text, url, linkText, extraClass}) {
+const BlockTextWithLink: FC<BlockTextWithLinkProps> = ({text, url, linkText, extraClass}) => {
   return (
     <div className={`${styles.flex} ${extraClass}`}>
       <p className={`${styles.text} text text_type_main-default`}>{text}</p>

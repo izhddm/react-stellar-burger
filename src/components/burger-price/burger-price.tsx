@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-price.module.css';
 import {useDispatch, useSelector} from "react-redux";
@@ -8,16 +8,18 @@ import {clearBurgerConstructor} from "../../services/slices/burger-slice";
 import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
 
-function BurgerPrice() {
+const BurgerPrice: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
+  // @ts-ignore
   const bun = useSelector(state => state.burger.bun);
+  // @ts-ignore
   const ingredients = useSelector(state => state.burger.ingredients);
 
   const calcPrice = () => {
-    return ingredients.reduce((acc, ingredient) => {
+    return ingredients.reduce((acc: any, ingredient: { price: any; }) => {
       return acc + ingredient.price;
     }, bun ? bun.price * 2 : 0);
   }
@@ -36,7 +38,7 @@ function BurgerPrice() {
       }
 
       // Получаем только _id ингредиентов
-      const ingredientIds = ingredients.map(ingredient => ingredient._id);
+      const ingredientIds = ingredients.map((ingredient: { _id: any; }) => ingredient._id);
       ingredientIds.push(bun._id, bun._id);
 
       // Вызываем мутацию с массивом _id ингредиентов
@@ -50,7 +52,7 @@ function BurgerPrice() {
           componentName: 'OrderDetails',
           data: order.number
         }));
-        dispatch(clearBurgerConstructor());
+        dispatch(clearBurgerConstructor({}));
       } else {
         console.error('Order placement failed:', response.data);
       }

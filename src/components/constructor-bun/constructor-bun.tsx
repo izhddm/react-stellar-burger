@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../constructor-bun/constructor-bun.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useSelector} from "react-redux";
-import PropTypes from "prop-types";
 
-function ConstructorBun({extraClass, type}) {
+interface ConstructorBunProps {
+  extraClass?: string,
+  type: 'top' | 'bottom'
+}
+
+const ConstructorBun: FC<ConstructorBunProps> = ({extraClass, type}) => {
+  // @ts-ignore
   const bun = useSelector(state => state.burger.bun)
 
   return (
@@ -21,8 +26,4 @@ function ConstructorBun({extraClass, type}) {
   );
 }
 
-ConstructorBun.propTypes = {
-  extraClass: PropTypes.string,
-  type: PropTypes.string.isRequired
-}
 export default ConstructorBun;

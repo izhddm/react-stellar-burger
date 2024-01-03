@@ -45,7 +45,7 @@ const burgerSlice = createSlice({
     clearBurgerConstructor: (state) => {
       state.bun = null;
       state.ingredients = [];
-    }
+    },
   },
 });
 

@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ingredientPropType} from "../../utils/prop-types";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
 import {useLocation, useNavigate} from "react-router-dom";
+import {Ingredient} from "../../utils/types";
 
-function BurgerIngredient({element}) {
+interface BurgerIngredientProps {
+  element: Ingredient
+}
+
+const BurgerIngredient: FC<BurgerIngredientProps> = ({element}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,12 +25,7 @@ function BurgerIngredient({element}) {
     })
   })
 
-  const handleOpenIngredientDetails = (element) => {
-    // dispatch(setContentModal({
-    //   componentName: 'IngredientDetails',
-    //   data: element
-    // }));
-
+  const handleOpenIngredientDetails = (element: Ingredient) => {
     navigate(`/ingredients/${element._id}`, {'state': {'modal': true, background: location}});
   }
 
@@ -58,10 +57,6 @@ function BurgerIngredient({element}) {
       </p>
     </div>
   );
-}
-
-BurgerIngredient.propTypes = {
-  element: ingredientPropType.isRequired,
 }
 
 export default BurgerIngredient;
