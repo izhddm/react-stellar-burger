@@ -30,27 +30,30 @@ const BurgerConstructor: FC = () => {
     }),
   });
 
+
   return (
     <section className={styles.section} aria-label="Бургер конструктор">
-      <div className={`${styles.burger} mt-25 ${isOver ? styles.drop_zone : ''}`} ref={drop}>
-        {/*Выводим надпись с призывом выбрать булочку*/}
-        {!constructorBun && (
-          <p className={styles.select + ' text text_type_main-default'}>Выберите булочку</p>
-        )}
-        {constructorBun && (<ConstructorBun type={'top'}/>)}
+      <div className={`mt-25 ${styles['flex-expand']} ${isOver ? styles.dropzone : ''}`} ref={drop}>
+        <div className={`${styles.burger}`}>
+          {!constructorBun && (
+            <p className={`${styles.select} text text_type_main-default`}>Выберите булочку</p>
+          )}
+          {constructorBun && (<ConstructorBun type={'top'}/>)}
 
-        {/*Выводим надпись с призывом выбрать соусы и ингредиенты*/}
-        {constructorIngredients.length === 0 && (
-          <p className={styles.select + ' text text_type_main-default'}>Выберите соусы и начинки</p>
-        )}
-        {
-          constructorIngredients.length > 0 && (<div className={styles.ingredients + ' custom-scroll'}>
-            {constructorIngredients.map((element, index) => (
-              <ConstructorIngredient key={element.uuid} element={element} index={index}/>
-            ))}
-          </div>)
-        }
-        {constructorBun && <ConstructorBun type={'bottom'}/>}
+          {constructorIngredients.length === 0 && (
+            <p
+              className={`${styles.select} text text_type_main-default`}>Выберите
+              соусы и начинки</p>
+          )}
+          {
+            constructorIngredients.length > 0 && (<div className={styles.ingredients + ' custom-scroll'}>
+              {constructorIngredients.map((element, index) => (
+                <ConstructorIngredient key={element.uuid} element={element} index={index}/>
+              ))}
+            </div>)
+          }
+          {constructorBun && <ConstructorBun type={'bottom'}/>}
+        </div>
       </div>
 
       <div className={styles.price + ' mb-6'}>
