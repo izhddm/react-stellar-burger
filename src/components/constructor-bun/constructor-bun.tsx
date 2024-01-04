@@ -3,12 +3,12 @@ import styles from "../constructor-bun/constructor-bun.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useSelector} from "react-redux";
 
-interface ConstructorBunProps {
+interface IProps {
   extraClass?: string,
   type: 'top' | 'bottom'
 }
 
-const ConstructorBun: FC<ConstructorBunProps> = ({extraClass, type}) => {
+const ConstructorBun: FC<IProps> = ({extraClass, type}) => {
   // @ts-ignore
   const bun = useSelector(state => state.burger.bun)
 

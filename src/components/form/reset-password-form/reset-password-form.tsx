@@ -4,16 +4,13 @@ import styles from './reset-password-form.module.css';
 import {useResetPasswordMutation} from "../../../services/api/user-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../../../hooks/useForm";
-import {FormType} from "../../../utils/types";
+import {FormUserData} from "../../../utils/types";
 
-interface FormValues {
-  password: string,
-  token: string
-}
+type FormValues = Pick<FormUserData, 'password'> & { 'token': string }
 
 const ResetPasswordForm: FC = () => {
   const [resetPassword, {isLoading, isSuccess, isError, error}] = useResetPasswordMutation();
-  const {values, handleChange, setValues}: FormType<FormValues> = useForm<FormValues>({password: '', token: ''});
+  const {values, handleChange, setValues}= useForm<FormValues>({password: '', token: ''});
 
   const navigate = useNavigate();
   const location = useLocation();

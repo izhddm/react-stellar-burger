@@ -4,18 +4,19 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
+import {IngredientConstructor} from "../../utils/types";
 
-interface ConstructorIngredientProps {
-  element: any,
+interface IProps {
+  element: IngredientConstructor,
   index: number
 }
 
-const ConstructorIngredient: FC<ConstructorIngredientProps> = ({element, index}) => {
+const ConstructorIngredient: FC<IProps> = ({element, index}) => {
   const dispatch = useDispatch();
 
   // @ts-ignore
   const burgerIngredients = useSelector(state => state.burger.ingredients);
-  const findIndex = (item: any) => burgerIngredients.indexOf(item);
+  const findIndex = (item: IngredientConstructor) => burgerIngredients.indexOf(item);
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'SWAP_INGREDIENT',
@@ -46,7 +47,7 @@ const ConstructorIngredient: FC<ConstructorIngredientProps> = ({element, index})
       <ConstructorElement
         text={element.name}
         price={element.price}
-        thumbnail={element.image_mobile}
+        thumbnail={element.image_mobile ?? ''}
         extraClass={styles.element_background + ' mr-2'}
         handleClose={() => {
           dispatch(removeIngredient({'uuid': element.uuid}))

@@ -7,11 +7,11 @@ import {getCountIngredientFromConstructor} from "../../services/selectors"
 import {useLocation, useNavigate} from "react-router-dom";
 import {Ingredient} from "../../utils/types";
 
-interface BurgerIngredientProps {
+interface IProps {
   element: Ingredient
 }
 
-const BurgerIngredient: FC<BurgerIngredientProps> = ({element}) => {
+const BurgerIngredient: FC<IProps> = ({element}) => {
   const navigate = useNavigate();
   const location = useLocation();
 

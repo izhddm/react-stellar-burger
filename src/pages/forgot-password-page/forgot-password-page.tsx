@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "./forgot-password-page.module.css";
 import ForgotPasswordForm from "../../components/form/forgot-password-form/forgot-password-form";
 import BlockTextWithLink from "../../components/block-text-with-link/block-text-with-link";
 
-function ForgotPasswordPage() {
+const ForgotPasswordPage: FC = () => {
   return (
     <main className={styles.page}>
       <ForgotPasswordForm/>

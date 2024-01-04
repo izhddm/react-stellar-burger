@@ -6,7 +6,6 @@ import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormType} from "../../../utils/types";
 
 interface FormValues {
   email: string,
@@ -20,7 +19,7 @@ const LoginForm: FC = () => {
 
   const from = location.state?.from || '/';
 
-  const {values, handleChange}: FormType<FormValues> = useForm<FormValues>({email: '', password: ''});
+  const {values, handleChange} = useForm<FormValues>({email: '', password: ''});
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

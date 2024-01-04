@@ -6,20 +6,15 @@ import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useRegisterUserMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormType} from "../../../utils/types";
+import {FormUserData} from "../../../utils/types";
 
-interface FormValues {
-  email: string,
-  name: string,
-  password: string
-}
 
 const RegisterForm: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [register, {isLoading, isError, error}] = useRegisterUserMutation();
-  const {values, handleChange}: FormType<FormValues> = useForm<FormValues>({email: '', name: '', password: ''});
+  const {values, handleChange} = useForm<FormUserData>({email: '', name: '', password: ''});
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

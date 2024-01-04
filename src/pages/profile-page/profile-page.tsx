@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './profile-page.module.css'
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useLogoutMutation} from "../../services/api/auth-api";
 import {useDispatch} from "react-redux";
 import {resetUser} from "../../services/slices/user-slice";
 
-function ProfilePage() {
+type NavLinkRenderProps = {
+  isActive: boolean;
+  isPending: boolean;
+  isTransitioning: boolean;
+};
+
+const ProfilePage: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [logout, {isLoading}] = useLogoutMutation();
 
-  const handleLogoutBtn = async (e) => {
+  const handleLogoutBtn = async (e: React.MouseEvent<HTMLHeadingElement>) => {
     e.preventDefault();
 
     const token = localStorage.getItem('refreshToken');
@@ -26,7 +32,7 @@ function ProfilePage() {
     }
   }
 
-  const navActiveClass = ({isActive}) => `${styles.link} ${!isActive ? styles.inactive : ''}`;
+  const navActiveClass = ({isActive}: NavLinkRenderProps) => `${styles.link} ${!isActive ? styles.inactive : ''}`;
   return (
     <main className={styles.page}>
       <nav className={`${styles.nav} mt-30 ml-5`}>

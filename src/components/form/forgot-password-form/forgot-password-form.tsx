@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {useForgotPasswordMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
 import {FC, FormEvent} from "react";
-import {FormType} from "../../../utils/types";
 
 interface FormValues {
   email: string
@@ -13,7 +12,7 @@ interface FormValues {
 const ForgotPasswordForm: FC = () => {
   const navigate = useNavigate();
   const [forgotPassword, {isLoading, isError, error}] = useForgotPasswordMutation();
-  const {values, handleChange}: FormType<FormValues> = useForm<FormValues>({'email': ''})
+  const {values, handleChange} = useForm<FormValues>({'email': ''})
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

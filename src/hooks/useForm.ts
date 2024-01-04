@@ -1,5 +1,10 @@
 import React, {useState} from "react";
-import {FormType} from "../utils/types";
+
+interface FormType<T> {
+  values: T,
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  setValues: React.Dispatch<React.SetStateAction<T>>
+}
 
 export function useForm<T>(inputValues: T) {
   const [values, setValues] = useState<T>(inputValues);
@@ -10,5 +15,4 @@ export function useForm<T>(inputValues: T) {
   };
 
   return {values, handleChange, setValues} as FormType<T>;
-
 }

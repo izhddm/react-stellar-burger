@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './login-page.module.css'
 import LoginForm from "../../components/form/login-form/login-form";
 import BlockTextWithLink from "../../components/block-text-with-link/block-text-with-link";
 
-function LoginPage() {
+const LoginPage: FC = () => {
   return (
     <main className={styles.page}>
       <LoginForm/>

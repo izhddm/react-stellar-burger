@@ -1,10 +1,11 @@
-import React, {FC, Fragment, RefObject, useRef} from 'react';
+import React, {FC, Fragment, RefObject, useRef, useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {useSelector} from "react-redux";
+import {Ingredient} from "../../utils/types";
 
-interface Tab {
+interface ITab {
   value: number,
   label: string,
   type: string,
@@ -18,16 +19,16 @@ const BurgerIngredients: FC = () => {
   const listIngredients = useSelector((state) => state.ingredients);
 
   // Категории ингредиентов
-  const tabs: Tab[] = [
+  const tabs: ITab[] = [
     {value: 1, label: 'Булки', type: 'bun', ref: useRef<HTMLParagraphElement>(null)},
     {value: 2, label: 'Соусы', type: 'sauce', ref: useRef<HTMLParagraphElement>(null)},
     {value: 3, label: 'Начинки', type: 'main', ref: useRef<HTMLParagraphElement>(null)},
   ];
 
-  const [currentTab, setCurrentTab] = React.useState(tabs[0].value);
+  const [currentTab, setCurrentTab] = useState<number>(tabs[0].value);
 
   // Скрол при клике по табу
-  const handleTabClick = (tab: Tab) => {
+  const handleTabClick = (tab: ITab) => {
     setCurrentTab(tab.value);
 
     // Прокрутка к нужному ref
@@ -89,7 +90,7 @@ const BurgerIngredients: FC = () => {
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
                 <div className={styles.list + ' ml-4'}>
-                  {listIngredients && listIngredients.map((element: any) => {
+                  {listIngredients && listIngredients.map((element: Ingredient) => {
                     if (element.type === tab.type) {
                       return (
                         <BurgerIngredient
