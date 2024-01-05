@@ -3,12 +3,14 @@ import styles from './ingredient-details.module.css'
 import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {getDetailIngredient} from "../../services/selectors";
+import {RootState} from "../../services/store/store";
+import {TIngredient} from "../../types/types";
 
 const IngredientDetails: FC = () => {
   const {id} = useParams()
 
-  // Если нет в стейте элемента ингредиента, значит заберем его из массива ингредиентов
-  const element = useSelector(getDetailIngredient(id));
+  // Если нет в state элемента ингредиента, значит заберем его из массива ингредиентов
+  const element = useSelector<RootState, TIngredient | null>(getDetailIngredient(id));
 
   return (
     element && <div className={styles.container}>

@@ -5,6 +5,7 @@ import {removeIngredient, swapIngredients} from "../../services/slices/burger-sl
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import {ICollectionPropsDrag, TIngredientConstructor} from "../../types/types";
+import {RootState} from "../../services/store/store";
 
 interface IProps {
   element: TIngredientConstructor,
@@ -14,9 +15,8 @@ interface IProps {
 const ConstructorIngredient: FC<IProps> = ({element, index}) => {
   const dispatch = useDispatch();
 
-  // @ts-ignore
-  const burgerIngredients = useSelector(state => state.burger.ingredients);
-  const findIndex = (item: TIngredientConstructor) => burgerIngredients.indexOf(item);
+  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
+  const findIndex = (item: TIngredientConstructor) => ingredients.indexOf(item);
 
   const [{isDragging}, dragRef] = useDrag<TIngredientConstructor, unknown, ICollectionPropsDrag>({
     type: 'SWAP_INGREDIENT',

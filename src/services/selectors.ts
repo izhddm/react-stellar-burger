@@ -1,4 +1,7 @@
-export const getCountIngredientFromConstructor = element => state => {
+import {TIngredient} from "../types/types";
+import {RootState} from "./store/store";
+
+export const getCountIngredientFromConstructor = (element: TIngredient) => (state: RootState) => {
   if (state.burger.bun && element._id === state.burger.bun._id) {
     return 2;
   }
@@ -7,9 +10,9 @@ export const getCountIngredientFromConstructor = element => state => {
 }
 
 // Возвращает ингредиент, либо из стейта, либо находит по id среди всех ингредиентов
-export const getDetailIngredient = id => state => {
-  if (state.modal.data){
-    return state.modal.data;
+export const getDetailIngredient = (id: string | undefined) => (state: RootState) => {
+  if (state.modal.data) {
+    return state.modal.data as TIngredient;
   }
 
   return state.ingredients.find((el) => el._id === id) ?? null;

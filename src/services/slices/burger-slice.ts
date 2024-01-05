@@ -1,7 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {v4 as uuidv4} from 'uuid';
+import {TIngredient, TIngredientConstructor} from "../../types/types";
 
-const initialState = {
+interface BurgerState {
+  bun: TIngredientConstructor | null,
+  ingredients: TIngredientConstructor[]
+}
+
+const initialState: BurgerState = {
   bun: null,
   ingredients: [],
 };
@@ -17,7 +23,8 @@ const burgerSlice = createSlice({
       reducer: (state, action) => {
         state.ingredients.push(action.payload);
       },
-      prepare: args => {
+      // @ts-ignore
+      prepare: (args: TIngredient) => {
         return {
           payload: {
             ...args,

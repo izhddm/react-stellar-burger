@@ -7,19 +7,19 @@ import {setOrder} from "../../services/slices/order-slice";
 import {clearBurgerConstructor} from "../../services/slices/burger-slice";
 import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
+import {RootState} from "../../services/store/store";
+import {TIngredientConstructor} from "../../types/types";
 
 const BurgerPrice: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // @ts-ignore
-  const bun = useSelector(state => state.burger.bun);
-  // @ts-ignore
-  const ingredients = useSelector(state => state.burger.ingredients);
+  const bun = useSelector<RootState, TIngredientConstructor | null>(state => state.burger.bun);
+  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
 
   const calcPrice = () => {
-    return ingredients.reduce((acc: any, ingredient: { price: any; }) => {
+    return ingredients.reduce((acc: number, ingredient) => {
       return acc + ingredient.price;
     }, bun ? bun.price * 2 : 0);
   }
@@ -37,8 +37,9 @@ const BurgerPrice: FC = () => {
         return;
       }
 
-      // Получаем только _id ингредиентов
       const ingredientIds = ingredients.map((ingredient: { _id: any; }) => ingredient._id);
+
+      // @ts-ignore "Нажатие по кнопке возможна только если булочка не null"
       ingredientIds.push(bun._id, bun._id);
 
       // Вызываем мутацию с массивом _id ингредиентов

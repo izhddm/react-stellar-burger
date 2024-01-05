@@ -1,17 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {TOrder} from "../../types/types";
+
+const initialState: TOrder = {
+  order: {
+    number: null
+  },
+  name: null,
+};
 
 export const orderSlice = createSlice({
   name: 'order',
-  initialState: {
-    order: {
-      number: null
-    },
-    name: null,
-  },
+  initialState,
   reducers: {
     setOrder: (state, action) => {
-      state.order.number = action.payload.order.number;
-      state.name = action.payload.name;
+      return {...state, ...action.payload}
     },
   },
 });

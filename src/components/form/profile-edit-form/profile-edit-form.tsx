@@ -5,13 +5,14 @@ import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
 import {useUpdateUserInfoMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData} from "../../../types/types";
+import {FormUserData, TUser} from "../../../types/types";
+import {RootState} from "../../../services/store/store";
 
 type UpdatedData = Partial<FormUserData>
 
 const ProfileEditForm: FC = () => {
   const dispatch = useDispatch();
-  const {email: defaultEmail, name: defaultName} = useSelector((state: any) => state.user);
+  const {email: defaultEmail, name: defaultName} = useSelector<RootState, TUser>((state) => state.user);
   const [updateUserInfo, {isLoading: isUpdatingUserInfo}] = useUpdateUserInfoMutation();
 
   const {values, handleChange, setValues} = useForm<FormUserData>({

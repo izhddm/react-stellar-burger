@@ -6,13 +6,14 @@ import {addIngredient, setBun} from "../../services/slices/burger-slice";
 import {useDrop} from "react-dnd";
 import ConstructorBun from "../constructor-bun/constructor-bun";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
+import {RootState} from "../../services/store/store";
+import {TIngredientConstructor} from "../../types/types";
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
-  // @ts-ignore
-  const constructorBun = useSelector(state => state.burger.bun);
-  // @ts-ignore
-  const constructorIngredients: any[] = useSelector(state => state.burger.ingredients);
+
+  const bun = useSelector<RootState, TIngredientConstructor | null>(state => state.burger.bun);
+  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
 
   // Принимаем то, что бросил пользователь при перетаскивании
   const [{isOver}, drop] = useDrop({
@@ -30,29 +31,28 @@ const BurgerConstructor: FC = () => {
     }),
   });
 
-
   return (
     <section className={styles.section} aria-label="Бургер конструктор">
       <div className={`mt-25 ${styles['flex-expand']} ${isOver ? styles.dropzone : ''}`} ref={drop}>
         <div className={`${styles.burger}`}>
-          {!constructorBun && (
+          {!bun && (
             <p className={`${styles.select} text text_type_main-default`}>Выберите булочку</p>
           )}
-          {constructorBun && (<ConstructorBun type={'top'}/>)}
+          {bun && (<ConstructorBun type={'top'}/>)}
 
-          {constructorIngredients.length === 0 && (
+          {ingredients.length === 0 && (
             <p
               className={`${styles.select} text text_type_main-default`}>Выберите
               соусы и начинки</p>
           )}
           {
-            constructorIngredients.length > 0 && (<div className={styles.ingredients + ' custom-scroll'}>
-              {constructorIngredients.map((element, index) => (
+            ingredients.length > 0 && (<div className={styles.ingredients + ' custom-scroll'}>
+              {ingredients.map((element, index) => (
                 <ConstructorIngredient key={element.uuid} element={element} index={index}/>
               ))}
             </div>)
           }
-          {constructorBun && <ConstructorBun type={'bottom'}/>}
+          {bun && <ConstructorBun type={'bottom'}/>}
         </div>
       </div>
 

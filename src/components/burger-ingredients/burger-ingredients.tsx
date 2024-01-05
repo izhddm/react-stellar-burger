@@ -3,7 +3,8 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {useSelector} from "react-redux";
-import {TIngredient} from "../../types/types";
+import {TIngredient, TIngredients} from "../../types/types";
+import {RootState} from "../../services/store/store";
 
 interface ITab {
   value: number,
@@ -15,8 +16,7 @@ interface ITab {
 const BurgerIngredients: FC = () => {
   const ingredientsRef = useRef<HTMLDivElement>(null);
 
-  // @ts-ignore
-  const listIngredients = useSelector((state) => state.ingredients);
+  const ingredients = useSelector<RootState, TIngredients>((state) => state.ingredients);
 
   // Категории ингредиентов
   const tabs: ITab[] = [
@@ -90,7 +90,7 @@ const BurgerIngredients: FC = () => {
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
                 <div className={styles.list + ' ml-4'}>
-                  {listIngredients && listIngredients.map((element: TIngredient) => {
+                  {ingredients && ingredients.map((element: TIngredient) => {
                     if (element.type === tab.type) {
                       return (
                         <BurgerIngredient

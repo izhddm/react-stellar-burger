@@ -1,12 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {TIsLoggedIn, TUser} from "../../types/types";
+
+
+export type TUserState = TUser & TIsLoggedIn;
+
+const initialState: TUserState = {
+  email: '',
+  name: '',
+  isLoggedIn: false
+};
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    email: '',
-    name: '',
-    isLoggedIn: false
-  },
+  initialState,
   reducers: {
     setUser: (state, action) => {
       state.email = action.payload.email;

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {useNavigate} from "react-router-dom";
 import {modalComponent} from "../../types/types";
+import {RootState} from "../../services/store/store";
 
 interface ModalProps {
   componentName?: string,
@@ -16,9 +17,8 @@ const Modal: FC<ModalProps> = ({componentName}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // @ts-ignore
-  const name: string = useSelector(state => state.modal.componentName);
-  const DynamicComponent = modalComponent[componentName ?? name];
+  const name = useSelector<RootState, string | null>(state => state.modal.componentName);
+  const DynamicComponent = modalComponent[componentName ?? name ?? ''];
   const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
 
   const modalsElement = document.getElementById('modals');

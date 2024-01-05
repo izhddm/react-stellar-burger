@@ -1,8 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {TIngredients} from "../../types/types";
+
+const initialState: TIngredients = [];
 
 const ingredientsSlice = createSlice({
   name: 'ingredients',
-  initialState: [],
+  initialState,
   reducers: {
     setIngredients: (state, action) => {
       return action.payload;

@@ -1,6 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {TIngredient} from "../../types/types";
 
-const initialState = {
+interface ModalState {
+  componentName: string | null,
+  data: number | null | TIngredient
+}
+
+const initialState: ModalState = {
   componentName: null,
   data: null
 };
