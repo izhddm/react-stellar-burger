@@ -24,7 +24,7 @@ const Modal: FC<ModalProps> = ({componentName}) => {
   const modalsElement = document.getElementById('modals');
 
   const closeModal = () => {
-    navigate(`/`, {'state': {'modal': false, 'background': null}});
+    navigate('/', {'state': {'background': null}});
     dispatch(clearContentModal());
   };
 

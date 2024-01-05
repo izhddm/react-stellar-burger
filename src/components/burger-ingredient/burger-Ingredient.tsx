@@ -27,6 +27,7 @@ const BurgerIngredient: FC<IProps> = ({element}) => {
 
   const handleOpenIngredientDetails = (element: Ingredient) => {
     navigate(`/ingredients/${element._id}`, {'state': {'modal': true, background: location}});
+    navigate(`/ingredients/${element._id}`, {'state': {background: location}});
   }
 
   return (
