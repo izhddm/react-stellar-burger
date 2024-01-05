@@ -5,10 +5,10 @@ import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
 import {useLocation, useNavigate} from "react-router-dom";
-import {Ingredient} from "../../utils/types";
+import {ICollectionPropsDrag, TIngredient} from "../../utils/types";
 
 interface IProps {
-  element: Ingredient
+  element: TIngredient
 }
 
 const BurgerIngredient: FC<IProps> = ({element}) => {
@@ -17,7 +17,7 @@ const BurgerIngredient: FC<IProps> = ({element}) => {
 
   const count = useSelector(getCountIngredientFromConstructor(element));
 
-  const [{isDragging}, drag] = useDrag({
+  const [{isDragging}, drag] = useDrag<TIngredient, unknown, ICollectionPropsDrag>({
     type: 'INGREDIENT',
     item: element,
     collect: (monitor) => ({
@@ -25,8 +25,7 @@ const BurgerIngredient: FC<IProps> = ({element}) => {
     })
   })
 
-  const handleOpenIngredientDetails = (element: Ingredient) => {
-    navigate(`/ingredients/${element._id}`, {'state': {'modal': true, background: location}});
+  const handleOpenIngredientDetails = (element: TIngredient) => {
     navigate(`/ingredients/${element._id}`, {'state': {background: location}});
   }
 

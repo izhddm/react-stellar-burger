@@ -13,7 +13,7 @@ export const modalComponent: ModalComponent = {
 };
 
 // Ингредиент приходящий с сервера
-export interface Ingredient {
+export type TIngredient = {
   _id: string;
   name: string;
   type: string;
@@ -28,6 +28,9 @@ export interface Ingredient {
   __v?: number;
 }
 
-export interface IngredientConstructor extends Ingredient {
-  uuid: string
+export type TIngredientConstructor = TIngredient & { uuid: string }
+
+// Для Drag and Drop
+export interface ICollectionPropsDrag {
+  isDragging: boolean
 }

@@ -4,10 +4,10 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import {IngredientConstructor} from "../../utils/types";
+import {ICollectionPropsDrag, TIngredientConstructor} from "../../utils/types";
 
 interface IProps {
-  element: IngredientConstructor,
+  element: TIngredientConstructor,
   index: number
 }
 
@@ -16,26 +16,25 @@ const ConstructorIngredient: FC<IProps> = ({element, index}) => {
 
   // @ts-ignore
   const burgerIngredients = useSelector(state => state.burger.ingredients);
-  const findIndex = (item: IngredientConstructor) => burgerIngredients.indexOf(item);
+  const findIndex = (item: TIngredientConstructor) => burgerIngredients.indexOf(item);
 
-  const [{isDragging}, dragRef] = useDrag({
+  const [{isDragging}, dragRef] = useDrag<TIngredientConstructor, unknown, ICollectionPropsDrag>({
     type: 'SWAP_INGREDIENT',
-    item: {ingredient: element},
+    item: element,
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })
   })
 
-  const [, dropRef] = useDrop({
+  const [, dropRef] = useDrop<TIngredientConstructor, unknown, unknown>({
     accept: 'SWAP_INGREDIENT',
-    // @ts-ignore
-    hover({ingredient}) {
-      if (ingredient.uuid === element.uuid) return;
+    hover(item) {
+      if (item.uuid === element.uuid) return;
 
       dispatch(swapIngredients({
-        indexFrom: findIndex(ingredient),
+        indexFrom: findIndex(item),
         indexTo: index,
-        ingredient: ingredient,
+        ingredient: item,
       }))
     }
   });

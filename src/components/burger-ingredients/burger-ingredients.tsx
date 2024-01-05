@@ -3,7 +3,7 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {useSelector} from "react-redux";
-import {Ingredient} from "../../utils/types";
+import {TIngredient} from "../../utils/types";
 
 interface ITab {
   value: number,
@@ -90,7 +90,7 @@ const BurgerIngredients: FC = () => {
               <Fragment key={tab.value}>
                 <p className="text text_type_main-medium mt-10 mb-6" ref={tab.ref}>{tab.label}</p>
                 <div className={styles.list + ' ml-4'}>
-                  {listIngredients && listIngredients.map((element: Ingredient) => {
+                  {listIngredients && listIngredients.map((element: TIngredient) => {
                     if (element.type === tab.type) {
                       return (
                         <BurgerIngredient
