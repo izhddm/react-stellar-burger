@@ -6,7 +6,7 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {useNavigate} from "react-router-dom";
-import {modalComponent} from "../../utils/types";
+import {modalComponent} from "../../types/types";
 
 interface ModalProps {
   componentName?: string,

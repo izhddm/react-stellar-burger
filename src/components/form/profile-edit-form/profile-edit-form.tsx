@@ -5,7 +5,7 @@ import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
 import {useUpdateUserInfoMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData} from "../../../utils/types";
+import {FormUserData} from "../../../types/types";
 
 type UpdatedData = Partial<FormUserData>
 

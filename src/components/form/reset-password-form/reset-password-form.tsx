@@ -4,7 +4,7 @@ import styles from './reset-password-form.module.css';
 import {useResetPasswordMutation} from "../../../services/api/user-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData} from "../../../utils/types";
+import {FormUserData} from "../../../types/types";
 
 type FormValues = Pick<FormUserData, 'password'> & { 'token': string }
 

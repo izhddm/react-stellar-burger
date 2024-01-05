@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useRegisterUserMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData} from "../../../utils/types";
+import {FormUserData} from "../../../types/types";
 
 
 const RegisterForm: FC = () => {

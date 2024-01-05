@@ -3,7 +3,7 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {useSelector} from "react-redux";
-import {TIngredient} from "../../utils/types";
+import {TIngredient} from "../../types/types";
 
 interface ITab {
   value: number,

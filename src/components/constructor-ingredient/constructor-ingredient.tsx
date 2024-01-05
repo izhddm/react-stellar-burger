@@ -4,7 +4,7 @@ import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-compon
 import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
 import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import {ICollectionPropsDrag, TIngredientConstructor} from "../../utils/types";
+import {ICollectionPropsDrag, TIngredientConstructor} from "../../types/types";
 
 interface IProps {
   element: TIngredientConstructor,

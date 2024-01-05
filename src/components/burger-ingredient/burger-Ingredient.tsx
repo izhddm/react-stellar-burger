@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
 import {useLocation, useNavigate} from "react-router-dom";
-import {ICollectionPropsDrag, TIngredient} from "../../utils/types";
+import {ICollectionPropsDrag, TIngredient} from "../../types/types";
 
 interface IProps {
   element: TIngredient
