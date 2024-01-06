@@ -27,8 +27,12 @@ const ForgotPasswordForm: FC = () => {
           }
         });
       }
-    } catch (error: any) {
-      console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error);
+      } else {
+        console.error("An unexpected error occurred");
+      }
     }
   }
 

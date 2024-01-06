@@ -36,7 +36,7 @@ const BurgerPrice: FC = () => {
         return;
       }
 
-      const ingredientIds = ingredients.map((ingredient: { _id: any; }) => ingredient._id);
+      const ingredientIds = ingredients.map((ingredient) => ingredient._id);
 
       // @ts-ignore "Нажатие по кнопке возможна только если булочка не null"
       ingredientIds.push(bun._id, bun._id);

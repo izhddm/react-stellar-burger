@@ -64,8 +64,12 @@ const App: FC = () => {
           if (data?.success) {
             dispatch(setLoggedIn({'isLoggedIn': true}));
           }
-        } catch (error: any) {
-          console.error('Ошибка при обновлении токена:', error.message);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.error(error);
+          } else {
+            console.error("An unexpected error occurred");
+          }
         }
       }
     };
