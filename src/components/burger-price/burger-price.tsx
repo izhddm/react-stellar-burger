@@ -1,22 +1,21 @@
 import React, {FC} from 'react';
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-price.module.css';
-import {useDispatch, useSelector} from "react-redux";
 import {setContentModal} from "../../services/slices/modal-slice";
 import {setOrder} from "../../services/slices/order-slice";
 import {clearBurgerConstructor} from "../../services/slices/burger-slice";
 import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
-import {RootState} from "../../services/store/store";
-import {TIngredientConstructor} from "../../types/types";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const BurgerPrice: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const bun = useSelector<RootState, TIngredientConstructor | null>(state => state.burger.bun);
-  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
+  const bun = useAppSelector(state => state.burger.bun);
+  const ingredients = useAppSelector(state => state.burger.ingredients);
 
   const calcPrice = () => {
     return ingredients.reduce((acc: number, ingredient) => {

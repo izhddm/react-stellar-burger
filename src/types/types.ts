@@ -1,6 +1,10 @@
 import {FC} from "react";
 import OrderDetails from "../components/order-details/order-details";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
+import {AppDispatch} from "../services/store/store";
+
+
+export type DispatchFunc = () => AppDispatch
 
 // Для Юзера
 export type TUser = {

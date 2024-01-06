@@ -1,18 +1,18 @@
 import React, {FC, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
 import {useUpdateUserInfoMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData, TUser} from "../../../types/types";
-import {RootState} from "../../../services/store/store";
+import {FormUserData} from "../../../types/types";
+import {useAppSelector} from "../../../hooks/useAppSelector";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
 
 type UpdatedData = Partial<FormUserData>
 
 const ProfileEditForm: FC = () => {
-  const dispatch = useDispatch();
-  const {email: defaultEmail, name: defaultName} = useSelector<RootState, TUser>((state) => state.user);
+  const dispatch = useAppDispatch();
+  const {email: defaultEmail, name: defaultName} = useAppSelector((state) => state.user);
   const [updateUserInfo, {isLoading: isUpdatingUserInfo}] = useUpdateUserInfoMutation();
 
   const {values, handleChange, setValues} = useForm<FormUserData>({

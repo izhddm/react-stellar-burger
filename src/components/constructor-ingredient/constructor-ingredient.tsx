@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import styles from "../constructor-ingredient/constructor-ingredient.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import {removeIngredient, swapIngredients} from "../../services/slices/burger-slice";
-import {useDispatch, useSelector} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import {ICollectionPropsDrag, TIngredientConstructor} from "../../types/types";
-import {RootState} from "../../services/store/store";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 interface IProps {
   element: TIngredientConstructor,
@@ -13,9 +13,9 @@ interface IProps {
 }
 
 const ConstructorIngredient: FC<IProps> = ({element, index}) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
+  const ingredients = useAppSelector(state => state.burger.ingredients);
   const findIndex = (item: TIngredientConstructor) => ingredients.indexOf(item);
 
   const [{isDragging}, dragRef] = useDrag<TIngredientConstructor, unknown, ICollectionPropsDrag>({

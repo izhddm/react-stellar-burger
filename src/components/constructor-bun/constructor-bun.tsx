@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import styles from "../constructor-bun/constructor-bun.module.css";
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface IProps {
   extraClass?: string,
@@ -9,8 +9,7 @@ interface IProps {
 }
 
 const ConstructorBun: FC<IProps> = ({extraClass, type}) => {
-  // @ts-ignore
-  const bun = useSelector(state => state.burger.bun)
+  const bun = useAppSelector(state => state.burger.bun)!
 
   return (
     <div className={`${styles.container} ${extraClass}`}>
@@ -19,7 +18,7 @@ const ConstructorBun: FC<IProps> = ({extraClass, type}) => {
         isLocked={true}
         text={`${bun.name} ${type === 'top' ? '(верх)' : '(низ)'}`}
         price={bun.price}
-        thumbnail={bun.image_mobile}
+        thumbnail={bun.image_mobile!}
         extraClass={styles.element_background + ' mr-4'}
       />
     </div>

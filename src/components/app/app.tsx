@@ -10,7 +10,6 @@ import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password
 import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
-import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/apiBase";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
@@ -20,9 +19,10 @@ import styles from './app.module.css'
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetUserInfoQuery} from "../../services/api/user-api";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 const App: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state && location.state?.background;
 

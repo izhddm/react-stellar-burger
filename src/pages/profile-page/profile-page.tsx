@@ -2,8 +2,8 @@ import React, {FC} from 'react';
 import styles from './profile-page.module.css'
 import {NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useLogoutMutation} from "../../services/api/auth-api";
-import {useDispatch} from "react-redux";
 import {resetUser} from "../../services/slices/user-slice";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 type NavLinkRenderProps = {
   isActive: boolean;
@@ -13,7 +13,7 @@ type NavLinkRenderProps = {
 
 const ProfilePage: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [logout, {isLoading}] = useLogoutMutation();
 

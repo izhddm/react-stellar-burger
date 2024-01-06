@@ -2,9 +2,8 @@ import React, {FC, Fragment, RefObject, useRef, useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
-import {useSelector} from "react-redux";
-import {TIngredient, TIngredients} from "../../types/types";
-import {RootState} from "../../services/store/store";
+import {TIngredient} from "../../types/types";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ITab {
   value: number,
@@ -16,7 +15,7 @@ interface ITab {
 const BurgerIngredients: FC = () => {
   const ingredientsRef = useRef<HTMLDivElement>(null);
 
-  const ingredients = useSelector<RootState, TIngredients>((state) => state.ingredients);
+  const ingredients = useAppSelector((state) => state.ingredients);
 
   // Категории ингредиентов
   const tabs: ITab[] = [

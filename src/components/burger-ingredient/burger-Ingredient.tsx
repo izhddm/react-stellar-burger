@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import styles from './burger-ingredient.module.css'
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {getCountIngredientFromConstructor} from "../../services/selectors"
 import {useLocation, useNavigate} from "react-router-dom";
 import {ICollectionPropsDrag, TIngredient} from "../../types/types";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface IProps {
   element: TIngredient
@@ -15,7 +15,7 @@ const BurgerIngredient: FC<IProps> = ({element}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const count = useSelector(getCountIngredientFromConstructor(element));
+  const count = useAppSelector(getCountIngredientFromConstructor(element));
 
   const [{isDragging}, drag] = useDrag<TIngredient, unknown, ICollectionPropsDrag>({
     type: 'INGREDIENT',

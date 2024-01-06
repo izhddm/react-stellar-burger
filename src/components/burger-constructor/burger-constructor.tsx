@@ -1,19 +1,18 @@
 import React, {FC} from 'react';
 import styles from './burger-constructor.module.css'
 import BurgerPrice from "../burger-price/burger-price";
-import {useDispatch, useSelector} from "react-redux";
 import {addIngredient, setBun} from "../../services/slices/burger-slice";
 import {useDrop} from "react-dnd";
 import ConstructorBun from "../constructor-bun/constructor-bun";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
-import {RootState} from "../../services/store/store";
-import {TIngredientConstructor} from "../../types/types";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const BurgerConstructor: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const bun = useSelector<RootState, TIngredientConstructor | null>(state => state.burger.bun);
-  const ingredients = useSelector<RootState, TIngredientConstructor[]>(state => state.burger.ingredients);
+  const bun = useAppSelector(state => state.burger.bun);
+  const ingredients = useAppSelector(state => state.burger.ingredients);
 
   // Принимаем то, что бросил пользователь при перетаскивании
   const [{isOver}, drop] = useDrop({

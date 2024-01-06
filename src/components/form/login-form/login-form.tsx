@@ -1,11 +1,11 @@
 import React, {FC, FormEvent} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
-import {useDispatch} from "react-redux";
 import {setLoggedIn, setUser} from "../../../services/slices/user-slice";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
 import {useForm} from "../../../hooks/useForm";
+import {useAppDispatch} from "../../../hooks/useAppDispatch";
 
 interface FormValues {
   email: string,
@@ -13,7 +13,7 @@ interface FormValues {
 }
 
 const LoginForm: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

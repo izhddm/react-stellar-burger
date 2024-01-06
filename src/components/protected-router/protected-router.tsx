@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {Navigate, Outlet, useLocation} from 'react-router-dom';
-import {useSelector} from "react-redux";
-import {RootState} from "../../services/store/store";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ProtectedRouterProps {
   anonymous?: true | false
@@ -9,7 +8,7 @@ interface ProtectedRouterProps {
 
 const ProtectedRouter: FC<ProtectedRouterProps> = ({anonymous = false}) => {
 
-  const isLoggedIn = useSelector<RootState, boolean>((store) => store.user.isLoggedIn);
+  const isLoggedIn = useAppSelector((store) => store.user.isLoggedIn);
 
   const location = useLocation();
   const from = location.state?.from || '/';

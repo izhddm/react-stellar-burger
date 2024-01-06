@@ -1,11 +1,10 @@
 import React, {FC} from 'react';
 import styles from './order-details.module.css'
 import imgDone from '../../images/done.png'
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 const OrderDetails: FC = () => {
-  // @ts-ignore
-  const orderNumber = useSelector(state => state.modal.data);
+  const orderNumber = useAppSelector(state => state.modal.data);
   return (
     <div className={styles.order}>
       <h2 className={'text text_type_digits-large'}>{orderNumber}</h2>
