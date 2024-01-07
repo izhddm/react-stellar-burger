@@ -1,9 +1,9 @@
-function removeBearerPrefix(token) {
+function removeBearerPrefix(token: string) {
   // Удаление префикса "Bearer ", если он присутствует
   return token.startsWith('Bearer ') ? token.slice(7) : token;
 }
 
-function decodeToken(token) {
+function decodeToken(token: string) {
   try {
     const cleanedToken = removeBearerPrefix(token);
 
@@ -13,23 +13,23 @@ function decodeToken(token) {
     const decodedHeader = JSON.parse(atob(header));
     const decodedPayload = JSON.parse(atob(payload));
 
-    return { header: decodedHeader, payload: decodedPayload, signature };
-  } catch (error) {
-    console.error('Ошибка при декодировании токена:', error.message);
+    return {header: decodedHeader, payload: decodedPayload, signature};
+  } catch (error: unknown) {
+    console.error('Ошибка при декодировании токена:', (error as Error).message);
     throw error;
   }
 }
 
-export function isJwtTokenValid(token) {
+export function isJwtTokenValid(token: string) {
   try {
-    if (!token){
+    if (!token) {
       return false;
     }
 
     const decodedToken = decodeToken(token);
 
     return decodedToken.payload && decodedToken.payload.exp * 1000 > Date.now();
-  } catch (error) {
-    console.error('Ошибка при проверке токена:', error.message);
+  } catch (error: unknown) {
+    console.error('Ошибка при проверке токена:', (error as Error).message);
   }
 }
