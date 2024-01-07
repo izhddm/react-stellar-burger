@@ -7,6 +7,7 @@ import ConstructorBun from "../constructor-bun/constructor-bun";
 import ConstructorIngredient from "../constructor-ingredient/constructor-ingredient";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import {ICollectionPropsDrop, TIngredientConstructor} from "../../types/types";
 
 const BurgerConstructor: FC = () => {
   const dispatch = useAppDispatch();
@@ -15,10 +16,9 @@ const BurgerConstructor: FC = () => {
   const ingredients = useAppSelector(state => state.burger.ingredients);
 
   // Принимаем то, что бросил пользователь при перетаскивании
-  const [{isOver}, drop] = useDrop({
+  const [{isOver}, drop] = useDrop<TIngredientConstructor, unknown, ICollectionPropsDrop>({
     accept: 'INGREDIENT',
     drop: (item) => {
-      // @ts-ignore
       if (item.type === 'bun') {
         dispatch(setBun(item));
       } else {

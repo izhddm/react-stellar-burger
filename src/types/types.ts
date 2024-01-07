@@ -51,6 +51,10 @@ export interface ICollectionPropsDrag {
   isDragging: boolean
 }
 
+export interface ICollectionPropsDrop {
+  isOver: boolean
+}
+
 // Ответ с номером созданого заказа
 export type TOrder = {
   order: {
