@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TIngredient} from "../../types/types";
 
 interface ModalState {
@@ -16,8 +16,8 @@ const modalSlice = createSlice({
     initialState,
     reducers:
       {
-        setContentModal: (state, action) => {
-          return {...state, ...action.payload}
+        setContentModal: (state, {payload}: PayloadAction<ModalState>) => {
+          return {...state, ...payload}
         },
         clearContentModal:
           () => {

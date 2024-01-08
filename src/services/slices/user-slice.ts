@@ -1,6 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TIsLoggedIn, TUser} from "../../types/types";
-
 
 export type TUserState = TUser & TIsLoggedIn;
 
@@ -14,17 +13,14 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.email = action.payload.email;
-      state.name = action.payload.name;
+    setUser: (state, {payload}: PayloadAction<TUser>) => {
+      return {...state, ...payload}
     },
-    setLoggedIn: (state, action) => {
-      state.isLoggedIn = action.payload.isLoggedIn;
+    setLoggedIn: (state, {payload}: PayloadAction<TIsLoggedIn>) => {
+      return {...state, ...payload}
     },
-    resetUser: (state) => {
-      state.email = '';
-      state.name = '';
-      state.isLoggedIn = false;
+    resetUser: () => {
+      return {...initialState}
     }
   },
 });

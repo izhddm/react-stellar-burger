@@ -1,13 +1,23 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {v4 as uuidv4} from 'uuid';
 import {TIngredient, TIngredientConstructor} from "../../types/types";
 
-interface BurgerState {
+interface IBurgerState {
   bun: TIngredientConstructor | null,
   ingredients: TIngredientConstructor[]
 }
 
-const initialState: BurgerState = {
+interface ISwapIngredient {
+  indexFrom: number,
+  indexTo: number,
+  ingredient: TIngredientConstructor
+}
+
+interface IRemoveIngredient {
+  uuid: string
+}
+
+const initialState: IBurgerState = {
   bun: null,
   ingredients: [],
 };
@@ -16,14 +26,13 @@ const burgerSlice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    setBun: (state, action) => {
-      state.bun = action.payload;
+    setBun: (state, {payload}: PayloadAction<TIngredientConstructor>) => {
+      state.bun = payload;
     },
     addIngredient: {
-      reducer: (state, action) => {
-        state.ingredients.push(action.payload);
+      reducer: (state, {payload}: PayloadAction<TIngredientConstructor>) => {
+        state.ingredients.push(payload);
       },
-      // @ts-ignore
       prepare: (args: TIngredient) => {
         return {
           payload: {
@@ -33,16 +42,16 @@ const burgerSlice = createSlice({
         };
       },
     },
-    swapIngredients: (store, action) => {
-      const {indexFrom, indexTo, ingredient} = action.payload;
+    swapIngredients: (store, {payload}: PayloadAction<ISwapIngredient>) => {
+      const {indexFrom, indexTo, ingredient} = payload;
 
       store.ingredients.splice(indexFrom, 1);
       store.ingredients.splice(indexTo, 0, ingredient);
 
     },
-    removeIngredient: (state, action) => {
+    removeIngredient: (state, {payload}: PayloadAction<IRemoveIngredient>) => {
       const index = state.ingredients.findIndex(
-        (ingredient) => ingredient.uuid === action.payload.uuid
+        (ingredient) => ingredient.uuid === payload.uuid
       );
 
       if (index !== -1) {
