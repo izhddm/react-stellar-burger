@@ -52,7 +52,7 @@ const BurgerPrice: FC = () => {
           componentName: 'OrderDetails',
           data: order.number
         }));
-        dispatch(clearBurgerConstructor({}));
+        dispatch(clearBurgerConstructor());
       } else {
         console.error('Order placement failed:', response.data);
       }
