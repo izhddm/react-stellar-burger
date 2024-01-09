@@ -8,6 +8,7 @@ import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
+import {BurgerPrice} from "../burger-price/burger-price";
 
 const BurgerConstructorPrice: FC = () => {
   const dispatch = useAppDispatch();
@@ -63,8 +64,7 @@ const BurgerConstructorPrice: FC = () => {
 
   return (
     <div className={styles.container}>
-      <p className="text text_type_digits-medium mr-2">{calcPrice()}</p>
-      <CurrencyIcon type="primary"/>
+      <BurgerPrice price={calcPrice()}/>
       <Button
         disabled={!bun || ingredients.length === 0 || isLoading}
         type="primary" size="large"
