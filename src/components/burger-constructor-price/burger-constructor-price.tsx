@@ -9,7 +9,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
 
-const BurgerPrice: FC = () => {
+const BurgerConstructorPrice: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,4 +78,4 @@ const BurgerPrice: FC = () => {
   );
 }
 
-export default BurgerPrice;
+export default BurgerConstructorPrice;
