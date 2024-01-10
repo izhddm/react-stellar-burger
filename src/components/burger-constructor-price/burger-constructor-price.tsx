@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-price.module.css';
 import {setContentModal} from "../../services/slices/modal-slice";
 import {setOrder} from "../../services/slices/order-slice";
@@ -8,7 +8,7 @@ import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
-import {BurgerPrice} from "../burger-price/burger-price";
+import {BurgerCost} from "../burger-cost/burger-cost";
 
 const BurgerConstructorPrice: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const BurgerConstructorPrice: FC = () => {
   const bun = useAppSelector(state => state.burger.bun);
   const ingredients = useAppSelector(state => state.burger.ingredients);
 
-  const calcPrice = () => {
+  const calculateCost = () => {
     return ingredients.reduce((acc: number, ingredient) => {
       return acc + ingredient.price;
     }, bun ? bun.price * 2 : 0);
@@ -64,7 +64,7 @@ const BurgerConstructorPrice: FC = () => {
 
   return (
     <div className={styles.container}>
-      <BurgerPrice price={calcPrice()}/>
+      <BurgerCost value={calculateCost()}/>
       <Button
         disabled={!bun || ingredients.length === 0 || isLoading}
         type="primary" size="large"
