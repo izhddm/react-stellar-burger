@@ -1,0 +1,13 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  flex: 1;
+  gap: 24px;
+  height: calc(100vh - 136px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  /*max-width: 856px;*/
+  box-sizing: border-box;
+}

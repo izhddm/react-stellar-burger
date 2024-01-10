@@ -20,6 +20,7 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetUserInfoQuery} from "../../services/api/user-api";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -103,7 +104,7 @@ const App: FC = () => {
           <Route element={<ProtectedRouter/>}>
             <Route path={'/profile'} element={<ProfilePage/>}>
               <Route index element={<ProfileEditForm/>}/>
-              <Route path={'orders'} element={<NotFoundPage/>}/>
+              <Route path={'orders'} element={<ProfileOrderPage/>}/>
             </Route>
           </Route>
 
