@@ -1,0 +1,53 @@
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.circles {
+  margin: 0;
+  padding: 4px 0;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+  border-radius: 50%;
+  border: 2px solid #4c4cff;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+}
+
+.circles:hover {
+  transform: scale(1.1);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #131316;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.opacity {
+  fill: var(--interface-modal-bg, #1C1C21);
+  opacity: 0.6;
+}
+
+.circles:not(:first-child) {
+  margin-left: -16px;
+}
+
+.circles:hover .image {
+  border-color: #ff4c4c; /* Изменяем цвет рамки при наведении */
+}
+
+.count {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
