@@ -1,4 +1,6 @@
-export const orderList = {
+import {TOrderResponse} from "./types/types";
+
+export const orderList: TOrderResponse = {
   "success": true,
   "orders": [
     {
