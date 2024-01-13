@@ -21,6 +21,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetUserInfoQuery} from "../../services/api/user-api";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
+import {FeedPage} from "../../pages/feed-page/feed-page";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -89,6 +90,7 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
+          <Route path={'/feed'} element={<FeedPage/>}/>
           <Route path={'/ingredients/:id'} element={<IngredientDetails/>}/>
 
           // Для не авторизированных только
