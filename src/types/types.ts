@@ -62,3 +62,23 @@ export type TOrder = {
   },
   name: string | null,
 }
+
+// Заказы
+export interface IOrder {
+  ingredients: (string | null)[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type TOrders = IOrder[];
+
+export type TOrderResponse = {
+  success: boolean;
+  orders: TOrders;
+  total: number;
+  totalToday: number;
+}
