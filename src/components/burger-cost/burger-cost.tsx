@@ -3,13 +3,14 @@ import React, {FC} from "react";
 import styles from './burger-cost.module.css'
 
 interface IProps {
-  value: number
+  value: number | string
+  className?: string
 }
 
-export const BurgerCost: FC<IProps> = ({value}) => {
+export const BurgerCost: FC<IProps> = ({value, className}) => {
   return (
     <div className={styles.container}>
-      <p className="text text_type_digits-medium mr-2">{value}</p>
+      <p className={`${className ? className : 'text text_type_digits-medium mr-2'}`}>{value}</p>
       <CurrencyIcon type="primary"/>
     </div>
   );

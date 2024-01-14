@@ -22,6 +22,7 @@ import {useGetUserInfoQuery} from "../../services/api/user-api";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
 import {FeedPage} from "../../pages/feed-page/feed-page";
+import {OrderInfo} from "../order-info/order-info";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -90,7 +91,10 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
-          <Route path={'/feed'} element={<FeedPage/>}/>
+          <Route path={'/feed'}>
+            <Route index element={<FeedPage/>}/>
+            <Route path={':id'} element={<OrderInfo/>}/>
+          </Route>
           <Route path={'/ingredients/:id'} element={<IngredientDetails/>}/>
 
           // Для не авторизированных только
@@ -114,13 +118,16 @@ const App: FC = () => {
         </Route>
       </Routes>
 
-      {background && (
-        <Routes>
-          <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
-        </Routes>
-      )}
+      {
+        background && (
+          <Routes>
+            <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
+          </Routes>
+        )
+      }
     </div>
-  );
+  )
+    ;
 }
 
 export default App;

@@ -28,8 +28,6 @@ export const CardIngredients: FC<IProps> = ({ingredients}) => {
           }
         </li>
       ))}
-
-      {}
     </ul>
   );
 };
