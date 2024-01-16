@@ -2,6 +2,7 @@ import {FC} from "react";
 import OrderDetails from "../components/order-details/order-details";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import {AppDispatch} from "../services/store/store";
+import {OrderInfo} from "../components/order-info/order-info";
 
 
 export type DispatchFunc = () => AppDispatch
@@ -24,6 +25,7 @@ type ModalComponent = Record<string, FC>;
 export const modalComponent: ModalComponent = {
   'OrderDetails': OrderDetails,
   'IngredientDetails': IngredientDetails,
+  'FeedDetails': OrderInfo
 };
 
 // Ингредиент приходящий с сервера

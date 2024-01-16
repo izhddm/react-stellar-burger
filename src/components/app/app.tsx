@@ -113,6 +113,9 @@ const App: FC = () => {
               <Route path={'orders'} element={<ProfileOrderPage/>}/>
             </Route>
           </Route>
+          <Route element={<ProtectedRouter/>}>
+            <Route path={'/profile/orders/:id'} element={<OrderInfo/>}/>
+          </Route>
 
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
@@ -121,10 +124,18 @@ const App: FC = () => {
       {
         background && (
           <Routes>
+            // Для всех
             <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
+            <Route path={'feed/:id'} element={<Modal componentName={'FeedDetails'}/>}/>
+
+            // Только для авторизированных
+            <Route element={<ProtectedRouter/>}>
+              <Route path={'/profile/orders/:id'} element={<Modal componentName={'FeedDetails'}/>}/>
+            </Route>
           </Routes>
         )
       }
+
     </div>
   )
     ;

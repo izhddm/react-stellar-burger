@@ -4,8 +4,13 @@ import {CardOrder} from "../../components/card-order/card-order";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {orderList} from "../../order-list";
 import {FeedOrderList} from "../../components/feed-order-list/feed-order-list";
+import {IOrder} from "../../types/types";
+import {useLocation, useNavigate} from "react-router-dom";
 
 export const FeedPage: FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const ingredients = useAppSelector(state => state.ingredients);
 
   // Фильтруем ордера по статусу "created"
@@ -13,6 +18,11 @@ export const FeedPage: FC = () => {
 
   // Фильтруем ордера по статусу "done"
   const completedOrders = orderList.orders.filter(order => order.status === 'done');
+
+  // Функция для подмены ссылки в адресной строке
+  const handleOpenFeedDetails = (element: IOrder) => {
+    navigate(`/feed/${element._id}?number=${element.number}`, {'state': {background: location}});
+  }
 
   return (
     <main className={styles.page}>
@@ -27,7 +37,7 @@ export const FeedPage: FC = () => {
                 return ingredient ? [ingredient] : [];
               });
 
-              return <CardOrder key={order._id} order={order} showStatus={false} ingredients={filteredIngredients}/>
+              return <CardOrder key={order._id} order={order} showStatus={false} ingredients={filteredIngredients} onClick={handleOpenFeedDetails}/>
             })
           }
         </div>

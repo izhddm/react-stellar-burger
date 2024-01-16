@@ -3,15 +3,16 @@ import styles from './card-order.module.css'
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {BurgerCost} from "../burger-cost/burger-cost";
 import {CardIngredients} from "../card-ingredients/card-ingredients";
-import {TIngredients} from "../../types/types";
+import {IOrder, TIngredients} from "../../types/types";
 
 interface IProps {
-  order: any,
+  order: IOrder,
   ingredients: TIngredients,
   showStatus: boolean,
+  onClick: (element: IOrder) => void
 }
 
-export const CardOrder: FC<IProps> = ({order, showStatus, ingredients}) => {
+export const CardOrder: FC<IProps> = ({order, showStatus, ingredients, onClick}) => {
   // Отформатируем строку с номером заказа к виду #000000
   const orderNumber = `#${order.number.toString().padStart(6, '0')}`;
 
@@ -19,7 +20,9 @@ export const CardOrder: FC<IProps> = ({order, showStatus, ingredients}) => {
   const totalCost = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
 
   return (
-    <div key={order._id} className={`${styles.card} ml-2 mr-2 p-6`}>
+    <div key={order._id} className={`${styles.card} ml-2 mr-2 p-6`} onClick={() => {
+      onClick(order)
+    }}>
       <div className={styles.line}>
         <p
           className={`${styles['no-margin']} text text_type_digits-default text_color_primary`}>{orderNumber}</p>

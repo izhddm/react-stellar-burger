@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-info.module.css'
 import {BurgerCost} from "../burger-cost/burger-cost";
@@ -9,10 +9,15 @@ import {OrderInfoIngredient} from "../../order-info-ingredient/order-info-ingred
 import {TIngredient} from "../../types/types";
 
 export const OrderInfo: FC = () => {
-  const {id} = useParams();
-  const ingredients = useAppSelector(store => store.ingredients)
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const order = orderList.orders.find((order) => order._id == id);
+  // id из адресной строки
+  const {id} = useParams();
+  const number = searchParams.get('number');
+
+  const ingredients = useAppSelector(store => store.ingredients);
+
+  const order = orderList.orders.find((order) => order._id === id);
 
   // Получим ингредиенты по их id
   const orderIngredientsMap = new Map<string, { ingredient: TIngredient; count: number }>();
@@ -40,11 +45,11 @@ export const OrderInfo: FC = () => {
   const totalCost = orderIngredients.reduce((acc, element) => acc + element.ingredient.price * element.count, 0);
 
   return (
-    <div className={styles.container}>
-      <p className={'text text_type_digits-default'}>#034533</p>
+    <div className={`${styles.container} m-10`}>
+      <p className={`${styles.number} text text_type_digits-default`}>#034533</p>
       <h2 className={'text text_type_main-medium mt-5'}>{order?.name}</h2>
-      <p className={`text text_type_main-default mt-2 ${order?.status == 'done' ? styles.done : ''}`}>
-        {order?.status == 'done' ? 'Выполнен' : 'Создан'}
+      <p className={`text text_type_main-default mt-2 ${order?.status === 'done' ? styles.done : ''}`}>
+        {order?.status === 'done' ? 'Выполнен' : 'Создан'}
       </p>
       <p className={'text text_type_main-medium mt-15'}>Состав:</p>
       <div
@@ -52,7 +57,7 @@ export const OrderInfo: FC = () => {
         {
           orderIngredients?.map((element) => {
             return (
-              <OrderInfoIngredient count={element.count} ingredient={element.ingredient}
+              <OrderInfoIngredient key={element.ingredient._id} count={element.count} ingredient={element.ingredient}
                                    extraClass={orderIngredients.length > 4 ? 'mr-6' : ''}/>
             )
           })
