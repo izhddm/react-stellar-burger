@@ -16,8 +16,28 @@ export const CardOrder: FC<IProps> = ({order, showStatus, ingredients, onClick})
   // Отформатируем строку с номером заказа к виду #000000
   const orderNumber = `#${order.number.toString().padStart(6, '0')}`;
 
-  // Расчитаем стоимость сборки бургера
+  // Рассчитаем стоимость сборки бургера
   const totalCost = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
+
+  // Статусы
+  let statusText: string;
+  let statusClassName = '';
+
+  switch (order.status) {
+    case 'created':
+      statusText = 'Готовится';
+      break;
+    case 'pending':
+      statusText = 'В ожидании';
+      break;
+    case 'done':
+      statusText = 'Выполнен';
+      statusClassName = styles.done;
+      break;
+    default:
+      statusText = 'Статус неизвестен';
+      break;
+  }
 
   return (
     <div key={order._id} className={`${styles.card} ml-2 mr-2 p-6`} onClick={() => {
@@ -33,8 +53,8 @@ export const CardOrder: FC<IProps> = ({order, showStatus, ingredients, onClick})
         {order.name}
       </h3>
       {showStatus &&
-        <p className={`text text_type_main-default mt-2 ${order.status === 'done' ? styles.done : ''}`}>
-          {order.status === 'created' ? 'Готовится' : 'Выполнен'}
+        <p className={`text text_type_main-default mt-2 ${statusClassName}`}>
+          {statusText}
         </p>}
       <div className={`${styles.line} mt-6`}>
         <CardIngredients ingredients={ingredients}/>
