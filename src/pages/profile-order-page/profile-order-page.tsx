@@ -1,16 +1,24 @@
 import React, {FC} from "react";
 import styles from "./profile-order-page.module.css"
 import {useAppSelector} from "../../hooks/useAppSelector";
-import {orderList} from "../../order-list";
 import {CardOrder} from "../../components/card-order/card-order";
 import {useLocation, useNavigate} from "react-router-dom";
 import {IOrder} from "../../types/types";
+import {useGetMyOrdersQuery} from "../../services/api/orders-api";
 
 export const ProfileOrderPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const ingredients = useAppSelector(state => state.ingredients);
+
+  const {data: orderList, isLoading: isLoadingOrders} = useGetMyOrdersQuery();
+
+  // Идет загрузка
+  if (isLoadingOrders){
+    return <div>Loading...</div>;
+  }
+
 
   // Функция для подмены ссылки в адресной строке
   const handleOpenFeedDetails = (element: IOrder) => {
@@ -20,7 +28,7 @@ export const ProfileOrderPage: FC = () => {
   return (
     <div className={`${styles.container} ml-10 mt-9 pt-2 custom-scroll`}>
       {
-        orderList.orders.map((order) => {
+        orderList?.orders.map((order) => {
           // Соберем массив ингредиентов которые были заказаны
           const filteredIngredients = order.ingredients.flatMap(orderIngredientId => {
             const ingredient = ingredients.find(ingredient => ingredient._id === orderIngredientId);

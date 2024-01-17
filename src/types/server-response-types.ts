@@ -1,4 +1,4 @@
-import {IOrder, TIngredients, TUser} from "./types";
+import {IOrder, TIngredients, TOrders, TUser} from "./types";
 
 // Для расширения всех ошибок
 export type ExtendedErrorResponse = {
@@ -16,19 +16,13 @@ export interface CreateOrderResponse extends SuccessApiResponse {
   order: IOrder
 }
 
-
-export interface CreateOrderErrorResponse extends SuccessApiResponse {
-  status: string | number;
-  message: string
-}
-
 // Ответ на обновление токена
 export interface UpdateTokenResponse extends SuccessApiResponse {
   accessToken: string;
   refreshToken: string
 }
 
-// Пользовательские овтеты
+// Пользовательские ответы
 export interface SuccessLoginResponse extends UpdateTokenResponse {
   user: TUser
 }
@@ -53,4 +47,12 @@ export interface SuccessRegistrationResponse extends UpdateTokenResponse {
 // Ответ на запрос ингредиентов с сервера
 export interface IngredientsResponse extends SuccessApiResponse {
   data: TIngredients
+}
+
+// Ответ на запрос ордеров
+export type OrderResponse = {
+  success: boolean;
+  orders: TOrders;
+  total: number;
+  totalToday: number;
 }

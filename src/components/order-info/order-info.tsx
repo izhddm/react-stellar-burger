@@ -1,23 +1,26 @@
 import React, {FC} from "react";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-info.module.css'
 import {BurgerCost} from "../burger-cost/burger-cost";
-import {orderList} from "../../order-list";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {OrderInfoIngredient} from "../../order-info-ingredient/order-info-ingredient";
 import {TIngredient} from "../../types/types";
+import {useGetOrdersAllQuery} from "../../services/api/orders-api";
 
 export const OrderInfo: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  // id из адресной строки
   const {id} = useParams();
-  const number = searchParams.get('number');
 
   const ingredients = useAppSelector(store => store.ingredients);
 
-  const order = orderList.orders.find((order) => order._id === id);
+  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersAllQuery();
+
+  // Идет загрузка
+  if (isLoadingOrders){
+    return <div>Loading...</div>;
+  }
+
+  const order = orderList?.orders.find((order) => order._id === id);
 
   // Получим ингредиенты по их id
   const orderIngredientsMap = new Map<string, { ingredient: TIngredient; count: number }>();

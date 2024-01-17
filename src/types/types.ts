@@ -94,10 +94,3 @@ export interface IOrder {
 }
 
 export type TOrders = IOrder[];
-
-export type TOrderResponse = {
-  success: boolean;
-  orders: TOrders;
-  total: number;
-  totalToday: number;
-}
