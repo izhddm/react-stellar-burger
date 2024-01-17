@@ -11,7 +11,7 @@ import ProfilePage from "../../pages/profile-page/profile-page";
 import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
 import {setLoggedIn, setUser} from "../../services/slices/user-slice";
-import {useRefreshTokenMutation} from "../../services/api/apiBase";
+import {useRefreshTokenMutation} from "../../services/api/api-base";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 import {setIngredients} from "../../services/slices/ingredients-slice";
@@ -61,18 +61,14 @@ const App: FC = () => {
         dispatch(setLoggedIn({'isLoggedIn': true}));
       } else if (refreshToken) {
         try {
-          const response = updateToken(refreshToken);
-          const {data} = await response;
+          const response = await updateToken(refreshToken);
 
-          if (data?.success) {
+          if ('data' in response && response.data.success) {
             dispatch(setLoggedIn({'isLoggedIn': true}));
           }
+
         } catch (error: unknown) {
-          if (error instanceof Error) {
-            console.error(error);
-          } else {
-            console.error("An unexpected error occurred");
-          }
+          error instanceof Error ? console.error(error) : console.error("An unexpected error occurred");
         }
       }
     };

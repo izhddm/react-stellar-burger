@@ -4,15 +4,13 @@ import {useNavigate} from "react-router-dom";
 import {useForgotPasswordMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
 import {FC, FormEvent} from "react";
+import {FormForgotValues} from "../../../types/types";
 
-interface FormValues {
-  email: string
-}
 
 const ForgotPasswordForm: FC = () => {
   const navigate = useNavigate();
   const [forgotPassword, {isLoading, isError, error}] = useForgotPasswordMutation();
-  const {values, handleChange} = useForm<FormValues>({'email': ''})
+  const {values, handleChange} = useForm<FormForgotValues>({'email': ''})
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +18,7 @@ const ForgotPasswordForm: FC = () => {
     try {
       const response = await forgotPassword(values);
 
-      if (response?.data?.success) {
+      if ('data' in response && response.data.success) {
         navigate('/reset-password', {
           state: {
             email: values.email
@@ -54,7 +52,7 @@ const ForgotPasswordForm: FC = () => {
         {!isLoading ? 'Восстановить' : 'Восстановление'}
       </Button>
       {isError && <p
-        className={`${styles.errorMessage} text text_type_main-default`}>{error?.data?.message ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
+        className={`${styles.errorMessage} text text_type_main-default`}>{(error && 'data' in error && error.data?.message) ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
     </form>
   );
 }

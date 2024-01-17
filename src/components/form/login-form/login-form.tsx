@@ -6,11 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useLoginMutation} from "../../../services/api/auth-api";
 import {useForm} from "../../../hooks/useForm";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
-
-interface FormValues {
-  email: string,
-  password: string
-}
+import {UserLoginReques} from "../../../types/types";
 
 const LoginForm: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +15,7 @@ const LoginForm: FC = () => {
 
   const from = location.state?.from || '/';
 
-  const {values, handleChange} = useForm<FormValues>({email: '', password: ''});
+  const {values, handleChange} = useForm<UserLoginReques>({email: '', password: ''});
 
   const [login, {isLoading, isError, error}] = useLoginMutation();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,7 +24,7 @@ const LoginForm: FC = () => {
     const response = await login(values);
 
     // Успешно авторизовались
-    if (response?.data?.success) {
+    if ('data' in response && response.data?.success) {
       dispatch(setUser(response.data.user));
       dispatch(setLoggedIn({isLoggedIn: true}))
 
@@ -57,7 +53,7 @@ const LoginForm: FC = () => {
         {!isLoading ? 'Вход' : 'Входим'}
       </Button>
       {isError && <p
-        className={`${styles.errorMessage} text text_type_main-default mt-5`}>{error?.data?.message ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
+        className={`${styles.errorMessage} text text_type_main-default mt-5`}>{(error && 'data' in error && error.data?.message) ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
     </form>
   );
 }

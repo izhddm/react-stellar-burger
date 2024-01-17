@@ -17,8 +17,17 @@ export type TIsLoggedIn = {
   isLoggedIn: boolean
 }
 
+// Авторизация пользователя
+export interface UserLoginReques {
+  email: string,
+  password: string
+}
+
 // Для формы
 export type FormUserData = Record<keyof TUser | 'password', string>
+export type FormForgotValues =  Pick<FormUserData, 'email'>
+export type FormResetValues = Pick<FormUserData, 'password'> & { 'token': string }
+
 
 // Для модальных окон
 type ModalComponent = Record<string, FC>;
@@ -66,6 +75,13 @@ export type TOrder = {
 }
 
 // Заказы
+interface IOrderOwner {
+  createdAt: string;
+  email: string;
+  name: string;
+  updatedAt: string
+}
+
 export interface IOrder {
   ingredients: (string | null)[];
   _id: string;
@@ -74,6 +90,7 @@ export interface IOrder {
   name: string;
   createdAt: string;
   updatedAt: string;
+  owner?: IOrderOwner;
 }
 
 export type TOrders = IOrder[];

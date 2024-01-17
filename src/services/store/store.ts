@@ -1,5 +1,5 @@
 import {configureStore} from '@reduxjs/toolkit'
-import {apiBase} from "../api/apiBase";
+import {apiBase} from "../api/api-base";
 import modalReducer from '../slices/modal-slice'
 import burgerReducer from '../slices/burger-slice'
 import orderReducer from '../slices/order-slice'

@@ -1,16 +1,18 @@
-import {apiBase} from "./apiBase";
+import {apiBase} from "./api-base";
+import {SuccessLoginResponse, SuccessLogoutResponse} from "../../types/server-response-types";
+import {UserLoginReques} from "../../types/types";
 
 export const authApi = apiBase.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (arg) => ({
+    login: builder.mutation<SuccessLoginResponse, UserLoginReques>({
+      query: (body) => ({
         url: 'auth/login',
         method: 'POST',
-        body: arg
+        body
       }),
-      transformResponse: (response) => {
+      transformResponse: (response: SuccessLoginResponse) => {
         // Проверяем, что вернулась модель с success:true
-        if (response?.success) {
+        if (response.success) {
           localStorage.setItem('accessToken', response.accessToken);
           localStorage.setItem('refreshToken', response.refreshToken);
         }
@@ -18,15 +20,14 @@ export const authApi = apiBase.injectEndpoints({
         return response;
       },
     }),
-    logout: builder.mutation({
+    logout: builder.mutation<SuccessLogoutResponse, void>({
       query: () => ({
         url: 'auth/logout',
         method: 'POST',
-        body: {'token': localStorage.getItem('refreshToken')}
+        body: {'token': localStorage.getItem('refreshToken') ?? undefined}
       }),
-      transformResponse: (response) => {
-        // Проверяем, что вернулась модель с success:true
-        if (response?.success) {
+      transformResponse: (response: SuccessLogoutResponse) => {
+        if (response.success) {
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
         }

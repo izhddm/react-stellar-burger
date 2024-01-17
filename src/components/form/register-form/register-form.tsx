@@ -22,7 +22,7 @@ const RegisterForm: FC = () => {
     const response = await register(values);
 
     //Успешная регистрация - редиректим на главную страницу
-    if (response?.data?.success) {
+    if ('data' in response && response.data?.success) {
       dispatch(setUser(response.data?.user));
       dispatch(setLoggedIn({isLoggedIn: true}))
 
@@ -58,7 +58,7 @@ const RegisterForm: FC = () => {
         {!isLoading ? 'Зарегистрироваться' : 'Регистрация'}
       </Button>
       {isError && <p
-        className={`${styles.errorMessage} text text_type_main-default mt-5`}>{error?.data?.message ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
+        className={`${styles.errorMessage} text text_type_main-default mt-5`}>{(error && 'data' in error && error?.data?.message) ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
     </form>
   );
 }

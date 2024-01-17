@@ -39,14 +39,13 @@ const BurgerConstructorPrice: FC = () => {
 
       const ingredientIds = ingredients.map((ingredient) => ingredient._id);
 
-      // @ts-ignore "Нажатие по кнопке возможна только если булочка не null"
-      ingredientIds.push(bun._id, bun._id);
+      ingredientIds.push(bun!._id, bun!._id);
 
       // Вызываем мутацию с массивом _id ингредиентов
       const response = await createOrder(ingredientIds);
 
       // Проверяем успешность заказа и обновляем UI соответственно
-      if (response.data.success) {
+      if ('data' in response && response.data.success) {
         const {name, order} = response.data;
         dispatch(setOrder({name, order}))
         dispatch(setContentModal({
@@ -55,7 +54,7 @@ const BurgerConstructorPrice: FC = () => {
         }));
         dispatch(clearBurgerConstructor());
       } else {
-        console.error('Order placement failed:', response.data);
+        console.error('Order placement failed:', response);
       }
     } catch (error) {
       console.error('Error placing order:', error);

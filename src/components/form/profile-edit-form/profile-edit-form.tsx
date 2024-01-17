@@ -51,7 +51,7 @@ const ProfileEditForm: FC = () => {
     if (Object.keys(updatedData).length > 0) {
       const response = await updateUserInfo(updatedData);
 
-      if (response?.data?.success) {
+      if ('data' in response && response.data?.success) {
         dispatch(setUser(response.data.user));
       }
     }
