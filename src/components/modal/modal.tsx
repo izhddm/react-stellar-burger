@@ -5,29 +5,27 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {useNavigate} from "react-router-dom";
-import {modalComponent} from "../../types/types";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ModalProps {
-  componentName?: string,
+  component?: React.ReactNode,
   backNavigate: boolean
 }
 
-const Modal: FC<ModalProps> = ({componentName, backNavigate = false}) => {
+const Modal: FC<ModalProps> = ({component, backNavigate = false}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const name = useAppSelector(state => state.modal.componentName);
-  const DynamicComponent = modalComponent[componentName ?? name ?? ''];
-  const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
+  // const name = useAppSelector(state => state.modal.componentName);
+  // const DynamicComponent = modalComponent[componentName ?? name ?? ''];
+  // const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
 
   const modalsElement = document.getElementById('modals');
 
   React.useEffect(() => {
-    setIsModalOpen(!!dynamicComponent);
-  }, [dynamicComponent]);
+    setIsModalOpen(!!component);
+  }, [component]);
 
   const closeModal = () => {
     if (backNavigate) {
@@ -53,11 +51,11 @@ const Modal: FC<ModalProps> = ({componentName, backNavigate = false}) => {
     return () => document.removeEventListener('keydown', closeByEsc);
   }, [isModalOpen]);
 
-  return dynamicComponent && modalsElement ? (
+  return component && modalsElement ? (
     createPortal(
       <ModalOverlay onMouseDown={closeModal}>
         <div className={styles.modal} onMouseDown={handleStopPropagation}>
-          {dynamicComponent}
+          {component}
           <div className={styles.close}>
             <CloseIcon onClick={closeModal} type="primary"/>
           </div>

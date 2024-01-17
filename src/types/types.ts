@@ -1,8 +1,4 @@
-import {FC} from "react";
-import OrderDetails from "../components/order-details/order-details";
-import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import {AppDispatch} from "../services/store/store";
-import {OrderInfo} from "../components/order-info/order-info";
 
 
 export type DispatchFunc = () => AppDispatch
@@ -27,15 +23,6 @@ export interface UserLoginReques {
 export type FormUserData = Record<keyof TUser | 'password', string>
 export type FormForgotValues = Pick<FormUserData, 'email'>
 export type FormResetValues = Pick<FormUserData, 'password'> & { 'token': string }
-
-
-// Для модальных окон
-type ModalComponent = Record<string, FC>;
-export const modalComponent: ModalComponent = {
-  'OrderDetails': OrderDetails,
-  'IngredientDetails': IngredientDetails,
-  'FeedDetails': OrderInfo
-};
 
 // Ингредиент приходящий с сервера
 export type TIngredient = {

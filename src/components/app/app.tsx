@@ -89,7 +89,7 @@ const App: FC = () => {
           <Route index element={<HomePage/>}/>
           <Route path={'/feed'}>
             <Route index element={<FeedPage/>}/>
-            <Route path={':id'} element={<OrderInfo/>}/>
+            <Route path={':id'} element={<OrderInfo forPrivate={false}/>}/>
           </Route>
           <Route path={'/ingredients/:id'} element={<IngredientDetails/>}/>
 
@@ -110,7 +110,7 @@ const App: FC = () => {
             </Route>
           </Route>
           <Route element={<ProtectedRouter/>}>
-            <Route path={'/profile/orders/:id'} element={<OrderInfo/>}/>
+            <Route path={'/profile/orders/:id'} element={<OrderInfo forPrivate={true}/>}/>
           </Route>
 
           <Route path='*' element={<NotFoundPage/>}/>
@@ -121,12 +121,13 @@ const App: FC = () => {
         background && (
           <Routes>
             // Для всех
-            <Route path={'ingredients/:id'} element={<Modal backNavigate={true} componentName={'IngredientDetails'}/>}/>
-            <Route path={'feed/:id'} element={<Modal backNavigate={true} componentName={'FeedDetails'}/>}/>
+            <Route path={'ingredients/:id'} element={<Modal backNavigate={true} component={<IngredientDetails/>}/>}/>
+            <Route path={'feed/:id'} element={<Modal backNavigate={true} component={<OrderInfo forPrivate={false}/>}/>}/>
 
             // Только для авторизированных
             <Route element={<ProtectedRouter/>}>
-              <Route path={'/profile/orders/:id'} element={<Modal backNavigate={true} componentName={'FeedDetails'}/>}/>
+              <Route path={'/profile/orders/:id'}
+                     element={<Modal backNavigate={true} component={<OrderInfo forPrivate={true}/>}/>}/>
             </Route>
           </Routes>
         )

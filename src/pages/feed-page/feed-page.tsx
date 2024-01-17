@@ -5,7 +5,7 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 import {FeedOrderList} from "../../components/feed-order-list/feed-order-list";
 import {IOrder} from "../../types/types";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useGetOrdersAllQuery} from "../../services/api/orders-api";
+import {useGetOrdersQuery} from "../../services/api/orders-api";
 
 export const FeedPage: FC = () => {
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ export const FeedPage: FC = () => {
 
   const ingredients = useAppSelector(state => state.ingredients);
 
-  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersAllQuery();
+  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersQuery(false);
 
   // Идет загрузка
-  if (isLoadingOrders){
+  if (isLoadingOrders) {
     return <div>Loading...</div>;
   }
 
@@ -44,7 +44,8 @@ export const FeedPage: FC = () => {
                 return ingredient ? [ingredient] : [];
               });
 
-              return <CardOrder key={order._id} order={order} showStatus={false} ingredients={filteredIngredients} onClick={handleOpenFeedDetails}/>
+              return <CardOrder key={order._id} order={order} showStatus={false} ingredients={filteredIngredients}
+                                onClick={handleOpenFeedDetails}/>
             })
           }
         </div>

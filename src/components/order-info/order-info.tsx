@@ -6,17 +6,21 @@ import {BurgerCost} from "../burger-cost/burger-cost";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {OrderInfoIngredient} from "../../order-info-ingredient/order-info-ingredient";
 import {TIngredient} from "../../types/types";
-import {useGetOrdersAllQuery} from "../../services/api/orders-api";
+import {useGetOrdersQuery} from "../../services/api/orders-api";
 
-export const OrderInfo: FC = () => {
+interface IProps {
+  forPrivate: boolean
+}
+
+export const OrderInfo: FC<IProps> = ({forPrivate = true}) => {
   const {id} = useParams();
 
   const ingredients = useAppSelector(store => store.ingredients);
 
-  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersAllQuery();
+  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersQuery(forPrivate);
 
   // Идет загрузка
-  if (isLoadingOrders){
+  if (isLoadingOrders) {
     return <div>Loading...</div>;
   }
 

@@ -4,7 +4,7 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 import {CardOrder} from "../../components/card-order/card-order";
 import {useLocation, useNavigate} from "react-router-dom";
 import {IOrder} from "../../types/types";
-import {useGetMyOrdersQuery} from "../../services/api/orders-api";
+import {useGetOrdersQuery} from "../../services/api/orders-api";
 
 export const ProfileOrderPage: FC = () => {
   const navigate = useNavigate();
@@ -12,13 +12,12 @@ export const ProfileOrderPage: FC = () => {
 
   const ingredients = useAppSelector(state => state.ingredients);
 
-  const {data: orderList, isLoading: isLoadingOrders} = useGetMyOrdersQuery();
+  const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersQuery(true);
 
   // Идет загрузка
   if (isLoadingOrders){
     return <div>Loading...</div>;
   }
-
 
   // Функция для подмены ссылки в адресной строке
   const handleOpenFeedDetails = (element: IOrder) => {
