@@ -11,11 +11,13 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ModalProps {
   componentName?: string,
+  backNavigate: boolean
 }
 
-const Modal: FC<ModalProps> = ({componentName}) => {
+const Modal: FC<ModalProps> = ({componentName, backNavigate = false}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const name = useAppSelector(state => state.modal.componentName);
   const DynamicComponent = modalComponent[componentName ?? name ?? ''];
@@ -23,8 +25,14 @@ const Modal: FC<ModalProps> = ({componentName}) => {
 
   const modalsElement = document.getElementById('modals');
 
+  React.useEffect(() => {
+    setIsModalOpen(!!dynamicComponent);
+  }, [dynamicComponent]);
+
   const closeModal = () => {
-    navigate(-1);
+    if (backNavigate) {
+      navigate(-1);
+    }
     dispatch(clearContentModal());
   };
 
@@ -34,18 +42,16 @@ const Modal: FC<ModalProps> = ({componentName}) => {
   };
 
   React.useEffect(() => {
-    // Закрытие по ESC
-    const closeByEsc = ((e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        closeModal()
+    const closeByEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
       }
-    });
+    };
 
-    //События на нажатие кнопок
     document.addEventListener('keydown', closeByEsc);
 
-    return () => document.removeEventListener('keydown', closeByEsc)
-  }, []);
+    return () => document.removeEventListener('keydown', closeByEsc);
+  }, [isModalOpen]);
 
   return dynamicComponent && modalsElement ? (
     createPortal(

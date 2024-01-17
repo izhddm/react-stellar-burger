@@ -25,7 +25,7 @@ export interface UserLoginReques {
 
 // Для формы
 export type FormUserData = Record<keyof TUser | 'password', string>
-export type FormForgotValues =  Pick<FormUserData, 'email'>
+export type FormForgotValues = Pick<FormUserData, 'email'>
 export type FormResetValues = Pick<FormUserData, 'password'> & { 'token': string }
 
 

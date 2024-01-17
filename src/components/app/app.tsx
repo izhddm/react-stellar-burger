@@ -121,20 +121,19 @@ const App: FC = () => {
         background && (
           <Routes>
             // Для всех
-            <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
-            <Route path={'feed/:id'} element={<Modal componentName={'FeedDetails'}/>}/>
+            <Route path={'ingredients/:id'} element={<Modal backNavigate={true} componentName={'IngredientDetails'}/>}/>
+            <Route path={'feed/:id'} element={<Modal backNavigate={true} componentName={'FeedDetails'}/>}/>
 
             // Только для авторизированных
             <Route element={<ProtectedRouter/>}>
-              <Route path={'/profile/orders/:id'} element={<Modal componentName={'FeedDetails'}/>}/>
+              <Route path={'/profile/orders/:id'} element={<Modal backNavigate={true} componentName={'FeedDetails'}/>}/>
             </Route>
           </Routes>
         )
       }
 
     </div>
-  )
-    ;
+  );
 }
 
 export default App;
