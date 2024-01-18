@@ -11,7 +11,7 @@ interface IProps {
 export const FeedOrderList: FC<IProps> = ({title, orders, extraClass}) => {
   return (
     <div className={`${styles.flex} ${styles.flexColumn}`}>
-      <h3 className={'text text_type_main-medium'}>{title}</h3>
+      <h2 className={'text text_type_main-medium'}>{title}</h2>
       <ul className={`${styles.created} mt-6 ${orders.length > 12 ? `${styles.scrollX} custom-scroll` : ''}`}>
         {
           orders.map(order => {
