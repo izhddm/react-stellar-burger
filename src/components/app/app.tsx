@@ -23,6 +23,7 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
 import {FeedPage} from "../../pages/feed-page/feed-page";
 import {OrderInfo} from "../order-info/order-info";
+import {ProfileEditPage} from "../../pages/profile-edit-page/profile-edit-page";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -105,7 +106,7 @@ const App: FC = () => {
           // Только для авторизированных
           <Route element={<ProtectedRouter/>}>
             <Route path={'/profile'} element={<ProfilePage/>}>
-              <Route index element={<ProfileEditForm/>}/>
+              <Route index element={<ProfileEditPage/>}/>
               <Route path={'orders'} element={<ProfileOrderPage/>}/>
             </Route>
           </Route>
