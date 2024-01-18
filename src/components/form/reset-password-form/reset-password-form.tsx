@@ -4,13 +4,11 @@ import styles from './reset-password-form.module.css';
 import {useResetPasswordMutation} from "../../../services/api/user-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useForm} from "../../../hooks/useForm";
-import {FormUserData} from "../../../types/types";
-
-type FormValues = Pick<FormUserData, 'password'> & { 'token': string }
+import {FormResetValues} from "../../../types/types";
 
 const ResetPasswordForm: FC = () => {
   const [resetPassword, {isLoading, isSuccess, isError, error}] = useResetPasswordMutation();
-  const {values, handleChange, setValues}= useForm<FormValues>({password: '', token: ''});
+  const {values, handleChange, setValues} = useForm<FormResetValues>({password: '', token: ''});
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,7 +26,7 @@ const ResetPasswordForm: FC = () => {
 
     const response = await resetPassword(values);
 
-    if (response?.data?.success) {
+    if ('data' in response && response.data?.success) {
       setValues({password: '', token: ''})
 
       navigate('/login');
@@ -57,7 +55,7 @@ const ResetPasswordForm: FC = () => {
       {!isLoading ? 'Сохранить' : 'Происходит сохранение'}
     </Button>
     {isError && <p
-      className={`${styles.errorMessage} text text_type_main-default mt-5`}>{error?.data?.message ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
+      className={`${styles.errorMessage} text text_type_main-default mt-5`}>{(error && 'data' in error && error?.data?.message) ?? 'Произошла ошибка, попробуйте еще раз.'}</p>}
   </form>);
 }
 

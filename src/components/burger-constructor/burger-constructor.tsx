@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import styles from './burger-constructor.module.css'
-import BurgerPrice from "../burger-price/burger-price";
+import BurgerConstructorPrice from "../burger-constructor-price/burger-constructor-price";
 import {addIngredient, setBun} from "../../services/slices/burger-slice";
 import {useDrop} from "react-dnd";
 import ConstructorBun from "../constructor-bun/constructor-bun";
@@ -56,7 +56,7 @@ const BurgerConstructor: FC = () => {
       </div>
 
       <div className={styles.price + ' mb-6'}>
-        <BurgerPrice/>
+        <BurgerConstructorPrice/>
       </div>
     </section>
   );

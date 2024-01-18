@@ -8,7 +8,7 @@ const Layout: FC = () => {
     <>
       <AppHeader/>
       <Outlet/>
-      <Modal/>
+      <Modal backNavigate={false}/>
     </>
   );
 }

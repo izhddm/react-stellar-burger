@@ -51,14 +51,14 @@ const ProfileEditForm: FC = () => {
     if (Object.keys(updatedData).length > 0) {
       const response = await updateUserInfo(updatedData);
 
-      if (response?.data?.success) {
+      if ('data' in response && response.data?.success) {
         dispatch(setUser(response.data.user));
       }
     }
   };
 
   return (
-    <form className={'mt-30 ml-15'}>
+    <form className={'mt-30 ml-15'} onSubmit={handleSave}>
       <Input
         name={'name'}
         onChange={handleChange}
@@ -88,7 +88,7 @@ const ProfileEditForm: FC = () => {
         <Button htmlType="button" type="secondary" size="small" onClick={handleCancel}>
           Отмена
         </Button>
-        <Button htmlType="button" type="primary" size="medium" onClick={handleSave} disabled={isUpdatingUserInfo}>
+        <Button htmlType="button" type="primary" size="medium" disabled={isUpdatingUserInfo}>
           Сохранить
         </Button>
       </div>

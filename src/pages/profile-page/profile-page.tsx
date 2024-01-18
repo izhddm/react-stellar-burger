@@ -25,7 +25,7 @@ const ProfilePage: FC = () => {
     if (token) {
       const response = await logout();
 
-      if (response?.data?.success) {
+      if ('data' in response && response.data?.success) {
         dispatch(resetUser());
         navigate('/login');
       }

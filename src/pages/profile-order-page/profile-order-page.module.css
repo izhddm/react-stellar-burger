@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  max-width: 856px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 24px;
+  height: calc(100vh - 136px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}

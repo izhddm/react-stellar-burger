@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 40px;
+  background: var(--interface-modal-bg, #1C1C21);
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.04), 0 0 2px 0 rgba(0, 0, 0, 0.06), 0 4px 8px 0 rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+}
+
+.line {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.done {
+  color: var(--interface-success, #0CC);
+}

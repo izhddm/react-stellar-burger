@@ -1,0 +1,27 @@
+.flex {
+  display: flex;
+}
+
+.flexRow {
+  flex-direction: row;
+}
+
+.flexColumn {
+  flex-direction: column;
+}
+
+.created {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 8px;
+  height: 140px;
+  padding: 0;
+  margin-bottom: 0;
+  list-style: none;
+  width: 280px;
+}
+
+.scrollX {
+  overflow-x: scroll;
+}

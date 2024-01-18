@@ -8,10 +8,9 @@ import ResetPasswordPage from "../../pages/reset-password-page/reset-password-pa
 import RegisterPage from "../../pages/register-page/register-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
 import ProfilePage from "../../pages/profile-page/profile-page";
-import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
 import {setLoggedIn, setUser} from "../../services/slices/user-slice";
-import {useRefreshTokenMutation} from "../../services/api/apiBase";
+import {useRefreshTokenMutation} from "../../services/api/api-base";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 import {setIngredients} from "../../services/slices/ingredients-slice";
@@ -20,6 +19,10 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useGetUserInfoQuery} from "../../services/api/user-api";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
+import {FeedPage} from "../../pages/feed-page/feed-page";
+import {OrderInfo} from "../order-info/order-info";
+import {ProfileEditPage} from "../../pages/profile-edit-page/profile-edit-page";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -58,18 +61,14 @@ const App: FC = () => {
         dispatch(setLoggedIn({'isLoggedIn': true}));
       } else if (refreshToken) {
         try {
-          const response = updateToken(refreshToken);
-          const {data} = await response;
+          const response = await updateToken(refreshToken);
 
-          if (data?.success) {
+          if ('data' in response && response.data.success) {
             dispatch(setLoggedIn({'isLoggedIn': true}));
           }
+
         } catch (error: unknown) {
-          if (error instanceof Error) {
-            console.error(error);
-          } else {
-            console.error("An unexpected error occurred");
-          }
+          error instanceof Error ? console.error(error) : console.error("An unexpected error occurred");
         }
       }
     };
@@ -88,6 +87,10 @@ const App: FC = () => {
       <Routes location={background || location}>
         <Route path={'/'} element={<Layout/>}>
           <Route index element={<HomePage/>}/>
+          <Route path={'/feed'}>
+            <Route index element={<FeedPage/>}/>
+            <Route path={':id'} element={<OrderInfo forPrivate={false}/>}/>
+          </Route>
           <Route path={'/ingredients/:id'} element={<IngredientDetails/>}/>
 
           // Для не авторизированных только
@@ -102,20 +105,34 @@ const App: FC = () => {
           // Только для авторизированных
           <Route element={<ProtectedRouter/>}>
             <Route path={'/profile'} element={<ProfilePage/>}>
-              <Route index element={<ProfileEditForm/>}/>
-              <Route path={'orders'} element={<NotFoundPage/>}/>
+              <Route index element={<ProfileEditPage/>}/>
+              <Route path={'orders'} element={<ProfileOrderPage/>}/>
             </Route>
+          </Route>
+          <Route element={<ProtectedRouter/>}>
+            <Route path={'/profile/orders/:id'} element={<OrderInfo forPrivate={true}/>}/>
           </Route>
 
           <Route path='*' element={<NotFoundPage/>}/>
         </Route>
       </Routes>
 
-      {background && (
-        <Routes>
-          <Route path={'ingredients/:id'} element={<Modal componentName={'IngredientDetails'}/>}/>
-        </Routes>
-      )}
+      {
+        background && (
+          <Routes>
+            // Для всех
+            <Route path={'ingredients/:id'} element={<Modal backNavigate={true} component={<IngredientDetails/>}/>}/>
+            <Route path={'feed/:id'} element={<Modal backNavigate={true} component={<OrderInfo forPrivate={false}/>}/>}/>
+
+            // Только для авторизированных
+            <Route element={<ProtectedRouter/>}>
+              <Route path={'/profile/orders/:id'}
+                     element={<Modal backNavigate={true} component={<OrderInfo forPrivate={true}/>}/>}/>
+            </Route>
+          </Routes>
+        )
+      }
+
     </div>
   );
 }

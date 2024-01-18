@@ -1,0 +1,36 @@
+.container {
+  grid-area: page;
+  align-self: center;
+  width: 100%;
+  max-width: 640px;
+}
+
+.number {
+  height: 50px;
+  line-height: 50px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flexGap {
+  gap: 16px;
+}
+
+.flexRow {
+  composes: flex;
+  flex-direction: row;
+}
+
+.done {
+  color: var(--interface-success, #0CC);
+}
+
+.ingredients {
+  height: 320px;
+  overflow-y: auto;
+}

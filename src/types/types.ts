@@ -1,6 +1,3 @@
-import {FC} from "react";
-import OrderDetails from "../components/order-details/order-details";
-import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import {AppDispatch} from "../services/store/store";
 
 
@@ -16,15 +13,16 @@ export type TIsLoggedIn = {
   isLoggedIn: boolean
 }
 
+// Авторизация пользователя
+export interface UserLoginReques {
+  email: string,
+  password: string
+}
+
 // Для формы
 export type FormUserData = Record<keyof TUser | 'password', string>
-
-// Для модальных окон
-type ModalComponent = Record<string, FC>;
-export const modalComponent: ModalComponent = {
-  'OrderDetails': OrderDetails,
-  'IngredientDetails': IngredientDetails,
-};
+export type FormForgotValues = Pick<FormUserData, 'email'>
+export type FormResetValues = Pick<FormUserData, 'password'> & { 'token': string }
 
 // Ингредиент приходящий с сервера
 export type TIngredient = {
@@ -62,3 +60,24 @@ export type TOrder = {
   },
   name: string | null,
 }
+
+// Заказы
+interface IOrderOwner {
+  createdAt: string;
+  email: string;
+  name: string;
+  updatedAt: string
+}
+
+export interface IOrder {
+  ingredients: (string | null)[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: IOrderOwner;
+}
+
+export type TOrders = IOrder[];
