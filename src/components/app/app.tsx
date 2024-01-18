@@ -8,7 +8,6 @@ import ResetPasswordPage from "../../pages/reset-password-page/reset-password-pa
 import RegisterPage from "../../pages/register-page/register-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
 import ProfilePage from "../../pages/profile-page/profile-page";
-import ProfileEditForm from "../form/profile-edit-form/profile-edit-form";
 import ProtectedRouter from "../protected-router/protected-router";
 import {setLoggedIn, setUser} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/api-base";
