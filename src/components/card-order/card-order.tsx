@@ -12,6 +12,16 @@ interface IProps {
   onClick: (element: IOrder) => void
 }
 
+const statusTextMap: Record<string, string> = {
+  created: 'Готовится',
+  pending: 'В ожидании',
+  done: 'Выполнен',
+};
+
+const statusClassMap: Record<string, string> = {
+  done: styles.done,
+};
+
 export const CardOrder: FC<IProps> = ({order, showStatus, ingredients, onClick}) => {
   // Отформатируем строку с номером заказа к виду #000000
   const orderNumber = `#${order.number.toString().padStart(6, '0')}`;
@@ -20,24 +30,8 @@ export const CardOrder: FC<IProps> = ({order, showStatus, ingredients, onClick})
   const totalCost = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
 
   // Статусы
-  let statusText: string;
-  let statusClassName = '';
-
-  switch (order.status) {
-    case 'created':
-      statusText = 'Готовится';
-      break;
-    case 'pending':
-      statusText = 'В ожидании';
-      break;
-    case 'done':
-      statusText = 'Выполнен';
-      statusClassName = styles.done;
-      break;
-    default:
-      statusText = 'Статус неизвестен';
-      break;
-  }
+  const statusText = statusTextMap[order.status] || 'Статус неизвестен';
+  const statusClassName = statusClassMap[order.status] || '';
 
   return (
     <div key={order._id} className={`${styles.card} ml-2 mr-2 p-6`} onClick={() => {
