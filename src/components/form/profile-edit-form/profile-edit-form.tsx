@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, FormEvent, useEffect} from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
@@ -33,7 +33,9 @@ const ProfileEditForm: FC = () => {
     setValues({email: defaultEmail, name: defaultName, password: ''});
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const updatedData: UpdatedData = {};
 
     if (values.name !== defaultName) {
@@ -88,7 +90,7 @@ const ProfileEditForm: FC = () => {
         <Button htmlType="button" type="secondary" size="small" onClick={handleCancel}>
           Отмена
         </Button>
-        <Button htmlType="button" type="primary" size="medium" disabled={isUpdatingUserInfo}>
+        <Button htmlType="submit" type="primary" size="medium" disabled={isUpdatingUserInfo}>
           Сохранить
         </Button>
       </div>
