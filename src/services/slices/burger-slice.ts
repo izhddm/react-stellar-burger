@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {TIngredient, TIngredientConstructor} from "../../types/types";
 
 interface IBurgerState {
-  bun: TIngredientConstructor | null,
+  bun: TIngredient | null,
   ingredients: TIngredientConstructor[]
 }
 
@@ -26,7 +26,7 @@ const burgerSlice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    setBun: (state, {payload}: PayloadAction<TIngredientConstructor>) => {
+    setBun: (state, {payload}: PayloadAction<TIngredient>) => {
       state.bun = payload;
     },
     addIngredient: {
