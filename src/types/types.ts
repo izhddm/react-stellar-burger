@@ -81,3 +81,18 @@ export interface IOrder {
 }
 
 export type TOrders = IOrder[];
+
+export interface IBurgerState {
+  bun: TIngredient | null,
+  ingredients: TIngredientConstructor[]
+}
+
+export interface ISwapIngredient {
+  indexFrom: number,
+  indexTo: number,
+  ingredient: TIngredientConstructor
+}
+
+export interface IRemoveIngredient {
+  uuid: string
+}
