@@ -1,5 +1,6 @@
 import {TIngredient} from "../types/types";
 import {RootState} from "./store/store";
+import {useGetIngredientsQuery} from "./api/ingredient-api";
 
 export const getCountIngredientFromConstructor = (element: TIngredient) => (state: RootState) => {
   if (state.burger.bun && element._id === state.burger.bun._id) {
@@ -15,5 +16,7 @@ export const getDetailIngredient = (id: string | undefined) => (state: RootState
     return state.modal.data as TIngredient;
   }
 
-  return state.ingredients.find((el) => el._id === id) ?? null;
+  const {data: ingredients} = useGetIngredientsQuery(); // Получения списка ингредиентов
+
+  return ingredients?.find((el) => el._id === id) ?? null;
 }

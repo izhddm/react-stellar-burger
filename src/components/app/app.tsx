@@ -13,7 +13,6 @@ import {setLoggedIn, setUser} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/api-base";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
-import {setIngredients} from "../../services/slices/ingredients-slice";
 import styles from './app.module.css'
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
@@ -30,7 +29,7 @@ const App: FC = () => {
   const background = location.state && location.state?.background;
 
   const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation(); // Обновление токена
-  const {data: ingredients, isLoading: ingredientLoading, isError: ingredientError} = useGetIngredientsQuery(); // Получения списка ингредиентов
+  const {isLoading: isLoadingIngredients} = useGetIngredientsQuery(); // Получения списка ингредиентов
   const {data: userInfo, isLoading: isLoadingUserInfo} = useGetUserInfoQuery(); // Получение данных о юзере
 
   // При монтировании запишем данные о пользователе
@@ -39,13 +38,6 @@ const App: FC = () => {
       dispatch(setUser(userInfo.user));
     }
   }, [userInfo]);
-
-  // При монтировании получим список ингредиентов
-  useEffect(() => {
-    if (!ingredientLoading) {
-      dispatch(setIngredients(ingredients?.data ?? []));
-    }
-  }, [ingredients, ingredientLoading]);
 
   // При монтировании актуализируем данные по логину пользователя
   useEffect(() => {
@@ -78,7 +70,7 @@ const App: FC = () => {
   }, [dispatch, updateToken]);
 
   // Выведем прелоудер пока идет загрузка
-  if (isLoadingToken || ingredientLoading || isLoadingUserInfo) {
+  if (isLoadingToken || isLoadingIngredients || isLoadingUserInfo) {
     return <div>Loading...</div>;
   }
 

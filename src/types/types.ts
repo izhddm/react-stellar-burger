@@ -1,4 +1,6 @@
 import {AppDispatch} from "../services/store/store";
+import {FC} from "react";
+import OrderDetails from "../components/order-details/order-details";
 
 
 export type DispatchFunc = () => AppDispatch
@@ -96,3 +98,9 @@ export interface ISwapIngredient {
 export interface IRemoveIngredient {
   uuid: string
 }
+
+// Для модальных окон без прямой ссылки
+type ModalComponent = Record<string, FC>;
+export const modalComponent: ModalComponent = {
+  'OrderDetails': OrderDetails,
+};

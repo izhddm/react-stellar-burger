@@ -6,6 +6,8 @@ import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {clearContentModal} from "../../services/slices/modal-slice";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {modalComponent} from "../../types/types";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ModalProps {
   component?: React.ReactNode,
@@ -17,15 +19,15 @@ const Modal: FC<ModalProps> = ({component, backNavigate = false}) => {
   const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  // const name = useAppSelector(state => state.modal.componentName);
-  // const DynamicComponent = modalComponent[componentName ?? name ?? ''];
-  // const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : null;
+   const name = useAppSelector(state => state.modal.componentName);
+   const DynamicComponent = modalComponent[name ?? ''];
+   const dynamicComponent = DynamicComponent ? (<DynamicComponent/>) : component;
 
   const modalsElement = document.getElementById('modals');
 
   React.useEffect(() => {
-    setIsModalOpen(!!component);
-  }, [component]);
+    setIsModalOpen(!!dynamicComponent);
+  }, [dynamicComponent]);
 
   const closeModal = () => {
     if (backNavigate) {
@@ -51,11 +53,11 @@ const Modal: FC<ModalProps> = ({component, backNavigate = false}) => {
     return () => document.removeEventListener('keydown', closeByEsc);
   }, [isModalOpen]);
 
-  return component && modalsElement ? (
+  return dynamicComponent && modalsElement ? (
     createPortal(
       <ModalOverlay onMouseDown={closeModal}>
         <div className={styles.modal} onMouseDown={handleStopPropagation}>
-          {component}
+          {dynamicComponent}
           <div className={styles.close}>
             <CloseIcon onClick={closeModal} type="primary"/>
           </div>
