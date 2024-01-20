@@ -104,3 +104,8 @@ type ModalComponent = Record<string, FC>;
 export const modalComponent: ModalComponent = {
   'OrderDetails': OrderDetails,
 };
+
+export interface IModalState {
+  componentName: string | null,
+  data: number | null
+}

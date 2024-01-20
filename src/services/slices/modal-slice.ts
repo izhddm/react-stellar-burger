@@ -1,12 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {TIngredient} from "../../types/types";
+import {IModalState} from "../../types/types";
 
-interface ModalState {
-  componentName: string | null,
-  data: number | null | TIngredient
-}
-
-const initialState: ModalState = {
+const initialState: IModalState = {
   componentName: null,
   data: null
 };
@@ -16,13 +11,12 @@ const modalSlice = createSlice({
     initialState,
     reducers:
       {
-        setContentModal: (state, {payload}: PayloadAction<ModalState>) => {
+        setContentModal: (state, {payload}: PayloadAction<IModalState>) => {
           return {...state, ...payload}
         },
-        clearContentModal:
-          () => {
-            return {...initialState}
-          },
+        clearContentModal: (_state) => {
+          return {...initialState}
+        }
       }
     ,
   })
