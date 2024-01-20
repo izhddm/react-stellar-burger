@@ -29,13 +29,17 @@
     "@types/react-dom": "17.0.0",
     "@types/react-redux": "^7.1.33",
     "@types/uuid": "^9.0.7",
+    "concurrently": "^8.2.2",
+    "cypress": "^13.6.3",
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run start-react\" \"npm run cypress:open\"",
+    "start-react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "npx cypress open"
   },
   "eslintConfig": {
     "extends": [
