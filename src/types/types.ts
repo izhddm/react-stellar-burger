@@ -109,3 +109,6 @@ export interface IModalState {
   componentName: string | null,
   data: number | null
 }
+
+// Для стейта с инфой о юзере
+export type TUserState = TUser & TIsLoggedIn;
