@@ -1,5 +1,5 @@
 import {apiBase} from "./api-base";
-import {OrderResponse} from "../../types/server-response-types";
+import {CreateOrderResponse, OrderResponse} from "../../types/server-response-types";
 
 
 const wsBaseUrl = 'wss://norma.nomoreparties.space'
@@ -48,7 +48,17 @@ export const ordersApi = apiBase.injectEndpoints({
         url: `orders/${id}`,
       }),
     }),
+    createOrder: builder.mutation<CreateOrderResponse, String[]>({
+      query: (ids) => ({
+        url: 'orders',
+        method: 'POST',
+        body: {ingredients: ids},
+        headers: {
+          'Authorization': localStorage.getItem('accessToken') ?? undefined
+        }
+      }),
+    }),
   }),
 });
 
-export const {useGetOrdersQuery, useGetOrderQuery} = ordersApi;
+export const {useGetOrdersQuery, useGetOrderQuery, useCreateOrderMutation} = ordersApi;

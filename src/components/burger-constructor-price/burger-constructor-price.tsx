@@ -4,11 +4,11 @@ import styles from './burger-price.module.css';
 import {setContentModal} from "../../services/slices/modal-slice";
 import {setOrder} from "../../services/slices/order-slice";
 import {clearBurgerConstructor} from "../../services/slices/burger-slice";
-import {useCreateOrderMutation} from "../../services/api/order-api";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {BurgerCost} from "../burger-cost/burger-cost";
+import {useCreateOrderMutation} from "../../services/api/orders-api";
 
 const BurgerConstructorPrice: FC = () => {
   const dispatch = useAppDispatch();
