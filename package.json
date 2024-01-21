@@ -2,6 +2,7 @@
   "name": "react-burger-starter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
@@ -31,6 +32,7 @@
     "@types/uuid": "^9.0.7",
     "concurrently": "^8.2.2",
     "cypress": "^13.6.3",
+    "gh-pages": "^6.1.1",
     "typescript": "^5.3.3"
   },
   "scripts": {
@@ -39,7 +41,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "npx cypress open"
+    "cypress:open": "npx cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
