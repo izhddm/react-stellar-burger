@@ -1,19 +1,21 @@
-import React, {FC, FormEvent, useEffect} from 'react';
+import React, {FC, FormEvent, useEffect, useState} from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {setUser} from "../../../services/slices/user-slice";
 import styles from './profile-edit-form.module.css';
-import {useUpdateUserInfoMutation} from "../../../services/api/user-api";
+import {useGetUserInfoQuery, useUpdateUserInfoMutation} from "../../../services/api/user-api";
 import {useForm} from "../../../hooks/useForm";
 import {FormUserData} from "../../../types/types";
-import {useAppSelector} from "../../../hooks/useAppSelector";
 import {useAppDispatch} from "../../../hooks/useAppDispatch";
 
 type UpdatedData = Partial<FormUserData>
 
 const ProfileEditForm: FC = () => {
   const dispatch = useAppDispatch();
-  const {email: defaultEmail, name: defaultName} = useAppSelector((state) => state.user);
+  const [defaultEmail, setDefaultEmail] = useState('');
+  const [defaultName, setDefaultName] = useState('');
   const [updateUserInfo, {isLoading: isUpdatingUserInfo}] = useUpdateUserInfoMutation();
+
+  const {data: userInfo, isLoading: isLoadingUserInfo} = useGetUserInfoQuery(); // Получение данных о юзере
 
   const {values, handleChange, setValues} = useForm<FormUserData>({
     email: defaultEmail,
@@ -22,9 +24,12 @@ const ProfileEditForm: FC = () => {
   });
 
   useEffect(() => {
-    setValues({email: defaultEmail, name: defaultName, password: ''});
-  }, [defaultEmail, defaultName]);
-
+    if (userInfo?.success) {
+      setDefaultEmail(userInfo.user.email);
+      setDefaultName(userInfo.user.name);
+      setValues({email: userInfo.user.email, name: userInfo.user.name, password: ''});
+    }
+  }, [userInfo]);
 
   const isFormEdited = values.name !== defaultName || values.email !== defaultEmail || values.password !== '';
 
@@ -58,6 +63,10 @@ const ProfileEditForm: FC = () => {
       }
     }
   };
+
+  if (isLoadingUserInfo){
+    return <div>Loading...</div>
+  }
 
   return (
     <form className={'mt-30 ml-15'} onSubmit={handleSave}>

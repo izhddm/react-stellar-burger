@@ -35,6 +35,7 @@ const fetchWithTokenRefresh:BaseQueryFn  = async (args: FetchArgs, api: BaseQuer
 export const apiBase = createApi({
   reducerPath: 'api',
   baseQuery: fetchWithTokenRefresh as BaseQueryFn<FetchArgs, unknown, ExtendedErrorResponse>,
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     refreshToken: builder.mutation<UpdateTokenResponse, string>({
       query: (args) => ({
@@ -52,20 +53,6 @@ export const apiBase = createApi({
 
         return response;
       },
-      // transformErrorResponse: (response: ExtendedErrorResponse) => {
-      //   // Добавим дополнительные поля, если их нет
-      //   const extendedError: ExtendedErrorResponse = {
-      //     ...response,
-      //     data: {
-      //       success: response.data?.success ?? false,
-      //       message: response.data?.message ?? "Ошибка обновления токена",
-      //     },
-      //   };
-      //
-      //   console.log('Ошибка запроса: ', extendedError);
-      //
-      //   return extendedError;
-      // }
     }),
   }),
 });
