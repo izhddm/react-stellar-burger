@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IModalState} from "../../types/types";
 
-const initialState: IModalState = {
+export const initialState: IModalState = {
   componentName: null,
   data: null
 };

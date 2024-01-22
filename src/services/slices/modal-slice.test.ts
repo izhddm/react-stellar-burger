@@ -1,15 +1,10 @@
 import modalReducer, {clearContentModal, setContentModal} from '../slices/modal-slice'
-import {IModalState} from "../../types/types";
-
-const initialState: IModalState = {
-  componentName: null,
-  data: null
-};
+import initialState from '../slices/modal-slice'
 
 describe('Тест ModalSlice', () => {
   it('Метод записи данных для модального окна setContentModal', () => {
     expect(
-      modalReducer(initialState, setContentModal(
+      modalReducer(undefined, setContentModal(
         {
           ...initialState,
           componentName: 'OrderDetails',

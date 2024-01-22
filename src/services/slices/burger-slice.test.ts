@@ -1,17 +1,12 @@
 import burgerReducer, {
   addIngredient,
-  clearBurgerConstructor,
+  clearBurgerConstructor, initialState,
   removeIngredient,
   setBun,
   swapIngredients
 } from '../slices/burger-slice'
 import {v4 as uuidv4} from 'uuid';
-import {IBurgerState, IRemoveIngredient, ISwapIngredient, TIngredient, TIngredients} from "../../types/types";
-
-const initialState: IBurgerState = {
-  bun: null,
-  ingredients: [],
-};
+import {IRemoveIngredient, ISwapIngredient, TIngredient, TIngredients} from "../../types/types";
 
 const bun: TIngredient = {
   _id: "643d69a5c3f7b9001cfa093d",

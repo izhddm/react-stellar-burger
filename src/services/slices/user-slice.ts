@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {TIsLoggedIn, TUser, TUserState} from "../../types/types";
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   email: '',
   name: '',
   isLoggedIn: false

@@ -1,12 +1,5 @@
-import orderReducer, {setOrder} from '../slices/order-slice'
+import orderReducer, {initialState, setOrder} from '../slices/order-slice'
 import {TOrder} from "../../types/types";
-
-const initialState: TOrder = {
-  order: {
-    number: null
-  },
-  name: null,
-};
 
 const testOrder: TOrder = {
   order: {

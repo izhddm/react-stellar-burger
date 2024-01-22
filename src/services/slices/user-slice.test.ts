@@ -1,11 +1,4 @@
-import userReducer, {resetUser, setLoggedIn, setUser} from '../slices/user-slice'
-import {TUserState} from "../../types/types";
-
-const initialState: TUserState = {
-  email: '',
-  name: '',
-  isLoggedIn: false
-};
+import userReducer, {initialState, resetUser, setLoggedIn, setUser} from '../slices/user-slice'
 
 describe('Тест UserSlice', () => {
   it('Метод записи данных о пользователе setUser', () => {
