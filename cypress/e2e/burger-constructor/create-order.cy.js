@@ -4,7 +4,7 @@ describe('Create order', () => {
       .intercept('api/ingredients', {fixture: 'ingredients.json'}).as('getIngredients')
       .intercept('api/auth/login', {fixture: 'login.json'}).as('loginAuth')
       .intercept({url: 'api/orders', method: 'POST'}, {fixture: 'order-success.json', delay: 3000}).as('orderSuccess')
-      .visit('http://localhost:3000/')
+      .visit('/')
 
       // Ожидаем чтобы загрузились ингредиенты из фикстур
       .wait('@getIngredients')
