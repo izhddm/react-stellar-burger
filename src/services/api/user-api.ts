@@ -15,7 +15,8 @@ export const authApi = apiBase.injectEndpoints({
         headers: {
           'Authorization': localStorage.getItem('accessToken') ?? undefined
         }
-      })
+      }),
+      providesTags: ['User']
     }),
     updateUserInfo: builder.mutation<SuccessLoginResponse, Partial<FormUserData>>({
       query: (body) => ({
@@ -25,7 +26,8 @@ export const authApi = apiBase.injectEndpoints({
         headers: {
           'Authorization': localStorage.getItem('accessToken') ?? undefined
         }
-      })
+      }),
+      invalidatesTags: ['User']
     }),
     forgotPassword: builder.mutation<SuccessResetResponse, FormForgotValues>({
       query: (body) => ({

@@ -3,10 +3,10 @@ import {useParams} from "react-router-dom";
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-info.module.css'
 import {BurgerCost} from "../burger-cost/burger-cost";
-import {useAppSelector} from "../../hooks/useAppSelector";
 import {OrderInfoIngredient} from "../../order-info-ingredient/order-info-ingredient";
 import {TIngredient} from "../../types/types";
 import {useGetOrdersQuery} from "../../services/api/orders-api";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 
 interface IProps {
   forPrivate: boolean
@@ -15,12 +15,12 @@ interface IProps {
 export const OrderInfo: FC<IProps> = ({forPrivate = true}) => {
   const {id} = useParams();
 
-  const ingredients = useAppSelector(store => store.ingredients);
+  const {data: ingredients, isLoading: ingredientLoading} = useGetIngredientsQuery(); // Получения списка ингредиентов
 
   const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersQuery(forPrivate);
 
   // Идет загрузка
-  if (isLoadingOrders) {
+  if (ingredientLoading || isLoadingOrders) {
     return <div>Loading...</div>;
   }
 
@@ -30,7 +30,7 @@ export const OrderInfo: FC<IProps> = ({forPrivate = true}) => {
   const orderIngredientsMap = new Map<string, { ingredient: TIngredient; count: number }>();
 
   order?.ingredients.forEach((orderIngredientId) => {
-    const ingredient = ingredients.find((ingredient) => ingredient._id === orderIngredientId);
+    const ingredient = ingredients?.find((ingredient) => ingredient._id === orderIngredientId);
 
     if (ingredient) {
       const existingIngredient = orderIngredientsMap.get(ingredient._id);

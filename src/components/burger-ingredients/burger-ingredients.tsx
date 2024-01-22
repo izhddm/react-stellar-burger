@@ -3,7 +3,7 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingredients.module.css'
 import BurgerIngredient from "../burger-ingredient/burger-Ingredient";
 import {TIngredient} from "../../types/types";
-import {useAppSelector} from "../../hooks/useAppSelector";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 
 interface ITab {
   value: number,
@@ -15,7 +15,7 @@ interface ITab {
 const BurgerIngredients: FC = () => {
   const ingredientsRef = useRef<HTMLDivElement>(null);
 
-  const ingredients = useAppSelector((state) => state.ingredients);
+  const {data: ingredients, isLoading: isLoadingIngredients} = useGetIngredientsQuery(); // Получения списка ингредиентов
 
   // Категории ингредиентов
   const tabs: ITab[] = [
@@ -63,6 +63,10 @@ const BurgerIngredients: FC = () => {
       ingredientsRef?.current?.removeEventListener('scroll', handleScroll);
     };
   }, [tabs]);
+
+  if (isLoadingIngredients){
+    return <div>Loading...</div>
+  }
 
   return (
     <section className={styles.section} aria-label="Бургер ингредиенты">

@@ -1,14 +1,20 @@
 import React, {FC} from 'react';
 import styles from './ingredient-details.module.css'
 import {useParams} from "react-router-dom";
-import {getDetailIngredient} from "../../services/selectors";
-import {useAppSelector} from "../../hooks/useAppSelector";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 
 const IngredientDetails: FC = () => {
   const {id} = useParams()
 
-  // Если нет в state элемента ингредиента, значит заберем его из массива ингредиентов
-  const element = useAppSelector(getDetailIngredient(id));
+  // Получения списка всех ингредиентов
+  const {data: ingredients, isLoading: isLoadingIngredients} = useGetIngredientsQuery();
+
+  if (isLoadingIngredients) {
+    return <div>Loading...</div>
+  }
+
+  // найдем элемент по id
+  const element = ingredients?.find((el) => el._id === id) ?? null;
 
   return (
     element && <div className={styles.container}>

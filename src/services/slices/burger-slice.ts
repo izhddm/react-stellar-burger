@@ -1,32 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {v4 as uuidv4} from 'uuid';
-import {TIngredient, TIngredientConstructor} from "../../types/types";
+import {IBurgerState, IRemoveIngredient, ISwapIngredient, TIngredient, TIngredientConstructor} from "../../types/types";
 
-interface IBurgerState {
-  bun: TIngredientConstructor | null,
-  ingredients: TIngredientConstructor[]
-}
-
-interface ISwapIngredient {
-  indexFrom: number,
-  indexTo: number,
-  ingredient: TIngredientConstructor
-}
-
-interface IRemoveIngredient {
-  uuid: string
-}
-
-const initialState: IBurgerState = {
+export const initialState: IBurgerState = {
   bun: null,
   ingredients: [],
 };
+
 
 const burgerSlice = createSlice({
   name: 'burger',
   initialState,
   reducers: {
-    setBun: (state, {payload}: PayloadAction<TIngredientConstructor>) => {
+    setBun: (state, {payload}: PayloadAction<TIngredient>) => {
       state.bun = payload;
     },
     addIngredient: {
@@ -47,7 +33,6 @@ const burgerSlice = createSlice({
 
       store.ingredients.splice(indexFrom, 1);
       store.ingredients.splice(indexTo, 0, ingredient);
-
     },
     removeIngredient: (state, {payload}: PayloadAction<IRemoveIngredient>) => {
       const index = state.ingredients.findIndex(
@@ -58,9 +43,8 @@ const burgerSlice = createSlice({
         state.ingredients.splice(index, 1);
       }
     },
-    clearBurgerConstructor: (state) => {
-      state.bun = null;
-      state.ingredients = [];
+    clearBurgerConstructor: (_state) => {
+      return initialState;
     },
   },
 });

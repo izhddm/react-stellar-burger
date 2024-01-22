@@ -9,15 +9,13 @@ import RegisterPage from "../../pages/register-page/register-page";
 import ForgotPasswordPage from "../../pages/forgot-password-page/forgot-password-page";
 import ProfilePage from "../../pages/profile-page/profile-page";
 import ProtectedRouter from "../protected-router/protected-router";
-import {setLoggedIn, setUser} from "../../services/slices/user-slice";
+import {setLoggedIn} from "../../services/slices/user-slice";
 import {useRefreshTokenMutation} from "../../services/api/api-base";
 import {isJwtTokenValid} from "../../utils/jwtUtils";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
-import {setIngredients} from "../../services/slices/ingredients-slice";
 import styles from './app.module.css'
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useGetUserInfoQuery} from "../../services/api/user-api";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {ProfileOrderPage} from "../../pages/profile-order-page/profile-order-page";
 import {FeedPage} from "../../pages/feed-page/feed-page";
@@ -29,23 +27,8 @@ const App: FC = () => {
   const location = useLocation();
   const background = location.state && location.state?.background;
 
-  const [updateToken, {isLoading: isLoadingToken, isError: isErrorToken}] = useRefreshTokenMutation(); // Обновление токена
-  const {data: ingredients, isLoading: ingredientLoading, isError: ingredientError} = useGetIngredientsQuery(); // Получения списка ингредиентов
-  const {data: userInfo, isLoading: isLoadingUserInfo} = useGetUserInfoQuery(); // Получение данных о юзере
-
-  // При монтировании запишем данные о пользователе
-  useEffect(() => {
-    if (userInfo?.success) {
-      dispatch(setUser(userInfo.user));
-    }
-  }, [userInfo]);
-
-  // При монтировании получим список ингредиентов
-  useEffect(() => {
-    if (!ingredientLoading) {
-      dispatch(setIngredients(ingredients?.data ?? []));
-    }
-  }, [ingredients, ingredientLoading]);
+  const [updateToken, {isLoading: isLoadingToken}] = useRefreshTokenMutation(); // Обновление токена
+  const {isLoading: isLoadingIngredients} = useGetIngredientsQuery(); // Получения списка ингредиентов
 
   // При монтировании актуализируем данные по логину пользователя
   useEffect(() => {
@@ -78,7 +61,7 @@ const App: FC = () => {
   }, [dispatch, updateToken]);
 
   // Выведем прелоудер пока идет загрузка
-  if (isLoadingToken || ingredientLoading || isLoadingUserInfo) {
+  if (isLoadingToken || isLoadingIngredients) {
     return <div>Loading...</div>;
   }
 

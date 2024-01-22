@@ -1,22 +1,22 @@
 import React, {FC} from "react";
 import styles from './feed-page.module.css'
 import {CardOrder} from "../../components/card-order/card-order";
-import {useAppSelector} from "../../hooks/useAppSelector";
 import {FeedOrderList} from "../../components/feed-order-list/feed-order-list";
 import {IOrder} from "../../types/types";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useGetOrdersQuery} from "../../services/api/orders-api";
+import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
 
 export const FeedPage: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const ingredients = useAppSelector(state => state.ingredients);
+  const {data: ingredients, isLoading: isLoadingIngredients} = useGetIngredientsQuery(); // Получения списка ингредиентов
 
   const {data: orderList, isLoading: isLoadingOrders} = useGetOrdersQuery(false);
 
   // Идет загрузка
-  if (isLoadingOrders) {
+  if (isLoadingIngredients || isLoadingOrders) {
     return <div>Loading...</div>;
   }
 
@@ -40,7 +40,7 @@ export const FeedPage: FC = () => {
             orderList?.orders.map((order) => {
               // Соберем массив ингредиентов которые были заказаны
               const filteredIngredients = order.ingredients.flatMap(orderIngredientId => {
-                const ingredient = ingredients.find(ingredient => ingredient._id === orderIngredientId);
+                const ingredient = ingredients?.find(ingredient => ingredient._id === orderIngredientId);
                 return ingredient ? [ingredient] : [];
               });
 

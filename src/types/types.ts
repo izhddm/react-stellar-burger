@@ -1,4 +1,6 @@
 import {AppDispatch} from "../services/store/store";
+import {FC} from "react";
+import OrderDetails from "../components/order-details/order-details";
 
 
 export type DispatchFunc = () => AppDispatch
@@ -81,3 +83,32 @@ export interface IOrder {
 }
 
 export type TOrders = IOrder[];
+
+export interface IBurgerState {
+  bun: TIngredient | null,
+  ingredients: TIngredientConstructor[]
+}
+
+export interface ISwapIngredient {
+  indexFrom: number,
+  indexTo: number,
+  ingredient: TIngredientConstructor
+}
+
+export interface IRemoveIngredient {
+  uuid: string
+}
+
+// Для модальных окон без прямой ссылки
+type ModalComponent = Record<string, FC>;
+export const modalComponent: ModalComponent = {
+  'OrderDetails': OrderDetails,
+};
+
+export interface IModalState {
+  componentName: string | null,
+  data: number | null
+}
+
+// Для стейта с инфой о юзере
+export type TUserState = TUser & TIsLoggedIn;

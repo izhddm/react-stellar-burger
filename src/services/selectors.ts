@@ -8,12 +8,3 @@ export const getCountIngredientFromConstructor = (element: TIngredient) => (stat
 
   return state.burger.ingredients.reduce((acc, ingredient) => (ingredient._id === element._id ? acc + 1 : acc), 0);
 }
-
-// Возвращает ингредиент, либо из стейта, либо находит по id среди всех ингредиентов
-export const getDetailIngredient = (id: string | undefined) => (state: RootState) => {
-  if (state.modal.data) {
-    return state.modal.data as TIngredient;
-  }
-
-  return state.ingredients.find((el) => el._id === id) ?? null;
-}
