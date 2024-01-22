@@ -31,19 +31,19 @@
 
 Теперь, когда проект склонирован и зависимости установлены, вы можете использовать следующие команды для разработки, тестирования и развертывания:
 
-1. **start**: Запускает приложение. Одновременно запускает `npm run start-react` и `npm run cypress:open` с использованием `concurrently`. `start-react` запускает React-приложение, а `cypress:open` открывает Cypress для тестирования.
+1. **start**: Запускает React-приложение.
 
     ```bash
     npm start
     ```
 
-2. **start-react**: Запускает React-приложение.
+2. **start:cypress**:  Одновременно запускает `npm run start` и `npm run cypress:open` с использованием `concurrently`.
 
     ```bash
-    npm run start-react
+    npm run start:cypress
     ```
 
-3. **build**: Собирает проект для развертывания.
+3. **build**: Производит сборку проекта для развертывания.
 
     ```bash
     npm run build

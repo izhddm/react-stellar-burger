@@ -36,9 +36,9 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-react\" \"npm run cypress:open\"",
-    "start-react": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
+    "start:cypress": "concurrently \"npm run start-react\" \"npm run cypress:open\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "npx cypress open",
