@@ -1,7 +1,7 @@
 import React, {FC} from "react";
-import {TIngredient} from "../types/types";
-import {BurgerCost} from "../components/burger-cost/burger-cost";
-import styles from  './order-info-ingredient.module.css'
+import {TIngredient} from "../../types/types";
+import {BurgerCost} from "../burger-cost/burger-cost";
+import styles from './order-info-ingredient.module.css'
 
 interface IProps {
   count: number,

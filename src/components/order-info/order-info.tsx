@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-info.module.css'
 import {BurgerCost} from "../burger-cost/burger-cost";
-import {OrderInfoIngredient} from "../../order-info-ingredient/order-info-ingredient";
+import {OrderInfoIngredient} from "../order-info-ingredient/order-info-ingredient";
 import {TIngredient} from "../../types/types";
 import {useGetOrdersQuery} from "../../services/api/orders-api";
 import {useGetIngredientsQuery} from "../../services/api/ingredient-api";
