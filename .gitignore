@@ -15,3 +15,7 @@ thumb
 sketch
 
 .idea/
+build/
+
+cypress/e2e/*-examples
+cypress/e2e/*-started
